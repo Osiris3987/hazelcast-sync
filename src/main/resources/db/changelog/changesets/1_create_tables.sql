@@ -2,7 +2,8 @@ create table legal_entity
 (
     id varchar(36) primary key,
     name varchar not null,
-    balance decimal not null
+    balance decimal not null,
+    version integer not null default 0
 );
 
 create table client
