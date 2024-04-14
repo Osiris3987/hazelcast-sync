@@ -10,7 +10,7 @@ spring:
     enabled: true
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: validate
 server:
   port:
     8080
