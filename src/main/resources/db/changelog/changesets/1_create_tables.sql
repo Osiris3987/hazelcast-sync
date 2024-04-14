@@ -15,9 +15,11 @@ create table transaction
 (
     id varchar(36) primary key,
     type varchar(10) not null,
-    client_id varchar(36),
     amount decimal not null,
-    constraint transaction_client_id foreign key (client_id) references client(id)
+    client_id varchar(36) not null,
+    legal_entity_id varchar(36) not null,
+    constraint transaction_client foreign key (client_id) references client(id),
+    constraint transaction_legal_entity foreign key (legal_entity_id) references legal_entity(id)
 );
 
 create table legal_entity_clients
@@ -28,12 +30,3 @@ create table legal_entity_clients
     constraint legal_entity_clients_legal_entity foreign key (legal_entity_id) references legal_entity (id),
     constraint legal_entity_clients_client foreign key (client_id) references client (id)
 );
-
-create table legal_entity_transactions
-(
-    legal_entity_id varchar(36),
-    transaction_id varchar(36),
-    constraint legal_entity_transactions_unique unique (legal_entity_id, transaction_id),
-    constraint legal_entity_transactions_legal_entity foreign key (legal_entity_id) references legal_entity (id),
-    constraint legal_entity_transactions_transaction foreign key (transaction_id) references transaction (id)
-)
