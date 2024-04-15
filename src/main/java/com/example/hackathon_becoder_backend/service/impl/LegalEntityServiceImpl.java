@@ -6,7 +6,11 @@ import com.example.hackathon_becoder_backend.domain.transaction.Transaction;
 import com.example.hackathon_becoder_backend.domain.transaction.TransactionType;
 import com.example.hackathon_becoder_backend.repository.LegalEntityRepository;
 import com.example.hackathon_becoder_backend.service.LegalEntityService;
+import jakarta.persistence.OptimisticLockException;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.StaleStateException;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,11 +30,18 @@ public class LegalEntityServiceImpl implements LegalEntityService {
     }
 
     @Override
-    @Transactional
+    @Retryable(maxAttempts = 5)
+    @Transactional()
     public void changeBalance(UUID id, BigDecimal amount, TransactionType type) {
+        LegalEntity legalEntity = findById(id);
         switch (type){
-            case DEBIT -> legalEntityRepository.decreaseBalance(amount, id.toString());
-            case REFILL -> legalEntityRepository.increaseBalance(amount, id.toString());
+            case DEBIT -> {
+                legalEntity.setBalance(legalEntity.getBalance().subtract(amount));
+            }
+            case REFILL -> {
+                legalEntity.setBalance(legalEntity.getBalance().add(amount));
+            }
         }
+        legalEntityRepository.save(legalEntity);
     }
 }

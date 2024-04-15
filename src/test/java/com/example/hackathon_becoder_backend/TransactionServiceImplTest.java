@@ -8,10 +8,13 @@ import com.example.hackathon_becoder_backend.repository.LegalEntityRepository;
 import com.example.hackathon_becoder_backend.service.ClientService;
 import com.example.hackathon_becoder_backend.service.LegalEntityService;
 import com.example.hackathon_becoder_backend.service.TransactionService;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
@@ -22,35 +25,34 @@ import java.util.concurrent.*;
 
 @SpringBootTest
 @Transactional
+@Configuration
+@EnableRetry
 class TransactionServiceImplTest {
     @Autowired
     private LegalEntityService legalEntityService;
 
     @Test
+    @SneakyThrows
     void testConcurrentTransactionsWithConsistentBalance() throws InterruptedException {
         // Create a legal entity
         LegalEntity legalEntity1 = legalEntityService.findById(UUID.fromString("b3ec6a4c-6245-419d-b884-024a69fea3ec"));
 
-        ExecutorService executor1 = Executors.newFixedThreadPool(5);
-        ExecutorService executor2 = Executors.newCachedThreadPool();
+        ExecutorService executor1 = Executors.newFixedThreadPool(3);
+        ExecutorService executor2 = Executors.newFixedThreadPool(3);
 
-        List<Callable> list = new ArrayList<>();
-
-        executor2.submit(() -> {legalEntityService.changeBalance(legalEntity1.getId(), BigDecimal.valueOf(1), TransactionType.REFILL);
-        });
-
-
-        /*
-        for (int i = 0; i < 100; i++) {
-            executor1.submit(() -> {
-                legalEntityService.changeBalance(legalEntity1.getId(), BigDecimal.valueOf(1000), TransactionType.REFILL);
-            });
-            executor2.submit(() -> {
-                legalEntityService.changeBalance(legalEntity1.getId(), BigDecimal.valueOf(1000), TransactionType.REFILL);
-            });
+        List<Future<Object>> futures = new ArrayList<>();
+        Callable<Object> task = () -> {
+            legalEntityService.changeBalance(legalEntity1.getId(), BigDecimal.valueOf(1000), TransactionType.REFILL);
+            return null;
+        };
+        for (int i = 0; i < 50; i++) {
+            futures.add(executor1.submit(task));
+            futures.add(executor2.submit(task));
         }
-         */
 
+        for (Future<Object> future : futures) {
+            future.get();
+        }
         executor1.shutdown();
         executor2.shutdown();
 

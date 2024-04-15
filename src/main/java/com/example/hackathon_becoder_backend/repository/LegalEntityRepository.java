@@ -11,17 +11,4 @@ import java.util.UUID;
 
 public interface LegalEntityRepository extends JpaRepository<LegalEntity, UUID> {
 
-    @Modifying
-    @Query(
-            value = "UPDATE legal_entity SET balance = balance + :amount WHERE id = :id",
-            nativeQuery = true
-    )
-    void increaseBalance(@Param("amount") BigDecimal amount, @Param("id") String id);
-
-    @Modifying
-    @Query(
-            value = "UPDATE legal_entity SET balance = balance - :amount WHERE id = :id",
-            nativeQuery = true
-    )
-    void decreaseBalance(@Param("amount") BigDecimal amount, @Param("id") String id);
 }
