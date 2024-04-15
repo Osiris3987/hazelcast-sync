@@ -26,4 +26,8 @@ public class LegalEntity {
 
     @Column(name = "balance")
     private BigDecimal balance;
+
+    @Version
+    @Column(name = "version")
+    private Integer version;
 }
