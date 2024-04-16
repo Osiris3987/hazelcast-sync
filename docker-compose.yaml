@@ -19,3 +19,19 @@ services:
       - hackathon_becoder
     volumes:
       - db-data:/var/lib/postgresql/data
+
+  app:
+    build:
+      context: .
+    container_name: tasklist
+    networks:
+      - hackathon_becoder
+    depends_on:
+      - postgres
+    environment:
+      - HOST=postgres:5432
+      - POSTGRES_DB=hackathon_becoder
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '8080:8080'

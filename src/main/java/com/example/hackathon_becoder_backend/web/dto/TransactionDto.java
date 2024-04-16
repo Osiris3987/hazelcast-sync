@@ -1,6 +1,7 @@
 package com.example.hackathon_becoder_backend.web.dto;
 
 import com.example.hackathon_becoder_backend.domain.transaction.TransactionType;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.math.BigDecimal;
