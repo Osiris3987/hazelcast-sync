@@ -3,8 +3,10 @@ package com.example.hackathon_becoder_backend.web.controller;
 import com.example.hackathon_becoder_backend.domain.transaction.Transaction;
 import com.example.hackathon_becoder_backend.service.TransactionService;
 import com.example.hackathon_becoder_backend.web.dto.TransactionDto;
+import com.example.hackathon_becoder_backend.web.dto.validation.OnCreate;
 import com.example.hackathon_becoder_backend.web.mapper.TransactionMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -18,7 +20,7 @@ public class TransactionController {
 
     @PostMapping
     public TransactionDto create(
-            @RequestBody TransactionDto transactionDto,
+            @Validated(OnCreate.class) @RequestBody TransactionDto transactionDto,
             @RequestParam UUID clientId,
             @RequestParam UUID legalEntityId
     ) {
