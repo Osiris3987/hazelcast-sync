@@ -1,5 +1,6 @@
 package com.example.hackathon_becoder_backend.service.impl;
 
+import com.example.hackathon_becoder_backend.domain.exception.LackOfBalanceException;
 import com.example.hackathon_becoder_backend.domain.exception.ResourceNotFoundException;
 import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntity;
 import com.example.hackathon_becoder_backend.domain.transaction.Transaction;
@@ -30,12 +31,16 @@ public class LegalEntityServiceImpl implements LegalEntityService {
     }
 
     @Override
-    @Retryable(maxAttempts = 5)
-    @Transactional()
+    @Retryable(maxAttempts = 6, retryFor = ObjectOptimisticLockingFailureException.class)
+    @Transactional
     public void changeBalance(UUID id, BigDecimal amount, TransactionType type) {
         LegalEntity legalEntity = findById(id);
-        switch (type){
+        switch (type) {
             case DEBIT -> {
+                BigDecimal newBalance = legalEntity.getBalance().subtract(amount);
+                if (newBalance.compareTo(BigDecimal.ZERO) < 0) {
+                    throw new LackOfBalanceException("Not enough balance for this DEBIT");
+                }
                 legalEntity.setBalance(legalEntity.getBalance().subtract(amount));
             }
             case REFILL -> {

@@ -28,5 +28,5 @@ public class Client {
     @JoinTable(name = "legal_entity_clients",
             joinColumns = @JoinColumn(name = "client_id"),
             inverseJoinColumns = @JoinColumn(name = "legal_entity_id"))
-    Set<LegalEntity> legalEntities;
+    private Set<LegalEntity> legalEntities;
 }

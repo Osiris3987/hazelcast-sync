@@ -2,6 +2,7 @@ package com.example.hackathon_becoder_backend.service.impl;
 
 import com.example.hackathon_becoder_backend.domain.client.Client;
 import com.example.hackathon_becoder_backend.domain.exception.ResourceNotFoundException;
+import com.example.hackathon_becoder_backend.domain.exception.ValidationException;
 import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntity;
 import com.example.hackathon_becoder_backend.domain.transaction.Transaction;
 import com.example.hackathon_becoder_backend.domain.transaction.TransactionType;
@@ -32,7 +33,7 @@ public class TransactionServiceImpl implements TransactionService {
         Client client = clientService.findById(clientId);
         LegalEntity legalEntity = legalEntityService.findById(legalEntityId);
         if(!LegalEntityValidator.isClientInLegalEntity(client, legalEntityId)){
-            throw new RuntimeException();
+            throw new ValidationException("Client is not in this legal entity");
         }
         transaction.setClient(client);
         transaction.setLegalEntity(legalEntity);

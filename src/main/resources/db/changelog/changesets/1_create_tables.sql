@@ -1,3 +1,7 @@
+drop table if exists legal_entity_clients;
+drop table if exists transaction;
+drop table if exists legal_entity;
+drop table if exists client;
 create table legal_entity
 (
     id varchar(36) primary key,
