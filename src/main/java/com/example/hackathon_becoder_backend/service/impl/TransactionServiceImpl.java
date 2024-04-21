@@ -15,9 +15,13 @@ import com.example.hackathon_becoder_backend.service.TransactionService;
 import com.example.hackathon_becoder_backend.util.LegalEntityValidator;
 import com.example.hackathon_becoder_backend.web.dto.TransactionDto;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.StaleObjectStateException;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -28,6 +32,7 @@ public class TransactionServiceImpl implements TransactionService {
     private final LegalEntityService legalEntityService;
 
     @Override
+    @Retryable(maxAttempts = 20)
     @Transactional
     public Transaction create(Transaction transaction, UUID clientId, UUID legalEntityId) {
         Client client = clientService.findById(clientId);
@@ -43,5 +48,20 @@ public class TransactionServiceImpl implements TransactionService {
                 transaction.getType()
         );
         return transactionRepository.save(transaction);
+    }
+
+    @Override
+    public Transaction getById(UUID id) {
+        return null;
+    }
+
+    @Override
+    public List<Transaction> getAllByLegalEntityId(UUID legalEntityId) {
+        return null;
+    }
+
+    @Override
+    public List<Transaction> getAllByClientId(UUID clientId) {
+        return null;
     }
 }

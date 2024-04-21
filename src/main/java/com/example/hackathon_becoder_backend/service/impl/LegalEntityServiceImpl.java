@@ -7,6 +7,7 @@ import com.example.hackathon_becoder_backend.domain.transaction.Transaction;
 import com.example.hackathon_becoder_backend.domain.transaction.TransactionType;
 import com.example.hackathon_becoder_backend.repository.LegalEntityRepository;
 import com.example.hackathon_becoder_backend.service.LegalEntityService;
+import com.example.hackathon_becoder_backend.web.dto.LegalEntityWithClientsDto;
 import jakarta.persistence.OptimisticLockException;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.StaleStateException;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -31,8 +33,7 @@ public class LegalEntityServiceImpl implements LegalEntityService {
     }
 
     @Override
-    @Retryable(maxAttempts = 6, retryFor = ObjectOptimisticLockingFailureException.class)
-    @Transactional
+    @Transactional()
     public void changeBalance(UUID id, BigDecimal amount, TransactionType type) {
         LegalEntity legalEntity = findById(id);
         switch (type) {
@@ -48,5 +49,25 @@ public class LegalEntityServiceImpl implements LegalEntityService {
             }
         }
         legalEntityRepository.save(legalEntity);
+    }
+
+    @Override
+    public void deleteById(UUID id) {
+
+    }
+
+    @Override
+    public LegalEntity assignClientToLegalEntity(UUID legalEntityId, UUID clientId) {
+        return null;
+    }
+
+    @Override
+    public List<LegalEntity> getAllLegalEntitiesByClientId(UUID clientId) {
+        return null;
+    }
+
+    @Override
+    public List<LegalEntity> getAll() {
+        return null;
     }
 }

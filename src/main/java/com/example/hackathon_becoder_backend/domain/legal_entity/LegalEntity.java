@@ -30,4 +30,10 @@ public class LegalEntity {
     @Version
     @Column(name = "version")
     private Integer version;
+
+    @ManyToMany
+    @JoinTable(name = "legal_entity_clients",
+            joinColumns = @JoinColumn(name = "legal_entity_id"),
+            inverseJoinColumns = @JoinColumn(name = "client_id"))
+    private Set<Client> clients;
 }

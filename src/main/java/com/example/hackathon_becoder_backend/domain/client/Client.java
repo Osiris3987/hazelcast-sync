@@ -23,7 +23,6 @@ public class Client {
     @Column(name = "name")
     private String name;
 
-
     @ManyToMany
     @JoinTable(name = "legal_entity_clients",
             joinColumns = @JoinColumn(name = "client_id"),
