@@ -21,6 +21,7 @@ import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -47,5 +48,20 @@ public class TransactionServiceImpl implements TransactionService {
                 transaction.getType()
         );
         return transactionRepository.save(transaction);
+    }
+
+    @Override
+    public Transaction getById(UUID id) {
+        return null;
+    }
+
+    @Override
+    public List<Transaction> getAllByLegalEntityId(UUID legalEntityId) {
+        return null;
+    }
+
+    @Override
+    public List<Transaction> getAllByClientId(UUID clientId) {
+        return null;
     }
 }
