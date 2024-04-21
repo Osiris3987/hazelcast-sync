@@ -15,6 +15,9 @@ import com.example.hackathon_becoder_backend.service.TransactionService;
 import com.example.hackathon_becoder_backend.util.LegalEntityValidator;
 import com.example.hackathon_becoder_backend.web.dto.TransactionDto;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.StaleObjectStateException;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +31,7 @@ public class TransactionServiceImpl implements TransactionService {
     private final LegalEntityService legalEntityService;
 
     @Override
+    @Retryable(maxAttempts = 20)
     @Transactional
     public Transaction create(Transaction transaction, UUID clientId, UUID legalEntityId) {
         Client client = clientService.findById(clientId);

@@ -31,8 +31,7 @@ public class LegalEntityServiceImpl implements LegalEntityService {
     }
 
     @Override
-    @Retryable(maxAttempts = 6, retryFor = ObjectOptimisticLockingFailureException.class)
-    @Transactional
+    @Transactional()
     public void changeBalance(UUID id, BigDecimal amount, TransactionType type) {
         LegalEntity legalEntity = findById(id);
         switch (type) {

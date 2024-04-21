@@ -36,12 +36,12 @@ class TransactionServiceImplTest {
     void testConcurrentTransactionsWithConsistentBalance() throws InterruptedException {
         LegalEntity legalEntity1 = legalEntityService.findById(UUID.fromString("b3ec6a4c-6245-419d-b884-024a69fea3ec"));
 
-        ExecutorService executor1 = Executors.newFixedThreadPool(3);
-        ExecutorService executor2 = Executors.newFixedThreadPool(3);
+        ExecutorService executor1 = Executors.newFixedThreadPool(10);
+        ExecutorService executor2 = Executors.newFixedThreadPool(10);
 
         List<Future<Object>> futures = new ArrayList<>();
         Callable<Object> task = () -> {
-            legalEntityService.changeBalance(legalEntity1.getId(), BigDecimal.valueOf(1000), TransactionType.DEBIT);
+            legalEntityService.changeBalance(legalEntity1.getId(), BigDecimal.valueOf(1000), TransactionType.REFILL);
             return null;
         };
         for (int i = 0; i < 55; i++) {
