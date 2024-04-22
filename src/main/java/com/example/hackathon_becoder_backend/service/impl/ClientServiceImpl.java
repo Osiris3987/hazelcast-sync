@@ -1,6 +1,7 @@
 package com.example.hackathon_becoder_backend.service.impl;
 
 import com.example.hackathon_becoder_backend.domain.client.Client;
+import com.example.hackathon_becoder_backend.domain.enums.EntityStatus;
 import com.example.hackathon_becoder_backend.domain.exception.ResourceNotFoundException;
 import com.example.hackathon_becoder_backend.repository.ClientRepository;
 import com.example.hackathon_becoder_backend.service.ClientService;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ClientServiceImpl implements ClientService {
     private final ClientRepository clientRepository;
+
     @Override
     @Transactional(readOnly = true)
     public Client findById(UUID id) {
@@ -24,27 +26,22 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<Client> getAll() {
-        return null;
-    }
-
-    @Override
-    public Client getById() {
-        return null;
-    }
-
-    @Override
-    public List<Client> getAllByLegalEntityId(UUID legalEntityID) {
-        return null;
+    public List<Client> findAll() {
+        return clientRepository.findAll();
     }
 
     @Override
     public Client create(Client client) {
-        return null;
+        client.setStatus(String.valueOf(EntityStatus.EXISTS));
+        return clientRepository.save(client);
     }
+
 
     @Override
     public void deleteById(UUID id) {
-
+        var client = findById(id);
+        client.setStatus(String.valueOf(EntityStatus.DELETED));
+        clientRepository.save(client);
     }
+
 }
