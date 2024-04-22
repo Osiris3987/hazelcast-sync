@@ -11,8 +11,8 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ClientMapper {
 
+    @Mapping(source = "status", target = "status")
     ClientDto toDto(Client client);
-
     Client toEntity(ClientDto dto);
     List<ClientDto> toDtoList(List<Client> list);
 }

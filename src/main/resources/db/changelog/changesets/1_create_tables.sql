@@ -13,7 +13,8 @@ create table legal_entity
 create table client
 (
     id varchar(36) primary key,
-    name varchar not null
+    name varchar not null,
+    status varchar not null
 );
 
 create table transaction

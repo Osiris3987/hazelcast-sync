@@ -68,7 +68,7 @@ public class ClientController {
             @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "404", description = "Client not found")
     })
-    @Operation(summary = "Delete client by ID", description = "Delete a client by its ID", operationId = "deleteById")
+    @Operation(summary = "Delete client by ID", description = "Set the \"Deleted\" status for this client", operationId = "deleteById")
     @DeleteMapping("")
     public ResponseEntity<String> deleteById(
             @RequestParam @Parameter(description = "Client id", required = true) UUID clientId

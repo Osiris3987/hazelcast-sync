@@ -9,7 +9,6 @@ import java.util.UUID;
 public class ClientDto {
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private UUID id;
-
     private String name;
-
+    private String status;
 }
