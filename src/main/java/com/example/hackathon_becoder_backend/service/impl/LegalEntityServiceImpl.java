@@ -1,5 +1,6 @@
 package com.example.hackathon_becoder_backend.service.impl;
 
+import com.example.hackathon_becoder_backend.domain.enums.EntityStatus;
 import com.example.hackathon_becoder_backend.domain.exception.LackOfBalanceException;
 import com.example.hackathon_becoder_backend.domain.exception.ResourceNotFoundException;
 import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntity;
@@ -53,7 +54,9 @@ public class LegalEntityServiceImpl implements LegalEntityService {
 
     @Override
     public void deleteById(UUID id) {
-
+        LegalEntity legalEntity = findById(id);
+        legalEntity.setStatus(String.valueOf(EntityStatus.DELETED));
+        legalEntityRepository.save(legalEntity);
     }
 
     @Override
