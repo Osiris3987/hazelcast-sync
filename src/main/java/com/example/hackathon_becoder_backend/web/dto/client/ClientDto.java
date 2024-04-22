@@ -2,6 +2,7 @@ package com.example.hackathon_becoder_backend.web.dto.client;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+
 import java.util.UUID;
 
 @Data
