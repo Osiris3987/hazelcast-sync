@@ -10,6 +10,6 @@ public interface ClientService {
     Client findById(UUID id);
     Client create(Client client);
     List<Client> findAll();
-    List<Client> getAllByLegalEntityId(UUID legalEntityID);
+    List<Client> findAllByLegalEntityId(UUID legalEntityID);
     void deleteById(UUID id);
 }

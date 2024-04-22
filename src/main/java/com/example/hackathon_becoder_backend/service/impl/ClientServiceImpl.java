@@ -32,9 +32,8 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<Client> getAllByLegalEntityId(UUID legalEntityID) {
-        var legalEntity = legalEntityService.findById(legalEntityID);
-        return clientRepository.getAllByLegalEntity(legalEntity);
+    public List<Client> findAllByLegalEntityId(UUID legalEntityID) {
+        return clientRepository.findByLegalEntityId(legalEntityID);
     }
 
     @Override
