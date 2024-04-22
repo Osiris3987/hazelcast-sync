@@ -37,7 +37,7 @@ public class TransactionServiceImpl implements TransactionService {
     public Transaction create(Transaction transaction, UUID clientId, UUID legalEntityId) {
         Client client = clientService.findById(clientId);
         LegalEntity legalEntity = legalEntityService.findById(legalEntityId);
-        if(!LegalEntityValidator.isClientInLegalEntity(client, legalEntityId)){
+        if (!LegalEntityValidator.isClientInLegalEntity(client, legalEntityId)) {
             throw new ValidationException("Client is not in this legal entity");
         }
         transaction.setClient(client);
@@ -52,16 +52,21 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public Transaction getById(UUID id) {
-        return null;
+        return transactionRepository
+                .findById(id)
+                .orElseThrow(()
+                        -> new ResourceNotFoundException("Requested transaction not found"));
     }
 
     @Override
     public List<Transaction> getAllByLegalEntityId(UUID legalEntityId) {
-        return null;
+        return transactionRepository
+                .findAllByLegalEntityId(legalEntityId);
     }
 
     @Override
     public List<Transaction> getAllByClientId(UUID clientId) {
-        return null;
+        return transactionRepository
+                .findAllByClientId(clientId);
     }
 }
