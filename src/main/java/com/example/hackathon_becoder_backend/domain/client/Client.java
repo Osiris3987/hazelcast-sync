@@ -23,6 +23,9 @@ public class Client {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "status")
+    private String status;
+
     @ManyToMany
     @JoinTable(name = "legal_entity_clients",
             joinColumns = @JoinColumn(name = "client_id"),
