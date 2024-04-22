@@ -3,6 +3,7 @@ package com.example.hackathon_becoder_backend.service.impl;
 import com.example.hackathon_becoder_backend.domain.client.Client;
 import com.example.hackathon_becoder_backend.domain.enums.EntityStatus;
 import com.example.hackathon_becoder_backend.domain.exception.ResourceNotFoundException;
+import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntity;
 import com.example.hackathon_becoder_backend.repository.ClientRepository;
 import com.example.hackathon_becoder_backend.service.ClientService;
 import lombok.RequiredArgsConstructor;
@@ -37,13 +38,21 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client create(Client client) {
-        return null;
+        client.setStatus(String.valueOf(EntityStatus.EXISTS));
+        return clientRepository.save(client);
     }
+
 
     @Override
     public void deleteById(UUID id) {
         var client = findById(id);
         client.setStatus(String.valueOf(EntityStatus.DELETED));
         clientRepository.save(client);
+    }
+
+    @Override
+    public List<LegalEntity> findAllLegalEntitiesByClientId(UUID clientId) {
+//        return clientRepository.findByLegalEntityId(legalEntityID);
+        return  null;//TO DO
     }
 }

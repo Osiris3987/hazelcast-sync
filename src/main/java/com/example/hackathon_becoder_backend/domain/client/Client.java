@@ -1,6 +1,5 @@
 package com.example.hackathon_becoder_backend.domain.client;
 
-import com.example.hackathon_becoder_backend.domain.enums.EntityStatus;
 import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntity;
 import jakarta.persistence.*;
 import lombok.Data;
