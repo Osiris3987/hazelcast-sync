@@ -9,8 +9,7 @@ import java.util.UUID;
 public interface ClientService {
     Client findById(UUID id);
     Client create(Client client);
-    List<Client> getAll();
-    Client getById();
+    List<Client> findAll();
     List<Client> getAllByLegalEntityId(UUID legalEntityID);
     void deleteById(UUID id);
 }

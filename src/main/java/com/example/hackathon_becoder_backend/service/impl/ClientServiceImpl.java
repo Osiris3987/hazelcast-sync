@@ -3,7 +3,9 @@ package com.example.hackathon_becoder_backend.service.impl;
 import com.example.hackathon_becoder_backend.domain.client.Client;
 import com.example.hackathon_becoder_backend.domain.exception.ResourceNotFoundException;
 import com.example.hackathon_becoder_backend.repository.ClientRepository;
+import com.example.hackathon_becoder_backend.repository.LegalEntityRepository;
 import com.example.hackathon_becoder_backend.service.ClientService;
+import com.example.hackathon_becoder_backend.service.LegalEntityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +17,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ClientServiceImpl implements ClientService {
     private final ClientRepository clientRepository;
+    private final LegalEntityService legalEntityService;
     @Override
     @Transactional(readOnly = true)
     public Client findById(UUID id) {
@@ -24,18 +27,14 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<Client> getAll() {
-        return null;
-    }
-
-    @Override
-    public Client getById() {
-        return null;
+    public List<Client> findAll() {
+        return clientRepository.findAll();
     }
 
     @Override
     public List<Client> getAllByLegalEntityId(UUID legalEntityID) {
-        return null;
+        var legalEntity = legalEntityService.findById(legalEntityID);
+        return clientRepository.getAllByLegalEntity(legalEntity);
     }
 
     @Override
@@ -45,6 +44,6 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void deleteById(UUID id) {
-
+         clientRepository.deleteById(id);
     }
 }
