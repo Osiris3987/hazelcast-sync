@@ -42,20 +42,6 @@ public class ClientController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successful operation"),
             @ApiResponse(responseCode = "400", description = "Invalid input"),
-            @ApiResponse(responseCode = "404", description = "Topic not found")
-    })
-    @Operation(summary = "Get all legal entities by client ID", description = "Get a list of all legal entities belonging to a client", operationId = "getAllLegalEntityByClientId")
-    @GetMapping("/{clientId}/legalEntities")
-    public List<LegalEntityDto> getAllClientsByLegalEntityId(
-            @PathVariable @Parameter(description = "Legal entity id", required = true) UUID clientId
-    ) {
-//        return clientMapper.toDtoList(clientService.findAllLegalEntitiesByClientId(clientId));
-        return null; //TO DO
-    }
-
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Successful operation"),
-            @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "404", description = "Client not found")
     })
     @Operation(summary = "Get client by ID", description = "Get a client by its ID", operationId = "getClientById")

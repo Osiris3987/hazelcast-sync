@@ -14,9 +14,6 @@ public interface ClientService {
 
     List<Client> findAll();
 
-    List<Client> findAllByLegalEntityId(UUID legalEntityID);
-
     void deleteById(UUID id);
 
-    List<LegalEntity> findAllLegalEntitiesByClientId(UUID clientId);
 }
