@@ -3,9 +3,13 @@ package com.example.hackathon_becoder_backend.web.controller;
 
 import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntity;
 import com.example.hackathon_becoder_backend.service.ClientService;
+import com.example.hackathon_becoder_backend.service.LegalEntityService;
+import com.example.hackathon_becoder_backend.service.TransactionService;
 import com.example.hackathon_becoder_backend.web.dto.LegalEntityDto;
+import com.example.hackathon_becoder_backend.web.dto.TransactionDto;
 import com.example.hackathon_becoder_backend.web.dto.client.ClientDto;
 import com.example.hackathon_becoder_backend.web.mapper.ClientMapper;
+import com.example.hackathon_becoder_backend.web.mapper.TransactionMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -30,6 +34,9 @@ public class ClientController {
     private final ClientService clientService;
     private final ClientMapper clientMapper;
 
+    private final TransactionService transactionService;
+    private final TransactionMapper transactionMapper;
+
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successful operation")
     })
@@ -50,6 +57,19 @@ public class ClientController {
             @PathVariable @Parameter(description = "Client id", required = true) UUID clientId
     ) {
         return clientMapper.toDto(clientService.findById(clientId));
+    }
+
+    // fixme: tests required
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Successful operation"),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "404", description = "Client not found")
+    })
+    @Operation(summary = "Get client by ID", description = "Get all transactions of client by its ID", operationId = "getTransactionsByClientId")
+    @GetMapping("/{clientId}/transactions")
+    public List<TransactionDto> getTransactionsByClientId(
+            @PathVariable @Parameter(description = "Client id", required = true) UUID clientId) {
+        return transactionMapper.toDtoList(transactionService.getAllByClientId(clientId));
     }
 
     @ApiResponses({
