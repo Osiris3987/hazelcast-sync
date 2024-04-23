@@ -7,6 +7,7 @@ create table legal_entity
     id varchar(36) primary key,
     name varchar not null,
     balance decimal not null,
+    status varchar not null,
     version integer not null default 0
 );
 
