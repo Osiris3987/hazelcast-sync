@@ -3,6 +3,8 @@ package com.example.hackathon_becoder_backend.domain.client;
 import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntity;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -17,7 +19,8 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @JdbcTypeCode(SqlTypes.VARCHAR)
-    @Column(name = "id")
+    @Getter
+    @Setter
     private UUID id;
 
     @Column(name = "name")

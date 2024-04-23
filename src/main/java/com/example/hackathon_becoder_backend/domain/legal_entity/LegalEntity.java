@@ -3,16 +3,21 @@ package com.example.hackathon_becoder_backend.domain.legal_entity;
 import com.example.hackathon_becoder_backend.domain.client.Client;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
+import org.springframework.data.repository.cdi.Eager;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
 @Entity
 @Table(name = "legal_entity")
-@Data
+@Getter
+@Setter
 public class LegalEntity {
 
     @Id
@@ -26,6 +31,9 @@ public class LegalEntity {
 
     @Column(name = "balance")
     private BigDecimal balance;
+
+    @Column(name = "status")
+    private String status;
 
     @Version
     @Column(name = "version")

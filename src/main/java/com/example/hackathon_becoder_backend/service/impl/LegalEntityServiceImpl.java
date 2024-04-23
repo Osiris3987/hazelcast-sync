@@ -1,10 +1,13 @@
 package com.example.hackathon_becoder_backend.service.impl;
 
+import com.example.hackathon_becoder_backend.domain.client.Client;
+import com.example.hackathon_becoder_backend.domain.enums.LegalEntityStatus;
 import com.example.hackathon_becoder_backend.domain.exception.LackOfBalanceException;
 import com.example.hackathon_becoder_backend.domain.exception.ResourceNotFoundException;
 import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntity;
 import com.example.hackathon_becoder_backend.domain.transaction.TransactionType;
 import com.example.hackathon_becoder_backend.repository.LegalEntityRepository;
+import com.example.hackathon_becoder_backend.service.ClientService;
 import com.example.hackathon_becoder_backend.service.LegalEntityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +22,7 @@ import java.util.UUID;
 public class LegalEntityServiceImpl implements LegalEntityService {
     private final LegalEntityRepository legalEntityRepository;
     private final LegalEntityServiceImpl self;
-
+    private final ClientService clientService;
     @Override
     @Transactional(readOnly = true)
     public LegalEntity findById(UUID id) {
@@ -46,22 +49,32 @@ public class LegalEntityServiceImpl implements LegalEntityService {
     }
 
     @Override
+    @Transactional
     public void deleteById(UUID id) {
-
+        LegalEntity legalEntity = findById(id);
+        legalEntity.setStatus(String.valueOf(LegalEntityStatus.CLOSED));
+        legalEntityRepository.save(legalEntity);
     }
 
     @Override
+    @Transactional
     public LegalEntity assignClientToLegalEntity(UUID legalEntityId, UUID clientId) {
-        return null;
+        LegalEntity legalEntity = findById(legalEntityId);
+        Client client = clientService.findById(clientId);
+        legalEntity.getClients().add(client);
+        legalEntityRepository.save(legalEntity);
+        return legalEntity;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<LegalEntity> getAllLegalEntitiesByClientId(UUID clientId) {
-        return null;
+        return legalEntityRepository.findAllLegalEntitiesByClientId(clientId);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<LegalEntity> getAll() {
-        return null;
+        return legalEntityRepository.findAll();
     }
 }

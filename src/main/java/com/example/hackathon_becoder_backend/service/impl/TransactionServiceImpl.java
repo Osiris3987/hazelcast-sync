@@ -45,16 +45,21 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public Transaction getById(UUID id) {
-        return null;
+        return transactionRepository
+                .findById(id)
+                .orElseThrow(()
+                        -> new ResourceNotFoundException("Requested transaction not found"));
     }
 
     @Override
     public List<Transaction> getAllByLegalEntityId(UUID legalEntityId) {
-        return null;
+        return transactionRepository
+                .findAllByLegalEntityId(legalEntityId);
     }
 
     @Override
     public List<Transaction> getAllByClientId(UUID clientId) {
-        return null;
+        return transactionRepository
+                .findAllByClientId(clientId);
     }
 }
