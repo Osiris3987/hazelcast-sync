@@ -9,5 +9,5 @@ import java.util.UUID;
 
 public interface LegalEntityRepository extends JpaRepository<LegalEntity, UUID> {
     @Query("SELECT le FROM LegalEntity le JOIN le.clients c WHERE c.id = :clientID")
-    List<LegalEntity> findAllLegalEntitiesByClientId(String clientID);
+    List<LegalEntity> findAllLegalEntitiesByClientId(UUID clientID);
 }
