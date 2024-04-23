@@ -21,6 +21,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class LegalEntityServiceImpl implements LegalEntityService {
     private final LegalEntityRepository legalEntityRepository;
+    private final LegalEntityServiceImpl self;
     private final ClientService clientService;
     @Override
     @Transactional(readOnly = true)
@@ -33,7 +34,7 @@ public class LegalEntityServiceImpl implements LegalEntityService {
     @Override
     @Transactional()
     public void changeBalance(UUID id, BigDecimal amount, TransactionType type) {
-        LegalEntity legalEntity = findById(id);
+        LegalEntity legalEntity = self.findById(id);
         switch (type) {
             case DEBIT -> {
                 BigDecimal newBalance = legalEntity.getBalance().subtract(amount);

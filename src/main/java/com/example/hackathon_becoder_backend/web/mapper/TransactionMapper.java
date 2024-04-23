@@ -12,6 +12,7 @@ public interface TransactionMapper {
     @Mapping(source = "transaction.legalEntity.id", target = "legalEntityId")
     @Mapping(source = "transaction.client.id", target = "clientId")
     TransactionDto toDto(Transaction transaction);
+
     Transaction toEntity(TransactionDto dto);
     List<TransactionDto> toDtoList(List<Transaction> transactions);
 }

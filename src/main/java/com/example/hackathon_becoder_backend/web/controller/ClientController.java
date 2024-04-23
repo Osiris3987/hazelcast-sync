@@ -1,7 +1,6 @@
 package com.example.hackathon_becoder_backend.web.controller;
 
 
-import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntity;
 import com.example.hackathon_becoder_backend.service.ClientService;
 import com.example.hackathon_becoder_backend.service.LegalEntityService;
 import com.example.hackathon_becoder_backend.service.TransactionService;
