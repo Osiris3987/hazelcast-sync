@@ -2,6 +2,7 @@ package com.example.hackathon_becoder_backend.service.impl;
 
 import com.example.hackathon_becoder_backend.domain.client.Client;
 import com.example.hackathon_becoder_backend.domain.enums.EntityStatus;
+import com.example.hackathon_becoder_backend.domain.enums.LegalEntityStatus;
 import com.example.hackathon_becoder_backend.domain.exception.LackOfBalanceException;
 import com.example.hackathon_becoder_backend.domain.exception.ResourceNotFoundException;
 import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntity;
@@ -57,13 +58,15 @@ public class LegalEntityServiceImpl implements LegalEntityService {
     }
 
     @Override
+    @Transactional
     public void deleteById(UUID id) {
         LegalEntity legalEntity = findById(id);
-        legalEntity.setStatus(String.valueOf(EntityStatus.DELETED));
+        legalEntity.setStatus(String.valueOf(LegalEntityStatus.CLOSED));
         legalEntityRepository.save(legalEntity);
     }
 
     @Override
+    @Transactional
     public LegalEntity assignClientToLegalEntity(UUID legalEntityId, UUID clientId) {
         LegalEntity legalEntity = findById(legalEntityId);
         Client client = clientService.findById(clientId);
@@ -73,12 +76,14 @@ public class LegalEntityServiceImpl implements LegalEntityService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<LegalEntity> getAllLegalEntitiesByClientId(UUID clientId) {
         List<LegalEntity> legalEntities = legalEntityRepository.findAllLegalEntitiesByClientId(clientId);
         return legalEntities;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<LegalEntity> getAll() {
         return legalEntityRepository.findAll();
     }
