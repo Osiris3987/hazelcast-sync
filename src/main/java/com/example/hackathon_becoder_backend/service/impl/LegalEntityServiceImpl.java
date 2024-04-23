@@ -1,28 +1,20 @@
 package com.example.hackathon_becoder_backend.service.impl;
 
 import com.example.hackathon_becoder_backend.domain.client.Client;
-import com.example.hackathon_becoder_backend.domain.enums.EntityStatus;
 import com.example.hackathon_becoder_backend.domain.enums.LegalEntityStatus;
 import com.example.hackathon_becoder_backend.domain.exception.LackOfBalanceException;
 import com.example.hackathon_becoder_backend.domain.exception.ResourceNotFoundException;
 import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntity;
-import com.example.hackathon_becoder_backend.domain.transaction.Transaction;
 import com.example.hackathon_becoder_backend.domain.transaction.TransactionType;
 import com.example.hackathon_becoder_backend.repository.LegalEntityRepository;
 import com.example.hackathon_becoder_backend.service.ClientService;
 import com.example.hackathon_becoder_backend.service.LegalEntityService;
-import com.example.hackathon_becoder_backend.web.dto.LegalEntityWithClientsDto;
-import jakarta.persistence.OptimisticLockException;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.StaleStateException;
-import org.springframework.orm.ObjectOptimisticLockingFailureException;
-import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -50,9 +42,7 @@ public class LegalEntityServiceImpl implements LegalEntityService {
                 }
                 legalEntity.setBalance(legalEntity.getBalance().subtract(amount));
             }
-            case REFILL -> {
-                legalEntity.setBalance(legalEntity.getBalance().add(amount));
-            }
+            case REFILL -> legalEntity.setBalance(legalEntity.getBalance().add(amount));
         }
         legalEntityRepository.save(legalEntity);
     }
@@ -78,8 +68,7 @@ public class LegalEntityServiceImpl implements LegalEntityService {
     @Override
     @Transactional(readOnly = true)
     public List<LegalEntity> getAllLegalEntitiesByClientId(UUID clientId) {
-        List<LegalEntity> legalEntities = legalEntityRepository.findAllLegalEntitiesByClientId(clientId);
-        return legalEntities;
+        return legalEntityRepository.findAllLegalEntitiesByClientId(clientId);
     }
 
     @Override
