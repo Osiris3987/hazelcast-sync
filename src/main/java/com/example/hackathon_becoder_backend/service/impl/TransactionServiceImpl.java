@@ -31,9 +31,7 @@ public class TransactionServiceImpl implements TransactionService {
     public Transaction create(Transaction transaction, UUID clientId, UUID legalEntityId) {
         Client client = clientService.findById(clientId);
         LegalEntity legalEntity = legalEntityService.findById(legalEntityId);
-        if (!LegalEntityValidator.isClientInLegalEntity(client, legalEntityId)) {
-            throw new ValidationException("Client is not in this legal entity");
-        }
+        LegalEntityValidator.isClientInLegalEntity(client, legalEntityId);
         transaction.setClient(client);
         transaction.setLegalEntity(legalEntity);
         legalEntityService.changeBalance(
@@ -45,6 +43,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Transaction getById(UUID id) {
         return transactionRepository
                 .findById(id)
@@ -53,12 +52,14 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Transaction> getAllByLegalEntityId(UUID legalEntityId) {
         return transactionRepository
                 .findAllByLegalEntityId(legalEntityId);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Transaction> getAllByClientId(UUID clientId) {
         return transactionRepository
                 .findAllByClientId(clientId);

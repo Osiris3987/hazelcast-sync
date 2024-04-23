@@ -1,10 +1,11 @@
 package com.example.hackathon_becoder_backend.web.dto;
 
-import com.example.hackathon_becoder_backend.domain.client.Client;
+import com.example.hackathon_becoder_backend.web.dto.client.ClientDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -15,5 +16,5 @@ public class LegalEntityWithClientsDto {
     private String name;
     private BigDecimal balance;
     private Integer version;
-    private Set<Client> clients;
+    private Set<ClientDto> clients;
 }

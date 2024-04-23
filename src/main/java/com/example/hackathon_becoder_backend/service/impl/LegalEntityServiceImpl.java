@@ -1,7 +1,7 @@
 package com.example.hackathon_becoder_backend.service.impl;
 
 import com.example.hackathon_becoder_backend.domain.client.Client;
-import com.example.hackathon_becoder_backend.domain.enums.LegalEntityStatus;
+import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntityStatus;
 import com.example.hackathon_becoder_backend.domain.exception.LackOfBalanceException;
 import com.example.hackathon_becoder_backend.domain.exception.ResourceNotFoundException;
 import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntity;
@@ -21,21 +21,22 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class LegalEntityServiceImpl implements LegalEntityService {
     private final LegalEntityRepository legalEntityRepository;
-    private final LegalEntityServiceImpl self;
     private final ClientService clientService;
     @Override
     @Transactional(readOnly = true)
     public LegalEntity findById(UUID id) {
         return legalEntityRepository
                 .findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Legal entity not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Legal entity not found")
+                );
     }
 
     @Override
-    @Transactional()
+    @Transactional
     public void changeBalance(UUID id, BigDecimal amount, TransactionType type) {
-        LegalEntity legalEntity = self.findById(id);
+        LegalEntity legalEntity = findById(id);
         switch (type) {
+
             case DEBIT -> {
                 BigDecimal newBalance = legalEntity.getBalance().subtract(amount);
                 if (newBalance.compareTo(BigDecimal.ZERO) < 0) {
@@ -43,7 +44,9 @@ public class LegalEntityServiceImpl implements LegalEntityService {
                 }
                 legalEntity.setBalance(legalEntity.getBalance().subtract(amount));
             }
+
             case REFILL -> legalEntity.setBalance(legalEntity.getBalance().add(amount));
+
         }
         legalEntityRepository.save(legalEntity);
     }
@@ -52,7 +55,7 @@ public class LegalEntityServiceImpl implements LegalEntityService {
     @Transactional
     public void deleteById(UUID id) {
         LegalEntity legalEntity = findById(id);
-        legalEntity.setStatus(String.valueOf(LegalEntityStatus.CLOSED));
+        legalEntity.setStatus(String.valueOf(LegalEntityStatus.DELETED));
         legalEntityRepository.save(legalEntity);
     }
 
@@ -69,7 +72,7 @@ public class LegalEntityServiceImpl implements LegalEntityService {
     @Override
     @Transactional(readOnly = true)
     public List<LegalEntity> getAllLegalEntitiesByClientId(UUID clientId) {
-        return legalEntityRepository.findAllLegalEntitiesByClientId(clientId.toString());
+        return legalEntityRepository.findAllLegalEntitiesByClientId(clientId);
     }
 
     @Override
