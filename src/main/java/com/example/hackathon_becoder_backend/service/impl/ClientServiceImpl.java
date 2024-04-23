@@ -1,7 +1,7 @@
 package com.example.hackathon_becoder_backend.service.impl;
 
 import com.example.hackathon_becoder_backend.domain.client.Client;
-import com.example.hackathon_becoder_backend.domain.enums.EntityStatus;
+import com.example.hackathon_becoder_backend.domain.client.ClientStatus;
 import com.example.hackathon_becoder_backend.domain.exception.ResourceNotFoundException;
 import com.example.hackathon_becoder_backend.repository.ClientRepository;
 import com.example.hackathon_becoder_backend.service.ClientService;
@@ -33,14 +33,14 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client create(Client client) {
-        client.setStatus(EntityStatus.EXISTS.name());
+        client.setStatus(ClientStatus.EXISTS.name());
         return clientRepository.save(client);
     }
 
     @Override
     public void deleteById(UUID id) {
         var client = self.findById(id);
-        client.setStatus(EntityStatus.DELETED.name());
+        client.setStatus(ClientStatus.DELETED.name());
         clientRepository.save(client);
     }
 }
