@@ -66,7 +66,8 @@ public class LegalEntityServiceImpl implements LegalEntityService {
 
     @Override
     public List<LegalEntity> getAllLegalEntitiesByClientId(UUID clientId) {
-        return null;
+        List<LegalEntity> legalEntities = legalEntityRepository.findAllLegalEntitiesByClientId(clientId);
+        return legalEntities;
     }
 
     @Override

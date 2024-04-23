@@ -7,8 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 public interface LegalEntityRepository extends JpaRepository<LegalEntity, UUID> {
-
+    @Query("SELECT le FROM LegalEntity le JOIN le.clients c WHERE c.id = :clientID")
+    List<LegalEntity> findAllLegalEntitiesByClientId(UUID clientID);
 }
