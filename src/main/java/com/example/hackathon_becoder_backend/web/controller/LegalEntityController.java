@@ -42,12 +42,7 @@ public class LegalEntityController {
         return transactionMapper.toDtoList(transactions);
     }
 
-    @GetMapping("/all")
-    public List<LegalEntityDto> findAll() {
-        return legalEntityMapper.toDtoList(legalEntityService.getAll());
-    }
-
-    @GetMapping("/client/{clientId}")
+    @GetMapping("/{clientId}/client")
     public List<LegalEntityDto> findAll(@PathVariable("clientId") @Parameter(description = "Client id", required = true) UUID clientId) {
         return legalEntityMapper.toDtoList(legalEntityService.getAllLegalEntitiesByClientId(clientId));
     }

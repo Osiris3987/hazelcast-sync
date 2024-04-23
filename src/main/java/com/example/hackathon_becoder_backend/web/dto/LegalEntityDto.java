@@ -12,7 +12,5 @@ public class LegalEntityDto {
     private UUID id;
     private String name;
     private BigDecimal balance;
-    private Integer version;
-
     public record AssignClientToLegalEntity(UUID legalEntityId, UUID clientId){}
 }
