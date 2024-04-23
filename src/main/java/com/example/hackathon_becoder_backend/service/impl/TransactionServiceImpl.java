@@ -1,22 +1,15 @@
 package com.example.hackathon_becoder_backend.service.impl;
 
 import com.example.hackathon_becoder_backend.domain.client.Client;
-import com.example.hackathon_becoder_backend.domain.exception.ResourceNotFoundException;
 import com.example.hackathon_becoder_backend.domain.exception.ValidationException;
 import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntity;
 import com.example.hackathon_becoder_backend.domain.transaction.Transaction;
-import com.example.hackathon_becoder_backend.domain.transaction.TransactionType;
-import com.example.hackathon_becoder_backend.repository.ClientRepository;
-import com.example.hackathon_becoder_backend.repository.LegalEntityRepository;
 import com.example.hackathon_becoder_backend.repository.TransactionRepository;
 import com.example.hackathon_becoder_backend.service.ClientService;
 import com.example.hackathon_becoder_backend.service.LegalEntityService;
 import com.example.hackathon_becoder_backend.service.TransactionService;
 import com.example.hackathon_becoder_backend.util.LegalEntityValidator;
-import com.example.hackathon_becoder_backend.web.dto.TransactionDto;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.StaleObjectStateException;
-import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +30,7 @@ public class TransactionServiceImpl implements TransactionService {
     public Transaction create(Transaction transaction, UUID clientId, UUID legalEntityId) {
         Client client = clientService.findById(clientId);
         LegalEntity legalEntity = legalEntityService.findById(legalEntityId);
-        if(!LegalEntityValidator.isClientInLegalEntity(client, legalEntityId)){
+        if (!LegalEntityValidator.isClientInLegalEntity(client, legalEntityId)) {
             throw new ValidationException("Client is not in this legal entity");
         }
         transaction.setClient(client);

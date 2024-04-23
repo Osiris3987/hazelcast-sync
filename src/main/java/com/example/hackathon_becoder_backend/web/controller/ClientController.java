@@ -1,9 +1,7 @@
 package com.example.hackathon_becoder_backend.web.controller;
 
 
-import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntity;
 import com.example.hackathon_becoder_backend.service.ClientService;
-import com.example.hackathon_becoder_backend.web.dto.LegalEntityDto;
 import com.example.hackathon_becoder_backend.web.dto.client.ClientDto;
 import com.example.hackathon_becoder_backend.web.mapper.ClientMapper;
 import io.swagger.v3.oas.annotations.Operation;

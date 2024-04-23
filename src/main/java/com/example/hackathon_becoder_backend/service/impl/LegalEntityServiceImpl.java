@@ -3,16 +3,10 @@ package com.example.hackathon_becoder_backend.service.impl;
 import com.example.hackathon_becoder_backend.domain.exception.LackOfBalanceException;
 import com.example.hackathon_becoder_backend.domain.exception.ResourceNotFoundException;
 import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntity;
-import com.example.hackathon_becoder_backend.domain.transaction.Transaction;
 import com.example.hackathon_becoder_backend.domain.transaction.TransactionType;
 import com.example.hackathon_becoder_backend.repository.LegalEntityRepository;
 import com.example.hackathon_becoder_backend.service.LegalEntityService;
-import com.example.hackathon_becoder_backend.web.dto.LegalEntityWithClientsDto;
-import jakarta.persistence.OptimisticLockException;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.StaleStateException;
-import org.springframework.orm.ObjectOptimisticLockingFailureException;
-import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +18,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class LegalEntityServiceImpl implements LegalEntityService {
     private final LegalEntityRepository legalEntityRepository;
+    private final LegalEntityServiceImpl self;
+
     @Override
     @Transactional(readOnly = true)
     public LegalEntity findById(UUID id) {
@@ -35,7 +31,7 @@ public class LegalEntityServiceImpl implements LegalEntityService {
     @Override
     @Transactional()
     public void changeBalance(UUID id, BigDecimal amount, TransactionType type) {
-        LegalEntity legalEntity = findById(id);
+        LegalEntity legalEntity = self.findById(id);
         switch (type) {
             case DEBIT -> {
                 BigDecimal newBalance = legalEntity.getBalance().subtract(amount);
@@ -44,9 +40,7 @@ public class LegalEntityServiceImpl implements LegalEntityService {
                 }
                 legalEntity.setBalance(legalEntity.getBalance().subtract(amount));
             }
-            case REFILL -> {
-                legalEntity.setBalance(legalEntity.getBalance().add(amount));
-            }
+            case REFILL -> legalEntity.setBalance(legalEntity.getBalance().add(amount));
         }
         legalEntityRepository.save(legalEntity);
     }

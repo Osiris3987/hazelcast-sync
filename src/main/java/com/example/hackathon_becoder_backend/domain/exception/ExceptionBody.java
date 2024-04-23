@@ -10,14 +10,10 @@ import java.util.Map;
 @Setter
 @AllArgsConstructor
 public class ExceptionBody {
-
     private String message;
     private Map<String, String> errors;
 
-    public ExceptionBody(
-            final String message
-    ) {
+    public ExceptionBody(String message) {
         this.message = message;
     }
-
 }
