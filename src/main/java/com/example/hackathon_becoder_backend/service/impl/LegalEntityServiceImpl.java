@@ -69,7 +69,7 @@ public class LegalEntityServiceImpl implements LegalEntityService {
     @Override
     @Transactional(readOnly = true)
     public List<LegalEntity> getAllLegalEntitiesByClientId(UUID clientId) {
-        return legalEntityRepository.findAllLegalEntitiesByClientId(clientId);
+        return legalEntityRepository.findAllLegalEntitiesByClientId(clientId.toString());
     }
 
     @Override
