@@ -15,6 +15,5 @@ public class LegalEntityWithClientsDto {
     private UUID id;
     private String name;
     private BigDecimal balance;
-    private Integer version;
     private Set<ClientDto> clients;
 }

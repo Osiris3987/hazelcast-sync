@@ -4,6 +4,7 @@ import com.example.hackathon_becoder_backend.domain.client.Client;
 import com.example.hackathon_becoder_backend.domain.exception.ResourceNotFoundException;
 import com.example.hackathon_becoder_backend.domain.exception.ValidationException;
 import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntity;
+import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntityStatus;
 import com.example.hackathon_becoder_backend.domain.transaction.Transaction;
 import com.example.hackathon_becoder_backend.repository.TransactionRepository;
 import com.example.hackathon_becoder_backend.service.ClientService;
@@ -11,6 +12,8 @@ import com.example.hackathon_becoder_backend.service.LegalEntityService;
 import com.example.hackathon_becoder_backend.service.TransactionService;
 import com.example.hackathon_becoder_backend.util.LegalEntityValidator;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import org.apache.coyote.BadRequestException;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,11 +29,13 @@ public class TransactionServiceImpl implements TransactionService {
     private final LegalEntityService legalEntityService;
 
     @Override
-    @Retryable(maxAttempts = 20)
+    @Retryable(maxAttempts = 20, noRetryFor = BadRequestException.class)
     @Transactional
+    @SneakyThrows
     public Transaction create(Transaction transaction, UUID clientId, UUID legalEntityId) {
         Client client = clientService.findById(clientId);
         LegalEntity legalEntity = legalEntityService.findById(legalEntityId);
+        if (LegalEntityStatus.valueOf(legalEntity.getStatus()) == LegalEntityStatus.DELETED) throw new BadRequestException();
         LegalEntityValidator.isClientInLegalEntity(client, legalEntityId);
         transaction.setClient(client);
         transaction.setLegalEntity(legalEntity);
