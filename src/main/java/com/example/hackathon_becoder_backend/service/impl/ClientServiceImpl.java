@@ -16,7 +16,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ClientServiceImpl implements ClientService {
     private final ClientRepository clientRepository;
-    private final ClientServiceImpl self;
 
     @Override
     @Transactional(readOnly = true)
@@ -27,19 +26,22 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Client> findAll() {
         return clientRepository.findAll();
     }
 
     @Override
+    @Transactional
     public Client create(Client client) {
         client.setStatus(ClientStatus.EXISTS.name());
         return clientRepository.save(client);
     }
 
     @Override
+    @Transactional
     public void deleteById(UUID id) {
-        var client = self.findById(id);
+        var client = findById(id);
         client.setStatus(ClientStatus.DELETED.name());
         clientRepository.save(client);
     }

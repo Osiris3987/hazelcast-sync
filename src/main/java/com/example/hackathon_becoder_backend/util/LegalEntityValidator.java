@@ -1,6 +1,8 @@
 package com.example.hackathon_becoder_backend.util;
 
 import com.example.hackathon_becoder_backend.domain.client.Client;
+import com.example.hackathon_becoder_backend.domain.exception.ResourceNotFoundException;
+import com.example.hackathon_becoder_backend.domain.exception.ValidationException;
 
 import java.util.UUID;
 
@@ -8,8 +10,12 @@ public class LegalEntityValidator {
     private LegalEntityValidator() {
     }
 
-    public static boolean isClientInLegalEntity(Client client, UUID legalEntityId) {
-        return client.getLegalEntities().stream()
-                .anyMatch(legalEntity -> legalEntity.getId().equals(legalEntityId));
+    public static void isClientInLegalEntity(Client client, UUID legalEntityId) {
+        boolean clientConsistsInLegalEntity = client.getLegalEntities().stream()
+                .anyMatch(legalEntity ->
+                        legalEntity.getId()
+                        .equals(legalEntityId)
+                );
+        if(!clientConsistsInLegalEntity) throw new ResourceNotFoundException("Client is not in this legal entity");
     }
 }

@@ -21,21 +21,22 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class LegalEntityServiceImpl implements LegalEntityService {
     private final LegalEntityRepository legalEntityRepository;
-    private final LegalEntityServiceImpl self;
     private final ClientService clientService;
     @Override
     @Transactional(readOnly = true)
     public LegalEntity findById(UUID id) {
         return legalEntityRepository
                 .findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Legal entity not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Legal entity not found")
+                );
     }
 
     @Override
-    @Transactional()
+    @Transactional
     public void changeBalance(UUID id, BigDecimal amount, TransactionType type) {
-        LegalEntity legalEntity = self.findById(id);
+        LegalEntity legalEntity = findById(id);
         switch (type) {
+
             case DEBIT -> {
                 BigDecimal newBalance = legalEntity.getBalance().subtract(amount);
                 if (newBalance.compareTo(BigDecimal.ZERO) < 0) {
@@ -43,7 +44,9 @@ public class LegalEntityServiceImpl implements LegalEntityService {
                 }
                 legalEntity.setBalance(legalEntity.getBalance().subtract(amount));
             }
+
             case REFILL -> legalEntity.setBalance(legalEntity.getBalance().add(amount));
+
         }
         legalEntityRepository.save(legalEntity);
     }
