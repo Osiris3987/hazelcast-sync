@@ -2,9 +2,7 @@ package com.example.hackathon_becoder_backend.domain.legal_entity;
 
 import com.example.hackathon_becoder_backend.domain.client.Client;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 import org.springframework.data.repository.cdi.Eager;
@@ -16,8 +14,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "legal_entity")
-@Getter
-@Setter
+@Data
 public class LegalEntity {
 
     @Id
@@ -43,5 +40,6 @@ public class LegalEntity {
     @JoinTable(name = "legal_entity_clients",
             joinColumns = @JoinColumn(name = "legal_entity_id"),
             inverseJoinColumns = @JoinColumn(name = "client_id"))
+    @EqualsAndHashCode.Exclude
     private Set<Client> clients;
 }

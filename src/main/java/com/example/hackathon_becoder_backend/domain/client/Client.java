@@ -2,9 +2,7 @@ package com.example.hackathon_becoder_backend.domain.client;
 
 import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntity;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -33,5 +31,6 @@ public class Client {
     @JoinTable(name = "legal_entity_clients",
             joinColumns = @JoinColumn(name = "client_id"),
             inverseJoinColumns = @JoinColumn(name = "legal_entity_id"))
+    @EqualsAndHashCode.Exclude
     private Set<LegalEntity> legalEntities;
 }

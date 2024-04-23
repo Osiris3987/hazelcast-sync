@@ -53,9 +53,12 @@ public class LegalEntityController {
     }
 
     @PostMapping("/assign")
-    public LegalEntityWithClientsDto assign(@RequestBody UUID legalEntityId, @RequestBody UUID clientId) {
-        return legalEntityMapper.toDtoWithClients(
-                legalEntityService.assignClientToLegalEntity(legalEntityId, clientId)
+    public LegalEntityWithClientsDto assign(@RequestBody LegalEntityDto.AssignClientToLegalEntity assignParams) {
+        return legalEntityMapper.toDtoWithClients(legalEntityService
+                .assignClientToLegalEntity(
+                        assignParams.legalEntityId(),
+                        assignParams.clientId()
+                )
         );
     }
 }
