@@ -15,7 +15,7 @@
     <description>hackathon_becoder_backend</description>
     <properties>
         <java.version>17</java.version>
-        <gatling.simulationClass>com.example.hackathon_becoder_backend.TransactionCreationSimulation</gatling.simulationClass>
+        <gatling.simulationClass>com.example.hackathon_becoder_backend.gatling.BankMicroserviceSimulation</gatling.simulationClass>
     </properties>
     <dependencies>
 

@@ -14,6 +14,7 @@ import com.example.hackathon_becoder_backend.util.LegalEntityValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.apache.coyote.BadRequestException;
+import org.hibernate.StaleStateException;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,13 +30,14 @@ public class TransactionServiceImpl implements TransactionService {
     private final LegalEntityService legalEntityService;
 
     @Override
-    @Retryable(maxAttempts = 20, noRetryFor = BadRequestException.class)
+    @Retryable(maxAttempts = 20, retryFor = StaleStateException.class, noRetryFor = BadRequestException.class)
     @Transactional
     @SneakyThrows
     public Transaction create(Transaction transaction, UUID clientId, UUID legalEntityId) {
         Client client = clientService.findById(clientId);
         LegalEntity legalEntity = legalEntityService.findById(legalEntityId);
-        if (LegalEntityStatus.valueOf(legalEntity.getStatus()) == LegalEntityStatus.DELETED) throw new BadRequestException();
+        //TODO fix it, doesn't work
+        //if (LegalEntityStatus.valueOf(legalEntity.getStatus()) == LegalEntityStatus.DELETED) throw new BadRequestException();
         LegalEntityValidator.isClientInLegalEntity(client, legalEntityId);
         transaction.setClient(client);
         transaction.setLegalEntity(legalEntity);
