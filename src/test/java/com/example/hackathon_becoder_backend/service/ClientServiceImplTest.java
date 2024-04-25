@@ -31,7 +31,7 @@ public class ClientServiceImplTest {
     private ClientServiceImpl clientService;
 
     @Test
-    void findById_shouldReturnClient(){
+    void findById_shouldReturnClient() {
         UUID clientUUID = UUID.randomUUID();
         Client client = new Client();
         client.setId(clientUUID);
@@ -47,7 +47,7 @@ public class ClientServiceImplTest {
     }
 
     @Test
-    void findAll_shouldReturnAllClients(){
+    void findAll_shouldReturnAllClients() {
         Client client1 = new Client();
         Client client2 = new Client();
         Client client3 = new Client();
@@ -66,7 +66,7 @@ public class ClientServiceImplTest {
     }
 
     @Test
-    void create_shouldInvokeSaveMethodOnceWithDelegatedClient(){
+    void create_shouldInvokeSaveMethodOnceWithDelegatedClient() {
         Client client = new Client();
         client.setId(UUID.randomUUID());
 
@@ -77,7 +77,7 @@ public class ClientServiceImplTest {
     }
 
     @Test
-    void deleteById_shouldRemoveClientWithDelegatedId(){
+    void deleteById_shouldRemoveClientWithDelegatedId() {
         UUID clientUUID = UUID.randomUUID();
         Client client = new Client();
         client.setId(clientUUID);
@@ -89,6 +89,23 @@ public class ClientServiceImplTest {
         verify(clientRepository, Mockito.times(1)).findById(clientUUID); //  Поиск клиента был выполнен единожды
         verify(clientRepository, Mockito.times(1)).save(client); //  Удаление конкретного клиента было выполнено единожды
         System.out.println(LocalDateTime.now().toLocalTime() + "[deleteById_shouldRemoveClientWithDelegatedId] passed!");
+    }
+
+    @Test
+    void findByUserName_shouldReturnClientByName() {
+        String clientName = "client";
+        UUID clientUUID = UUID.randomUUID();
+        Client client = new Client();
+        client.setName(clientName);
+        client.setId(clientUUID);
+
+        when(clientRepository.findByUsername(clientName)).thenReturn(Optional.of(client));
+        Client recievedClient = clientService.findByUsername(clientName);
+
+        assertNotNull(recievedClient); //  Проверка, что результат был получен
+        assertEquals(clientUUID, recievedClient.getId()); //  Убедимся, что получен ожидаемый клиент
+        verify(clientRepository, Mockito.times(1)).findByUsername(clientName); //  Обращение к репозиторию было единожды
+        System.out.println(LocalDateTime.now().toLocalTime() + "[findByUserName_shouldReturnClientByName] passed!");
     }
 
 }

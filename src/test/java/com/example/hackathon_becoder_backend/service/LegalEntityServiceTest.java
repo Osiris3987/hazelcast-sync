@@ -38,6 +38,18 @@ class LegalEntityServiceTest {
     LegalEntityServiceImpl legalEntityService;
 
     @Test
+    void create_shouldCreateNewLegalEntityWithDelegatedOwner(){
+        String ownerName = "owner";
+        LegalEntity legalEntity = new LegalEntity();
+
+        legalEntityService.create(legalEntity, ownerName);
+
+        assertEquals(ownerName, legalEntity.getOwner()); //  Для юр.лица установлен владелец
+        assertEquals(LegalEntityStatus.EXISTS.name(), legalEntity.getStatus()); //  Статус юр. лица EXISTS
+        verify(legalEntityRepository, Mockito.times(1)).save(legalEntity); //  Единственное обращение к репозиторию
+    }
+
+    @Test
     void findById_shouldReturnLegalEntityWithDelegatedID(){
         UUID legalEntityUUID = UUID.randomUUID();
         LegalEntity legalEntity = new LegalEntity();
