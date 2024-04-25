@@ -38,7 +38,7 @@ public class ClientServiceImplTest {
 
         assertNotNull(recievedClient); //  Клиент был получен
         assertEquals(clientUUID, recievedClient.getId()); //  Верифицируем id полученного клиента
-        verify(clientRepository, Mockito.only()).findById(clientUUID); //  Было единственное обращение к репозиторию
+        verify(clientRepository, Mockito.times(1)).findById(clientUUID); //  Было единственное обращение к репозиторию
         System.out.println(LocalDateTime.now().toLocalTime() + "[findById_shouldReturnClient] passed!");
     }
 
@@ -68,7 +68,7 @@ public class ClientServiceImplTest {
 
         clientService.create(client);
 
-        verify(clientRepository, Mockito.only()).save(client);
+        verify(clientRepository, Mockito.times(1)).save(client);
         System.out.println(LocalDateTime.now().toLocalTime() + "[create_shouldInvokeSaveMethodOnceWithDelegatedClient] passed!");
     }
 
