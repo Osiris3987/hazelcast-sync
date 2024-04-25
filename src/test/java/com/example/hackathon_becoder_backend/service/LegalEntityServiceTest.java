@@ -10,9 +10,11 @@ import com.example.hackathon_becoder_backend.repository.LegalEntityRepository;
 import com.example.hackathon_becoder_backend.service.impl.ClientServiceImpl;
 import com.example.hackathon_becoder_backend.service.impl.LegalEntityServiceImpl;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 @Transactional
 class LegalEntityServiceTest {
     @Mock
