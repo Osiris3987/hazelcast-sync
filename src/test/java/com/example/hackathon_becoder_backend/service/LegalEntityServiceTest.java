@@ -1,15 +1,11 @@
-package com.example.hackathon_becoder_backend;
+package com.example.hackathon_becoder_backend.service;
 
 import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntity;
-import com.example.hackathon_becoder_backend.service.LegalEntityService;
-import com.example.hackathon_becoder_backend.service.impl.LegalEntityServiceImpl;
 import com.example.hackathon_becoder_backend.web.dto.LegalEntityWithClientsDto;
 import com.example.hackathon_becoder_backend.web.mapper.LegalEntityMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,11 +16,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-class LegalEntityServiceImplTest {
+class LegalEntityServiceTest {
     @Autowired
     LegalEntityService legalEntityService;
     @Autowired
     LegalEntityMapper legalEntityMapper;
+
+    @Test
+    void checkTestContext(){
+        assertNotNull(legalEntityService);
+        assertNotNull(legalEntityMapper);
+    }
 
     @Rollback(value = false)
     @Test
