@@ -32,6 +32,9 @@ public class LegalEntity {
     @Column(name = "status")
     private String status;
 
+    @Column(name = "owner")
+    private String owner;
+
     @Version
     @Column(name = "version")
     private Integer version;

@@ -2,7 +2,9 @@ package com.example.hackathon_becoder_backend.service.impl;
 
 import com.example.hackathon_becoder_backend.domain.client.Client;
 import com.example.hackathon_becoder_backend.domain.exception.ResourceNotFoundException;
+import com.example.hackathon_becoder_backend.domain.exception.ValidationException;
 import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntity;
+import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntityStatus;
 import com.example.hackathon_becoder_backend.domain.transaction.Transaction;
 import com.example.hackathon_becoder_backend.repository.TransactionRepository;
 import com.example.hackathon_becoder_backend.service.ClientService;
@@ -28,7 +30,7 @@ public class TransactionServiceImpl implements TransactionService {
     private final LegalEntityService legalEntityService;
 
     @Override
-    @Retryable(maxAttempts = 20, retryFor = StaleStateException.class, noRetryFor = BadRequestException.class)
+    @Retryable(maxAttempts = 40, retryFor = StaleStateException.class, noRetryFor = BadRequestException.class)
     @Transactional
     @SneakyThrows
     public Transaction create(Transaction transaction, UUID clientId, UUID legalEntityId) {

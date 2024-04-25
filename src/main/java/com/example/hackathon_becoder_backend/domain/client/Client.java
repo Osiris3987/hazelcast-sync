@@ -24,8 +24,20 @@ public class Client {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "username")
+    private String username;
+
+    @Column(name = "password")
+    private String password;
+
     @Column(name = "status")
     private String status;
+
+    @Column(name = "role")
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "clients_roles")
+    @Enumerated(value = EnumType.STRING)
+    private Set<Role> roles;
 
     @ManyToMany
     @JoinTable(name = "legal_entity_clients",

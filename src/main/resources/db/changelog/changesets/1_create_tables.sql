@@ -2,12 +2,14 @@ drop table if exists legal_entity_clients;
 drop table if exists transaction;
 drop table if exists legal_entity;
 drop table if exists client;
+
 create table legal_entity
 (
     id varchar(36) primary key,
     name varchar not null,
     balance decimal not null,
     status varchar not null,
+    owner varchar not null,
     version integer not null default 0
 );
 
@@ -15,7 +17,17 @@ create table client
 (
     id varchar(36) primary key,
     name varchar not null,
+    username varchar(255)  not null,
+    password varchar(255)  not null,
     status varchar not null
+);
+
+create table if not exists clients_roles
+(
+    client_id varchar(36)  not null,
+    role    varchar(255) not null,
+    primary key (client_id, role),
+    constraint fk_clients_roles_clients foreign key (client_id) references client (id)
 );
 
 create table transaction

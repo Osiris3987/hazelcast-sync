@@ -1,7 +1,7 @@
 package com.example.hackathon_becoder_backend.web.mapper;
 
 import com.example.hackathon_becoder_backend.domain.transaction.Transaction;
-import com.example.hackathon_becoder_backend.web.dto.TransactionDto;
+import com.example.hackathon_becoder_backend.web.dto.transaction.TransactionDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
