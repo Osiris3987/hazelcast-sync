@@ -9,6 +9,7 @@ create table legal_entity
     name varchar not null,
     balance decimal not null,
     status varchar not null,
+    owner varchar not null,
     version integer not null default 0
 );
 

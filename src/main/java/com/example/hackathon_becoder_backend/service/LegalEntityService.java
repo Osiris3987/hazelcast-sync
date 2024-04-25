@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.UUID;
 
 public interface LegalEntityService {
+
+    LegalEntity create(LegalEntity legalEntity, String owner);
+
     LegalEntity findById(UUID id);
 
     void changeBalance(UUID id, BigDecimal amount, TransactionType type);

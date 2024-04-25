@@ -1,5 +1,6 @@
 package com.example.hackathon_becoder_backend.web.controller;
 
+import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntity;
 import com.example.hackathon_becoder_backend.domain.transaction.Transaction;
 import com.example.hackathon_becoder_backend.exception.ErrorMessage;
 import com.example.hackathon_becoder_backend.service.LegalEntityService;
@@ -7,6 +8,7 @@ import com.example.hackathon_becoder_backend.service.TransactionService;
 import com.example.hackathon_becoder_backend.web.dto.legalEntity.LegalEntityDto;
 import com.example.hackathon_becoder_backend.web.dto.legalEntity.LegalEntityWithClientsDto;
 import com.example.hackathon_becoder_backend.web.dto.transaction.TransactionDto;
+import com.example.hackathon_becoder_backend.web.dto.validation.OnCreate;
 import com.example.hackathon_becoder_backend.web.mapper.LegalEntityMapper;
 import com.example.hackathon_becoder_backend.web.mapper.TransactionMapper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -19,6 +21,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,6 +39,15 @@ public class LegalEntityController {
 
     private final TransactionService transactionService;
     private final TransactionMapper transactionMapper;
+
+    @PostMapping
+    public LegalEntityDto create(
+            @Validated(OnCreate.class) @RequestBody LegalEntityDto legalEntityDto,
+            @AuthenticationPrincipal UserDetails userDetails
+            ) {
+        LegalEntity legalEntity = legalEntityService.create(legalEntityMapper.toEntity(legalEntityDto), userDetails.getUsername());
+        return legalEntityMapper.toDto(legalEntity);
+    }
 
     @Operation(summary = "Delete legal entity", description = "Delete a legal entity by its ID")
     @ApiResponses({

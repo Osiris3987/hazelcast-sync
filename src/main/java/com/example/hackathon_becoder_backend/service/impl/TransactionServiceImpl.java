@@ -36,8 +36,6 @@ public class TransactionServiceImpl implements TransactionService {
     public Transaction create(Transaction transaction, UUID clientId, UUID legalEntityId) {
         Client client = clientService.findById(clientId);
         LegalEntity legalEntity = legalEntityService.findById(legalEntityId);
-        //TODO fix it, doesn't work
-        //if (LegalEntityStatus.valueOf(legalEntity.getStatus()) == LegalEntityStatus.DELETED) throw new BadRequestException();
         LegalEntityValidator.isClientInLegalEntity(client, legalEntityId);
         transaction.setClient(client);
         transaction.setLegalEntity(legalEntity);

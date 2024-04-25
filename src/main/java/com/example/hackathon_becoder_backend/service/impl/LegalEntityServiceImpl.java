@@ -22,6 +22,14 @@ import java.util.UUID;
 public class LegalEntityServiceImpl implements LegalEntityService {
     private final LegalEntityRepository legalEntityRepository;
     private final ClientService clientService;
+
+    @Override
+    public LegalEntity create(LegalEntity legalEntity, String owner) {
+        legalEntity.setOwner(owner);
+        legalEntity.setStatus(LegalEntityStatus.EXISTS.name());
+        return legalEntityRepository.save(legalEntity);
+    }
+
     @Override
     @Transactional(readOnly = true)
     public LegalEntity findById(UUID id) {
