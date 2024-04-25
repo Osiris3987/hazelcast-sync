@@ -60,27 +60,6 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public OpenAPI openAPI() {
-        return new OpenAPI()
-                .addSecurityItem(new SecurityRequirement()
-                        .addList("bearerAuth"))
-                .components(
-                        new Components()
-                                .addSecuritySchemes("bearerAuth",
-                                        new SecurityScheme()
-                                                .type(SecurityScheme.Type.HTTP)
-                                                .scheme("bearer")
-                                                .bearerFormat("JWT")
-                                )
-                )
-                .info(new Info()
-                        .title("Becoder hackathon project")
-                        .description("Api for fintech")
-                        .version("1.0")
-                );
-    }
-
-    @Bean
     @SneakyThrows
     public SecurityFilterChain filterChain(
             final HttpSecurity httpSecurity
