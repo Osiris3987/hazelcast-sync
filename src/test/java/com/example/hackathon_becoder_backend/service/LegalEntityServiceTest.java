@@ -1,66 +1,96 @@
 package com.example.hackathon_becoder_backend.service;
 
+import com.example.hackathon_becoder_backend.domain.client.ClientStatus;
+import com.example.hackathon_becoder_backend.domain.exception.LackOfBalanceException;
 import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntity;
-import com.example.hackathon_becoder_backend.web.dto.LegalEntityWithClientsDto;
-import com.example.hackathon_becoder_backend.web.mapper.LegalEntityMapper;
+import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntityStatus;
+import com.example.hackathon_becoder_backend.domain.transaction.TransactionType;
+import com.example.hackathon_becoder_backend.repository.LegalEntityRepository;
+import com.example.hackathon_becoder_backend.service.impl.ClientServiceImpl;
+import com.example.hackathon_becoder_backend.service.impl.LegalEntityServiceImpl;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.Semaphore;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @Transactional
 class LegalEntityServiceTest {
-    @Autowired
-    LegalEntityService legalEntityService;
-    @Autowired
-    LegalEntityMapper legalEntityMapper;
+    @Mock
+    LegalEntityRepository legalEntityRepository;
+
+    @Mock
+    ClientServiceImpl clientService;
+
+    @InjectMocks
+    LegalEntityServiceImpl legalEntityService;
 
     @Test
-    void checkTestContext(){
-        assertNotNull(legalEntityService);
-        assertNotNull(legalEntityMapper);
-    }
+    void findById_shouldReturnLegalEntityWithDelegatedID(){
+        UUID legalEntityUUID = UUID.randomUUID();
+        LegalEntity legalEntity = new LegalEntity();
+        legalEntity.setId(legalEntityUUID);
 
-    @Rollback(value = false)
-    @Test
-    void deleteById() {
-        final UUID testId = UUID.fromString("b3ec6a4c-6245-419d-b884-024a69fea3eb");
-        legalEntityService.deleteById(testId);
-        assertEquals(legalEntityService.findById(testId).getStatus(), "DELETED");
-        System.out.println("Test passed!");
-    }
+        when(legalEntityRepository.findById(legalEntityUUID)).thenReturn(Optional.of(legalEntity));
+        LegalEntity receivedLegalEntity = legalEntityService.findById(legalEntityUUID);
 
-    @Test
-    void getAllLegalEntitiesByClientId(){
-        final UUID testId = UUID.fromString("f0caf844-5a61-43a7-b1c2-e66971f5e08a");
-        List<LegalEntity> legalEntities = legalEntityService.getAllLegalEntitiesByClientId(testId);
-        for (var legalEntity: legalEntities) {
-            System.out.println(legalEntity.getId());
-        }
+        assertNotNull(receivedLegalEntity); //  Юр. лицо было получено
+        assertEquals(legalEntityUUID, receivedLegalEntity.getId());
+        verify(legalEntityRepository, Mockito.times(1)).findById(legalEntityUUID);
+        System.out.println(LocalDateTime.now().toLocalTime() + "[findById_shouldReturnLegalEntityWithDelegatedID] passed!");
     }
 
     @Test
-    void getAll(){
-        List<LegalEntity> legalEntities = legalEntityService.getAll();
-        for (var legalEntity: legalEntities) {
-            System.out.println(legalEntity.getId());
-        }
+    void changeBalance_shouldDebitAndRefillDelegatedLegalEntityBalance(){
+        BigDecimal amount = new BigDecimal(1000);
+        BigDecimal basicBalance = new BigDecimal(10000);
+        UUID legalEntityUUID = UUID.randomUUID();
+        LegalEntity legalEntity = new LegalEntity();
+        legalEntity.setBalance(basicBalance);
+        legalEntity.setId(legalEntityUUID);
+
+        when(legalEntityRepository.findById(legalEntityUUID)).thenReturn(Optional.of(legalEntity));
+        legalEntityService.changeBalance(legalEntityUUID, amount, TransactionType.DEBIT);
+        legalEntityService.changeBalance(legalEntityUUID, amount, TransactionType.REFILL);
+        legalEntityService.changeBalance(legalEntityUUID, amount, TransactionType.REFILL);
+        try {
+            legalEntityService.changeBalance(legalEntityUUID, amount.multiply(BigDecimal.valueOf(12)), TransactionType.DEBIT);
+            fail();
+        } catch (LackOfBalanceException lackOfBalanceException){}
+
+        assertEquals(BigDecimal.valueOf(11000), legalEntity.getBalance()); //  Баланс соответствует ожидаемому значению
+        verify(legalEntityRepository, Mockito.times(4)).findById(legalEntityUUID); //  Поиск по id был выполнен 3 раза
+        verify(legalEntityRepository, Mockito.times(3)).save(legalEntity); //  Сохранение в БД было выполнено 3 раза
+        System.out.println(LocalDateTime.now().toLocalTime() + "[changeBalance_shouldDebitAndRefillDelegatedLegalEntityBalance] passed!");
     }
 
-    @Rollback(value = false)
     @Test
-    void assignClientToLegalEntity(){
-        final UUID testClientId = UUID.fromString("f0caf844-5a61-43a7-b1c2-e66971f5e08a");
-        final UUID testLegalEntityId = UUID.fromString("b3ec6a4c-6245-419d-b884-024a69fea3ec");
-        LegalEntity legalEntity = legalEntityService.assignClientToLegalEntity(testLegalEntityId, testClientId);
-        LegalEntityWithClientsDto legalEntityWithClientsDto = legalEntityMapper.toDtoWithClients(legalEntity);
-        assertEquals(1, legalEntityWithClientsDto.getClients().size());
+    void deleteById_shouldRemoveLegalEntityWithDelegatedId(){
+        UUID clientUUID = UUID.randomUUID();
+        LegalEntity legalEntity = new LegalEntity();
+        legalEntity.setId(clientUUID);
+
+        when(legalEntityRepository.findById(clientUUID)).thenReturn(Optional.of(legalEntity));
+        legalEntityService.deleteById(clientUUID);
+
+        assertEquals(LegalEntityStatus.DELETED, LegalEntityStatus.valueOf(legalEntity.getStatus())); //  Статус клиента DELETED
+        verify(legalEntityRepository, Mockito.times(1)).findById(clientUUID); //  Поиск клиента был выполнен единожды
+        verify(legalEntityRepository, Mockito.times(1)).save(legalEntity); //  Удаление конкретного клиента было выполнено единожды
+        System.out.println(LocalDateTime.now().toLocalTime() + "[deleteById_shouldRemoveLegalEntityWithDelegatedId] passed!");
     }
+
+
+
 }
