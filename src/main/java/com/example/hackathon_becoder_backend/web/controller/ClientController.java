@@ -74,19 +74,6 @@ public class ClientController {
     }
 
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Successful operation",content = {@Content(schema = @Schema(implementation = ClientDto.class), mediaType = "application/json")}),
-            @ApiResponse(responseCode = "400", description = "Invalid input (Ex.Client already exists)",content = {@Content(schema = @Schema(implementation = ErrorMessage.class), mediaType = "application/json")}),
-            @ApiResponse(responseCode = "422", description = "Validation exception",content = {@Content(schema = @Schema(implementation = ErrorMessage.class), mediaType = "application/json")})
-    })
-    @Operation(summary = "Create client", description = "Create new client to store client", operationId = "createClient")
-    @PostMapping("")
-    public ClientDto createClient(
-            @Valid @RequestBody final ClientDto clientDto
-    ) {
-        return clientMapper.toDto(clientService.create(clientMapper.toEntity(clientDto)));
-    }
-
-    @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Successful operation"),
             @ApiResponse(responseCode = "400", description = "Invalid input",content = {@Content(schema = @Schema(implementation = ErrorMessage.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", description = "Client not found",content = {@Content(schema = @Schema(implementation = ErrorMessage.class), mediaType = "application/json")})
