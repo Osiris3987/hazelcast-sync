@@ -5,6 +5,10 @@ import com.example.hackathon_becoder_backend.service.TransactionService;
 import com.example.hackathon_becoder_backend.web.dto.TransactionDto;
 import com.example.hackathon_becoder_backend.web.dto.validation.OnCreate;
 import com.example.hackathon_becoder_backend.web.mapper.TransactionMapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -14,11 +18,17 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/transactions")
+@Tag(name = "Transaction API", description = "Endpoints for managing transactions")
 public class TransactionController {
     private final TransactionService transactionService;
     private final TransactionMapper transactionMapper;
 
     @PostMapping
+    @Operation(summary = "Create transaction", description = "Create a new transaction")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Successful operation"),
+            @ApiResponse(responseCode = "400", description = "Invalid input (Ex. Validation error)")
+    })
     public TransactionDto create(
             @Validated(OnCreate.class) @RequestBody TransactionDto transactionDto,
             @RequestParam UUID clientId,
