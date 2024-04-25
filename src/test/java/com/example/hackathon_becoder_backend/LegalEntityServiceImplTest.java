@@ -2,14 +2,11 @@ package com.example.hackathon_becoder_backend;
 
 import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntity;
 import com.example.hackathon_becoder_backend.service.LegalEntityService;
-import com.example.hackathon_becoder_backend.service.impl.LegalEntityServiceImpl;
-import com.example.hackathon_becoder_backend.web.dto.LegalEntityWithClientsDto;
+import com.example.hackathon_becoder_backend.web.dto.legalEntity.LegalEntityWithClientsDto;
 import com.example.hackathon_becoder_backend.web.mapper.LegalEntityMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 

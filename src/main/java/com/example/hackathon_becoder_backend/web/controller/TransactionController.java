@@ -3,7 +3,7 @@ package com.example.hackathon_becoder_backend.web.controller;
 import com.example.hackathon_becoder_backend.domain.transaction.Transaction;
 import com.example.hackathon_becoder_backend.exception.ErrorMessage;
 import com.example.hackathon_becoder_backend.service.TransactionService;
-import com.example.hackathon_becoder_backend.web.dto.TransactionDto;
+import com.example.hackathon_becoder_backend.web.dto.transaction.TransactionDto;
 import com.example.hackathon_becoder_backend.web.dto.validation.OnCreate;
 import com.example.hackathon_becoder_backend.web.mapper.TransactionMapper;
 import io.swagger.v3.oas.annotations.Operation;
