@@ -1,15 +1,8 @@
-package com.example.hackathon_becoder_backend;
+package com.example.hackathon_becoder_backend.service;
 
-import com.example.hackathon_becoder_backend.domain.client.Client;
 import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntity;
-import com.example.hackathon_becoder_backend.domain.transaction.Transaction;
 import com.example.hackathon_becoder_backend.domain.transaction.TransactionType;
-import com.example.hackathon_becoder_backend.repository.LegalEntityRepository;
-import com.example.hackathon_becoder_backend.service.ClientService;
-import com.example.hackathon_becoder_backend.service.LegalEntityService;
-import com.example.hackathon_becoder_backend.service.TransactionService;
 import lombok.SneakyThrows;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,7 +20,7 @@ import java.util.concurrent.*;
 @Transactional
 @Configuration
 @EnableRetry
-class TransactionServiceImplTest {
+class TransactionServiceTest {
     @Autowired
     private LegalEntityService legalEntityService;
 

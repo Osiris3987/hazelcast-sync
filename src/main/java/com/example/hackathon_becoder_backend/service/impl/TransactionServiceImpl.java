@@ -1,9 +1,11 @@
 package com.example.hackathon_becoder_backend.service.impl;
 
 import com.example.hackathon_becoder_backend.domain.client.Client;
-import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntity;
-import com.example.hackathon_becoder_backend.domain.transaction.Transaction;
 import com.example.hackathon_becoder_backend.exception.ResourceNotFoundException;
+import com.example.hackathon_becoder_backend.exception.ValidationException;
+import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntity;
+import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntityStatus;
+import com.example.hackathon_becoder_backend.domain.transaction.Transaction;
 import com.example.hackathon_becoder_backend.repository.TransactionRepository;
 import com.example.hackathon_becoder_backend.service.ClientService;
 import com.example.hackathon_becoder_backend.service.LegalEntityService;
@@ -34,7 +36,10 @@ public class TransactionServiceImpl implements TransactionService {
     public Transaction create(Transaction transaction, UUID clientId, UUID legalEntityId) {
         Client client = clientService.findById(clientId);
         LegalEntity legalEntity = legalEntityService.findById(legalEntityId);
-        LegalEntityValidator.isClientInLegalEntity(client, legalEntityId);
+
+        LegalEntityValidator.assertLegalEntityExists(legalEntity);
+        LegalEntityValidator.isClientInLegalEntity(client, legalEntity);
+
         transaction.setClient(client);
         transaction.setLegalEntity(legalEntity);
         legalEntityService.changeBalance(
