@@ -2,7 +2,7 @@ package com.example.hackathon_becoder_backend.web.security;
 
 import com.example.hackathon_becoder_backend.domain.client.Client;
 import com.example.hackathon_becoder_backend.domain.client.Role;
-import com.example.hackathon_becoder_backend.domain.exception.AccessDeniedException;
+import com.example.hackathon_becoder_backend.exception.AccessDeniedException;
 import com.example.hackathon_becoder_backend.service.ClientService;
 import com.example.hackathon_becoder_backend.service.props.JwtProperties;
 import com.example.hackathon_becoder_backend.web.dto.auth.JwtResponse;
