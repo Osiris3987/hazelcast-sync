@@ -1,4 +1,4 @@
-package com.example.hackathon_becoder_backend.domain.exception;
+package com.example.hackathon_becoder_backend.exception;
 
 
 public class AccessDeniedException extends RuntimeException {

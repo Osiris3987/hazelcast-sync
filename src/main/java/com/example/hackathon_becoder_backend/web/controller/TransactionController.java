@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -22,6 +23,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/transactions")
 @Tag(name = "Transaction API", description = "Endpoints for managing transactions")
+@SecurityRequirement(name = "JWT")
 public class TransactionController {
     private final TransactionService transactionService;
     private final TransactionMapper transactionMapper;
@@ -29,8 +31,8 @@ public class TransactionController {
     @PostMapping
     @Operation(summary = "Create transaction", description = "Create a new transaction")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Successful operation",content = {@Content(schema = @Schema(implementation = TransactionDto.class), mediaType = "application/json")}),
-            @ApiResponse(responseCode = "400", description = "Invalid input (Ex.Transaction already exists)",content = {@Content(schema = @Schema(implementation = ErrorMessage.class), mediaType = "application/json")})
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = {@Content(schema = @Schema(implementation = TransactionDto.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "400", description = "Invalid input (Ex.Transaction already exists)", content = {@Content(schema = @Schema(implementation = ErrorMessage.class), mediaType = "application/json")})
     })
     public TransactionDto create(
             @Validated(OnCreate.class) @RequestBody TransactionDto transactionDto,

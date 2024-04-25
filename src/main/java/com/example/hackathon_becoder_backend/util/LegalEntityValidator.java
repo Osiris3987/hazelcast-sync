@@ -1,8 +1,7 @@
 package com.example.hackathon_becoder_backend.util;
 
 import com.example.hackathon_becoder_backend.domain.client.Client;
-import com.example.hackathon_becoder_backend.domain.exception.ResourceNotFoundException;
-import com.example.hackathon_becoder_backend.domain.exception.ValidationException;
+import com.example.hackathon_becoder_backend.exception.ResourceNotFoundException;
 
 import java.util.UUID;
 
