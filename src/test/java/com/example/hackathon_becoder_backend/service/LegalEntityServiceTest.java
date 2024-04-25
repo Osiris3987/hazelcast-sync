@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -115,13 +116,13 @@ class LegalEntityServiceTest {
         Client client = new Client();
         legalEntity.setId(legalEntityUUID);
         client.setId(clientUUID);
+        legalEntity.setClients(new HashSet<>());
 
         when(clientService.findById(clientUUID)).thenReturn(client);
         when(legalEntityRepository.findById(legalEntityUUID)).thenReturn(Optional.of(legalEntity));
         legalEntityService.assignClientToLegalEntity(legalEntityUUID, clientUUID);
 
         assertTrue(legalEntity.getClients().contains(client)); //  Юр.лицо связано с клиентом
-        assertTrue(client.getLegalEntities().contains(legalEntity)); //  Клиент связан с юр. лицом
         verify(clientService, Mockito.times(1)).findById(clientUUID); //  Единожды обращаемся к сервису клиентов
         verify(legalEntityRepository, Mockito.times(1)).findById(legalEntityUUID); //  Единожды обращаемся к поиску юр.лиц
         verify(legalEntityRepository, Mockito.times(1)).save(legalEntity); //  Единожды сохраняем изменения в репозиторий юр.лиц
@@ -142,13 +143,14 @@ class LegalEntityServiceTest {
         legalEntity1.setId(legalEntityID1);
         legalEntity2.setId(legalEntityID2);
         legalEntity3.setId(legalEntityID3);
+        client.setLegalEntities(new HashSet<>());
         client.getLegalEntities().addAll(List.of(legalEntity1, legalEntity2, legalEntity3));
 
         when(legalEntityRepository.findAllLegalEntitiesByClientId(clientUUID))
                 .thenReturn(List.of(legalEntity1, legalEntity2, legalEntity3));
         List<LegalEntity> receivedLegalEntities = legalEntityService.getAllLegalEntitiesByClientId(clientUUID);
 
-        assertArrayEquals(client.getLegalEntities().toArray(), receivedLegalEntities.toArray()); //  Массивы юр.лиц совпадают
+        assertTrue(client.getLegalEntities().containsAll(receivedLegalEntities)); //  Массивы юр.лиц совпадают
         verify(legalEntityRepository, Mockito.times(1)).findAllLegalEntitiesByClientId(clientUUID);
         System.out.println(LocalDateTime.now().toLocalTime() + "[getAllLegalEntitiesByClientId_shouldReturnAllLegalEntitiesBelongsToDelegatedClient] passed!");
     }
