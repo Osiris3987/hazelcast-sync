@@ -1,7 +1,7 @@
 package com.example.hackathon_becoder_backend.util;
 
 import com.example.hackathon_becoder_backend.domain.client.Client;
-import com.example.hackathon_becoder_backend.domain.exception.ResourceNotFoundException;
+import com.example.hackathon_becoder_backend.exception.ResourceNotFoundException;
 import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntity;
 import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntityStatus;
 import org.apache.coyote.BadRequestException;
