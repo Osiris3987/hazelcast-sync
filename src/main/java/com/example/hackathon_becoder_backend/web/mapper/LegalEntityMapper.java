@@ -1,10 +1,9 @@
 package com.example.hackathon_becoder_backend.web.mapper;
 
 import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntity;
-import com.example.hackathon_becoder_backend.web.dto.LegalEntityDto;
-import com.example.hackathon_becoder_backend.web.dto.LegalEntityWithClientsDto;
+import com.example.hackathon_becoder_backend.web.dto.legalEntity.LegalEntityDto;
+import com.example.hackathon_becoder_backend.web.dto.legalEntity.LegalEntityWithClientsDto;
 import org.mapstruct.Mapper;
-import org.mapstruct.MapperConfig;
 
 import java.util.List;
 
