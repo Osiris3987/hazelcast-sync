@@ -1,6 +1,7 @@
 package com.example.hackathon_becoder_backend.web.controller;
 
 import com.example.hackathon_becoder_backend.domain.transaction.Transaction;
+import com.example.hackathon_becoder_backend.exception.ErrorMessage;
 import com.example.hackathon_becoder_backend.service.LegalEntityService;
 import com.example.hackathon_becoder_backend.service.TransactionService;
 import com.example.hackathon_becoder_backend.web.dto.LegalEntityDto;
@@ -10,10 +11,14 @@ import com.example.hackathon_becoder_backend.web.mapper.LegalEntityMapper;
 import com.example.hackathon_becoder_backend.web.mapper.TransactionMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +39,7 @@ public class LegalEntityController {
     @Operation(summary = "Delete legal entity", description = "Delete a legal entity by its ID")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Legal entity deleted"),
-            @ApiResponse(responseCode = "404", description = "Legal entity not found")
+            @ApiResponse(responseCode = "404", description = "Legal entity not found",content = {@Content(schema = @Schema(implementation = ErrorMessage.class), mediaType = "application/json")})
     })
     @DeleteMapping
     public ResponseEntity<String> deleteById(
@@ -47,8 +52,8 @@ public class LegalEntityController {
     @GetMapping("/{legalEntityId}/transactions")
     @Operation(summary = "Get transactions by legal entity ID", description = "Get all transactions of a legal entity by its ID")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Successful operation"),
-            @ApiResponse(responseCode = "404", description = "Legal entity not found")
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = TransactionDto.class)), mediaType = "application/json")),
+            @ApiResponse(responseCode = "404", description = "Legal entity not found",content = {@Content(schema = @Schema(implementation = ErrorMessage.class), mediaType = "application/json")})
     })
     public List<TransactionDto> getTransactionsByLegalEntityId(
             @PathVariable UUID legalEntityId) {
@@ -60,8 +65,8 @@ public class LegalEntityController {
     @GetMapping("/{clientId}/client")
     @Operation(summary = "Find all legal entities by client ID", description = "Get all legal entities of a client by client ID")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Successful operation"),
-            @ApiResponse(responseCode = "404", description = "Client not found")
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = LegalEntityDto.class)), mediaType = "application/json")),
+            @ApiResponse(responseCode = "404", description = "Client not found",content = {@Content(schema = @Schema(implementation = ErrorMessage.class), mediaType = "application/json")})
     })
     public List<LegalEntityDto> findAll(@PathVariable("clientId") @Parameter(description = "Client id", required = true) UUID clientId) {
         return legalEntityMapper.toDtoList(legalEntityService.getAllLegalEntitiesByClientId(clientId));
@@ -70,8 +75,8 @@ public class LegalEntityController {
     @PostMapping("/assign")
     @Operation(summary = "Assign client to legal entity", description = "Assign a client to a legal entity")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Successful operation"),
-            @ApiResponse(responseCode = "404", description = "Legal entity or client not found")
+            @ApiResponse(responseCode = "200", description = "Successful operation",content = {@Content(schema = @Schema(implementation = LegalEntityWithClientsDto.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", description = "Legal entity or client not found",content = {@Content(schema = @Schema(implementation = ErrorMessage.class), mediaType = "application/json")})
     })
     public LegalEntityWithClientsDto assign(@RequestBody LegalEntityDto.AssignClientToLegalEntity assignParams) {
         return legalEntityMapper.toDtoWithClients(legalEntityService
