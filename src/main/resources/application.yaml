@@ -14,3 +14,8 @@ spring:
 server:
   port:
     8080
+security:
+  jwt:
+    secret: amF0amhvaWFob2loanE5ZXdqMDlyZWlvZmppZmppc2RqZnBkamZwb3Nkam9zZGZramZvcGpzZGY=
+    access: 3600000
+    refresh: 2592000000

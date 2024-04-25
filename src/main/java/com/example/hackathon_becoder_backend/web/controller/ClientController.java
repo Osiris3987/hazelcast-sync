@@ -72,19 +72,6 @@ public class ClientController {
     }
 
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Successful operation"),
-            @ApiResponse(responseCode = "400", description = "Invalid input (Ex.Client already exists)"),
-            @ApiResponse(responseCode = "422", description = "Validation exception")
-    })
-    @Operation(summary = "Create client", description = "Create new client to store client", operationId = "createClient")
-    @PostMapping("")
-    public ClientDto createClient(
-            @Valid @RequestBody final ClientDto clientDto
-    ) {
-        return clientMapper.toDto(clientService.create(clientMapper.toEntity(clientDto)));
-    }
-
-    @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Successful operation"),
             @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "404", description = "Client not found")

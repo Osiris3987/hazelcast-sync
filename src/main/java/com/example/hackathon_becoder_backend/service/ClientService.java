@@ -8,6 +8,8 @@ import java.util.UUID;
 public interface ClientService {
     Client findById(UUID id);
 
+    Client findByUsername(String username);
+
     Client create(Client client);
 
     List<Client> findAll();
