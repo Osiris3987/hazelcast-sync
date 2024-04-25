@@ -19,7 +19,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-public class ClientServiceImplTest {
+public class ClientServiceTest {
 
     @Mock
     private ClientRepository clientRepository;
