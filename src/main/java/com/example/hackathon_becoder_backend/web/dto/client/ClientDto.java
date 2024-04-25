@@ -21,16 +21,15 @@ public class ClientDto {
     @Schema(description = "Name of the client", example = "John Doe")
     private String name;
 
-    @Schema(description = "Status of the client", example = "Active", accessMode = Schema.AccessMode.READ_ONLY)
+    @Schema(description = "Status of the client", example = "EXISTS", accessMode = Schema.AccessMode.READ_ONLY)
     private String status;
 
-    @Length(max = 255,
-            message = "Username length must be smaller than 255 symbols.",
-            groups = {OnCreate.class})
+    @Schema(description = "Username of the client", maxLength = 255, example = "johndoe@gmail.com")
+    @Length(max = 255, message = "Username length must be smaller than 255 symbols.", groups = {OnCreate.class})
     private String username;
 
+    @Schema(description = "Password of the client", accessMode = Schema.AccessMode.WRITE_ONLY)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @NotNull(message = "Password must be not null.",
-            groups = {OnCreate.class})
+    @NotNull(message = "Password must be not null.", groups = {OnCreate.class})
     private String password;
 }
