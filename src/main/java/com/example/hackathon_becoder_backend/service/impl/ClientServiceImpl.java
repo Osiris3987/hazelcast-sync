@@ -6,6 +6,7 @@ import com.example.hackathon_becoder_backend.domain.client.Role;
 import com.example.hackathon_becoder_backend.exception.ResourceNotFoundException;
 import com.example.hackathon_becoder_backend.repository.ClientRepository;
 import com.example.hackathon_becoder_backend.service.ClientService;
+import com.example.hackathon_becoder_backend.util.ClientValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -39,9 +40,8 @@ public class ClientServiceImpl implements ClientService {
     @Override
     @Transactional
     public Client create(Client client) {
-        if (clientRepository.findByUsername(client.getUsername()).isPresent()) {
-            throw new IllegalStateException("User already exists.");
-        }
+        ClientValidator.assertClientNotExist(clientRepository, client);
+
         client.setPassword(passwordEncoder.encode(client.getPassword()));
         client.setStatus(ClientStatus.EXISTS.name());
         Set<Role> roles = Set.of(Role.USER);
