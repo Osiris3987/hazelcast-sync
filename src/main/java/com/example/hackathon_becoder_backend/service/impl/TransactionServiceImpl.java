@@ -28,7 +28,7 @@ public class TransactionServiceImpl implements TransactionService {
     private final LegalEntityService legalEntityService;
 
     @Override
-    @Retryable(maxAttempts = 20, retryFor = StaleStateException.class, noRetryFor = BadRequestException.class)
+    @Retryable(maxAttempts = 40, retryFor = StaleStateException.class, noRetryFor = BadRequestException.class)
     @Transactional
     @SneakyThrows
     public Transaction create(Transaction transaction, UUID clientId, UUID legalEntityId) {
