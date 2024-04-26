@@ -24,7 +24,6 @@ public class TransactionDto {
 
     @Schema(description = "Amount of the transaction", example = "100.00")
     @NotNull(message = "amount must not be null", groups = OnCreate.class)
-    @Positive
     private BigDecimal amount;
 
     @Schema(description = "Unique identifier of the client associated with the transaction", example = "123e4567-e89b-12d3-a456-426655440001", accessMode = Schema.AccessMode.READ_ONLY)

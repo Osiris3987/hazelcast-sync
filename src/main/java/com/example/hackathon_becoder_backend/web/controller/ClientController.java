@@ -4,6 +4,7 @@ package com.example.hackathon_becoder_backend.web.controller;
 import com.example.hackathon_becoder_backend.exception.ErrorMessage;
 import com.example.hackathon_becoder_backend.service.ClientService;
 import com.example.hackathon_becoder_backend.service.TransactionService;
+import com.example.hackathon_becoder_backend.web.dto.client.ClientWithLegalEntitiesDto;
 import com.example.hackathon_becoder_backend.web.dto.transaction.TransactionDto;
 import com.example.hackathon_becoder_backend.web.dto.client.ClientDto;
 import com.example.hackathon_becoder_backend.web.mapper.ClientMapper;
@@ -62,7 +63,6 @@ public class ClientController {
         return clientMapper.toDto(clientService.findById(clientId));
     }
 
-    // fixme: tests required
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = TransactionDto.class)), mediaType = "application/json")),
             @ApiResponse(responseCode = "400", description = "Invalid input",content = {@Content(schema = @Schema(implementation = ErrorMessage.class), mediaType = "application/json")}),
@@ -73,6 +73,11 @@ public class ClientController {
     public List<TransactionDto> getTransactionsByClientId(
             @PathVariable @Parameter(description = "Client id", required = true) UUID clientId) {
         return transactionMapper.toDtoList(transactionService.getAllByClientId(clientId));
+    }
+
+    @GetMapping("/{clientId}/legalEntities")
+    public ClientWithLegalEntitiesDto getLegalEntitiesByClientId(@PathVariable UUID clientId) {
+        return clientMapper.toClientWithLegalEntitiesDto(clientService.findLegalEntitiesByClientId(clientId));
     }
 
     @ApiResponses({

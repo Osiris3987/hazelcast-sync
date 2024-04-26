@@ -9,6 +9,7 @@ public interface ClientService {
     Client findById(UUID id);
 
     Client findByUsername(String username);
+    Client findLegalEntitiesByClientId(UUID clientId);
 
     Client create(Client client);
 
