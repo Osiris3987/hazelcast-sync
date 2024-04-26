@@ -5,6 +5,7 @@ import com.example.hackathon_becoder_backend.domain.transaction.Transaction;
 import com.example.hackathon_becoder_backend.service.ClientService;
 import com.example.hackathon_becoder_backend.service.TransactionService;
 import com.example.hackathon_becoder_backend.web.dto.client.ClientDto;
+import com.example.hackathon_becoder_backend.web.dto.client.ClientWithLegalEntitiesDto;
 import com.example.hackathon_becoder_backend.web.dto.transaction.TransactionDto;
 import com.example.hackathon_becoder_backend.web.mapper.ClientMapper;
 import com.example.hackathon_becoder_backend.web.mapper.TransactionMapper;
@@ -95,6 +96,23 @@ class ClientControllerTest {
         verify(transactionService, times(1)).getAllByClientId(clientId);
         verify(transactionMapper, times(1)).toDtoList(transactions);
         System.out.println(LocalDateTime.now().toLocalTime() + "[getTransactionsByClientId] passed!");
+    }
+
+    @Test
+    void getLegalEntitiesByClientId() {
+        UUID clientId = UUID.randomUUID();
+        Client client = mock(Client.class);
+        ClientWithLegalEntitiesDto clientWithLegalEntitiesDto = mock(ClientWithLegalEntitiesDto.class);
+
+        when(clientService.findLegalEntitiesByClientId(clientId)).thenReturn(client);
+        when(clientMapper.toClientWithLegalEntitiesDto(client)).thenReturn(clientWithLegalEntitiesDto);
+        ClientWithLegalEntitiesDto actualDto = clientController.getLegalEntitiesByClientId(clientId);
+
+        assertNotNull(actualDto);
+        assertEquals(clientWithLegalEntitiesDto, actualDto);
+        verify(clientService, times(1)).findLegalEntitiesByClientId(clientId);
+        verify(clientMapper, times(1)).toClientWithLegalEntitiesDto(client);
+        System.out.println(LocalDateTime.now().toLocalTime() + "[getLegalEntitiesByClientId] passed!");
     }
 
     @Test
