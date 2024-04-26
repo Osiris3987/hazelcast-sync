@@ -47,8 +47,9 @@ public class PostTransactionView extends VerticalLayout  implements AfterNavigat
         NumberField amount = new NumberField("Amount");
         amount.setValue(100.0);
         TextField clientId = new TextField("clientId");
+        clientId.setValue("f0caf844-5a61-43a7-b1c2-e66971f5e08a");
         TextField legalEntityId = new TextField("legalEntityId");
-
+        legalEntityId.setValue("3f71f34c-be0f-46eb-853c-fbc1fd60b284");
         FormLayout formLayout = new FormLayout(type, amount, clientId, legalEntityId);
 
         // Restrict maximum width and center on page

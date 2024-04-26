@@ -34,7 +34,7 @@ public class GetClientByIdView extends VerticalLayout implements AfterNavigation
         this.vaadinAuthService= vaadinAuthService;
 
         TextField id = new TextField("Client id");
-
+        id.setValue("f0caf844-5a61-43a7-b1c2-e66971f5e08a");
         add(id);
 
         final Grid<ClientDto> commentsGrid = new Grid<ClientDto>(ClientDto.class);
