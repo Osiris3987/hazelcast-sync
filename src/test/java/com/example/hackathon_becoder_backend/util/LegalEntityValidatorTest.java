@@ -6,6 +6,7 @@ import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntity;
 import org.apache.coyote.BadRequestException;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.UUID;
 
@@ -22,6 +23,7 @@ class LegalEntityValidatorTest {
 
         assertDoesNotThrow(() ->
                 LegalEntityValidator.isClientInLegalEntity(client, legalEntity));
+        System.out.println(LocalDateTime.now().toLocalTime() + "[isClientInLegalEntity_onClientPresentInLegalEntity_shouldPass] passed!");
     }
 
     @Test
@@ -32,6 +34,7 @@ class LegalEntityValidatorTest {
 
         assertThrows(ResourceNotFoundException.class, () ->
                 LegalEntityValidator.isClientInLegalEntity(client, legalEntity));
+        System.out.println(LocalDateTime.now().toLocalTime() + "[isClientInLegalEntity_onClientAbsent_shouldThrowException] passed!");
     }
 
     @Test
@@ -40,6 +43,7 @@ class LegalEntityValidatorTest {
         legalEntity.setStatus("EXISTS");
 
         assertDoesNotThrow(() -> LegalEntityValidator.assertLegalEntityExists(legalEntity));
+        System.out.println(LocalDateTime.now().toLocalTime() + "[assertLegalEntityPresent_onExistsLegalEntity_shouldPass] passed!");
     }
 
     @Test
@@ -49,5 +53,6 @@ class LegalEntityValidatorTest {
 
         assertThrows(BadRequestException.class, () ->
                 LegalEntityValidator.assertLegalEntityExists(legalEntity));
+        System.out.println(LocalDateTime.now().toLocalTime() + "[assertLegalEntityPresent_onRemovedLegalEntity_shouldThrowBadRequestException] passed!");
     }
 }

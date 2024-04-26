@@ -8,6 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,6 +28,7 @@ class ClientValidatorTest {
 
         assertDoesNotThrow(() ->
                 ClientValidator.assertClientNotExist(clientRepository, client));
+        System.out.println(LocalDateTime.now().toLocalTime() + "[assertClientNotExist_whenClientNotFound_shouldPass] passed!");
     }
 
     @Test
@@ -38,5 +40,6 @@ class ClientValidatorTest {
         assertThrows(UserAlreadyExistException.class, () ->
                 ClientValidator.assertClientNotExist(clientRepository, client)
         );
+        System.out.println(LocalDateTime.now().toLocalTime() + "[assertClientExist_whenClientExist_shouldThrowUserAlreadyExistException] passed!");
     }
 }
