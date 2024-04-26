@@ -19,7 +19,7 @@ public interface LegalEntityService {
 
     LegalEntity assignClientToLegalEntity(UUID legalEntityId, UUID clientId);
 
-    List<LegalEntity> getAllLegalEntitiesByClientId(UUID clientId);
+    LegalEntity findClientsByLegalEntityId(UUID legalEntityId);
 
     List<LegalEntity> getAll();
 }

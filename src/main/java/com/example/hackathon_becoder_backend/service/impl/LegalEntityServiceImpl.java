@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -24,9 +25,11 @@ public class LegalEntityServiceImpl implements LegalEntityService {
     private final ClientService clientService;
 
     @Override
+    @Transactional
     public LegalEntity create(LegalEntity legalEntity, String owner) {
         legalEntity.setOwner(owner);
         legalEntity.setStatus(LegalEntityStatus.EXISTS.name());
+        legalEntity.setClients(Set.of(clientService.findByUsername(owner)));
         return legalEntityRepository.save(legalEntity);
     }
 
@@ -79,8 +82,8 @@ public class LegalEntityServiceImpl implements LegalEntityService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<LegalEntity> getAllLegalEntitiesByClientId(UUID clientId) {
-        return legalEntityRepository.findAllLegalEntitiesByClientId(clientId);
+    public LegalEntity findClientsByLegalEntityId(UUID legalEntityId) {
+        return findById(legalEntityId);
     }
 
     @Override

@@ -5,7 +5,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -20,6 +19,9 @@ public class LegalEntityWithClientsDto {
 
     @Schema(description = "Balance of the legal entity", example = "10000.50")
     private BigDecimal balance;
+
+    @Schema(description = "Owner of the legal entity", example = "yfnf72@gmail.com")
+    private String owner;
 
     @Schema(description = "Set of clients associated with the legal entity")
     private Set<ClientDto> clients;

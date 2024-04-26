@@ -77,14 +77,14 @@ public class LegalEntityController {
         return transactionMapper.toDtoList(transactions);
     }
 
-    @GetMapping("/{clientId}/client")
+    @GetMapping("/{legalEntityId}/client")
     @Operation(summary = "Find all legal entities by client ID", description = "Get all legal entities of a client by client ID")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = LegalEntityDto.class)), mediaType = "application/json")),
             @ApiResponse(responseCode = "404", description = "Client not found",content = {@Content(schema = @Schema(implementation = ErrorMessage.class), mediaType = "application/json")})
     })
-    public List<LegalEntityDto> findAll(@PathVariable("clientId") @Parameter(description = "Client id", required = true) UUID clientId) {
-        return legalEntityMapper.toDtoList(legalEntityService.getAllLegalEntitiesByClientId(clientId));
+    public LegalEntityWithClientsDto getClientsByLegalEntityId(@PathVariable("legalEntityId") @Parameter(description = "Client id", required = true) UUID legalEntityId) {
+        return  legalEntityMapper.toDtoWithClients(legalEntityService.findClientsByLegalEntityId(legalEntityId));
     }
 
     @PostMapping("/assign")

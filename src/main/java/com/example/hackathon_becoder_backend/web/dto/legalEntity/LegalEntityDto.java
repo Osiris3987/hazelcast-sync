@@ -24,7 +24,7 @@ public class LegalEntityDto {
     @NotNull(message = "Legal entity balance must not be null", groups = OnCreate.class)
     private BigDecimal balance;
 
-    @Schema(description = "Owner of the legal entity", example = "yfnf72@gmail.com")
+    @Schema(description = "Owner of the legal entity", example = "yfnf72@gmail.com", accessMode = Schema.AccessMode.READ_ONLY)
     @Null(message = "Legal entity owner must be null", groups = OnCreate.class)
     private String owner;
 
