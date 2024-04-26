@@ -37,6 +37,12 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Client findLegalEntitiesByClientId(UUID clientId) {
+        return findById(clientId);
+    }
+
+    @Override
     @Transactional
     public Client create(Client client) {
         if (clientRepository.findByUsername(client.getUsername()).isPresent()) {
