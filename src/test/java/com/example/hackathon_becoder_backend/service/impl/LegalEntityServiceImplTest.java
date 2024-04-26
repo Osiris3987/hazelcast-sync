@@ -5,6 +5,7 @@ import com.example.hackathon_becoder_backend.exception.LackOfBalanceException;
 import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntity;
 import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntityStatus;
 import com.example.hackathon_becoder_backend.domain.transaction.TransactionType;
+import com.example.hackathon_becoder_backend.exception.ResourceNotFoundException;
 import com.example.hackathon_becoder_backend.repository.LegalEntityRepository;
 import com.example.hackathon_becoder_backend.service.impl.ClientServiceImpl;
 import com.example.hackathon_becoder_backend.service.impl.LegalEntityServiceImpl;
@@ -42,12 +43,17 @@ class LegalEntityServiceImplTest {
     @Test
     void create_shouldCreateNewLegalEntityWithDelegatedOwner() {
         String ownerName = "owner";
+        Client client = new Client();
+        client.setName(ownerName);
         LegalEntity legalEntity = new LegalEntity();
+        legalEntity.setClients(new HashSet<>());
 
+        when(clientService.findByUsername(ownerName)).thenReturn(client);
         legalEntityService.create(legalEntity, ownerName);
 
         assertEquals(ownerName, legalEntity.getOwner()); //  Для юр.лица установлен владелец
         assertEquals(LegalEntityStatus.EXISTS.name(), legalEntity.getStatus()); //  Статус юр. лица EXISTS
+        assertTrue(legalEntity.getClients().contains(client));
         verify(legalEntityRepository, Mockito.times(1)).save(legalEntity); //  Единственное обращение к репозиторию
         System.out.println(LocalDateTime.now().toLocalTime() + "[create_shouldCreateNewLegalEntityWithDelegatedOwner] passed!");
     }
@@ -125,28 +131,16 @@ class LegalEntityServiceImplTest {
     }
 
     @Test
-    void getAllLegalEntitiesByClientId_shouldReturnAllLegalEntitiesBelongsToDelegatedClient() {
-        UUID clientUUID = UUID.randomUUID();
-        UUID legalEntityID1 = UUID.randomUUID();
-        UUID legalEntityID2 = UUID.randomUUID();
-        UUID legalEntityID3 = UUID.randomUUID();
-        Client client = new Client();
-        client.setId(clientUUID);
-        LegalEntity legalEntity1 = new LegalEntity();
-        LegalEntity legalEntity2 = new LegalEntity();
-        LegalEntity legalEntity3 = new LegalEntity();
-        legalEntity1.setId(legalEntityID1);
-        legalEntity2.setId(legalEntityID2);
-        legalEntity3.setId(legalEntityID3);
-        client.setLegalEntities(new HashSet<>());
-        client.getLegalEntities().addAll(List.of(legalEntity1, legalEntity2, legalEntity3));
+    void findClientsByLegalEntityId() {
+        UUID legalEntityUUID = UUID.randomUUID();
+        LegalEntity legalEntity = new LegalEntity();
+        legalEntity.setId(legalEntityUUID);
 
-        when(legalEntityRepository.findAllLegalEntitiesByClientId(clientUUID))
-                .thenReturn(List.of(legalEntity1, legalEntity2, legalEntity3));
-        List<LegalEntity> receivedLegalEntities = legalEntityService.getAllLegalEntitiesByClientId(clientUUID);
+        when(legalEntityRepository.findById(legalEntityUUID)).thenReturn(Optional.of(legalEntity));
+        LegalEntity receivedLegalEntity = legalEntityService.findClientsByLegalEntityId(legalEntityUUID);
 
-        assertTrue(client.getLegalEntities().containsAll(receivedLegalEntities)); //  Массивы юр.лиц совпадают
-        verify(legalEntityRepository, Mockito.times(1)).findAllLegalEntitiesByClientId(clientUUID);
+        assertThrows(ResourceNotFoundException.class, () -> legalEntityService.findClientsByLegalEntityId(UUID.randomUUID()));
+        assertEquals(legalEntity, receivedLegalEntity);
         System.out.println(LocalDateTime.now().toLocalTime() + "[getAllLegalEntitiesByClientId_shouldReturnAllLegalEntitiesBelongsToDelegatedClient] passed!");
     }
 
