@@ -63,6 +63,37 @@ class LegalEntityControllerTest {
     }
 
     @Test
+    void getAll() {
+        List<LegalEntity> legalEntities = new ArrayList<>();
+        List<LegalEntityDto> legalEntityDtos = new ArrayList<>();
+
+        when(legalEntityMapper.toDtoList(legalEntities)).thenReturn(legalEntityDtos);
+        when(legalEntityService.getAll()).thenReturn(legalEntities);
+        List<LegalEntityDto> actualLegalEntityDtos = legalEntityController.getAll();
+
+        assertNotNull(actualLegalEntityDtos);
+        assertEquals(legalEntityDtos.size(), actualLegalEntityDtos.size());
+        verify(legalEntityMapper, times(1)).toDtoList(legalEntities);
+        verify(legalEntityService, times(1)).getAll();
+    }
+
+    @Test
+    void getById() {
+        UUID legalEntityID = UUID.randomUUID();
+        LegalEntity legalEntity = mock(LegalEntity.class);
+        LegalEntityDto legalEntityDto = mock(LegalEntityDto.class);
+
+        when(legalEntityService.findById(legalEntityID)).thenReturn(legalEntity);
+        when(legalEntityMapper.toDto(legalEntity)).thenReturn(legalEntityDto);
+        LegalEntityDto actualLegalEntityDto = legalEntityController.getById(legalEntityID);
+
+        assertNotNull(actualLegalEntityDto);
+        assertEquals(legalEntityDto, actualLegalEntityDto);
+        verify(legalEntityMapper, times(1)).toDto(legalEntity);
+        verify(legalEntityService, times(1)).findById(legalEntityID);
+    }
+
+    @Test
     void deleteById() {
         UUID legalEntityId = UUID.randomUUID();
 
