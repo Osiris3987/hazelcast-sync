@@ -3,7 +3,6 @@ package com.example.hackathon_becoder_backend.service.impl;
 import com.example.hackathon_becoder_backend.domain.client.Client;
 import com.example.hackathon_becoder_backend.domain.client.ClientStatus;
 import com.example.hackathon_becoder_backend.repository.ClientRepository;
-import com.example.hackathon_becoder_backend.service.impl.ClientServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -16,8 +15,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class ClientServiceImplTest {
@@ -64,6 +62,19 @@ public class ClientServiceImplTest {
         assertArrayEquals(clientsUUIDs.toArray(), receivedClients.stream().map(Client::getId).toArray()); //  Верифицируем значения
         verify(clientRepository, Mockito.times(1)).findAll();
         System.out.println(LocalDateTime.now().toLocalTime() + "[findAll_shouldReturnAllClients] passed!");
+    }
+
+    @Test
+    void findLegalEntitiesByClientId_shouldCallFindById() {
+        UUID clientId = UUID.randomUUID();
+        Client client = mock(Client.class);
+
+        when(clientRepository.findById(clientId)).thenReturn(Optional.of(client));
+        Client actualClient = clientService.findLegalEntitiesByClientId(clientId);
+
+        assertNotNull(actualClient);
+        assertEquals(client, actualClient);
+        verify(clientRepository, Mockito.times(1)).findById(clientId);
     }
 
     @Test
