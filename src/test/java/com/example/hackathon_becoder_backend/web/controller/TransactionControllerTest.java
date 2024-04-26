@@ -12,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -50,5 +51,6 @@ class TransactionControllerTest {
 
         assertNotNull(actualDto);
         assertEquals(transactionDto, actualDto);
+        System.out.println(LocalDateTime.now().toLocalTime() + "[create] passed!");
     }
 }

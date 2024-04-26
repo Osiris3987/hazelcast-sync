@@ -14,6 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -55,6 +56,7 @@ class ClientControllerTest {
         assertEquals(clientDtos.size(), actualDtos.size());
         verify(clientService, times(1)).findAll();
         verify(clientMapper, times(1)).toDtoList(clients);
+        System.out.println(LocalDateTime.now().toLocalTime() + "[getAllClients] passed!");
     }
 
     @Test
@@ -71,6 +73,7 @@ class ClientControllerTest {
         assertEquals(clientDto, actualDto);
         verify(clientService, times(1)).findById(clientId);
         verify(clientMapper, times(1)).toDto(client);
+        System.out.println(LocalDateTime.now().toLocalTime() + "[getClientById] passed!");
     }
 
     @Test
@@ -91,6 +94,7 @@ class ClientControllerTest {
         assertEquals(transactionDtos.size(), actualDtos.size());
         verify(transactionService, times(1)).getAllByClientId(clientId);
         verify(transactionMapper, times(1)).toDtoList(transactions);
+        System.out.println(LocalDateTime.now().toLocalTime() + "[getTransactionsByClientId] passed!");
     }
 
     @Test
@@ -101,5 +105,6 @@ class ClientControllerTest {
         clientController.deleteById(clientId);
 
         verify(clientService, times(1)).deleteById(clientId);
+        System.out.println(LocalDateTime.now().toLocalTime() + "[deleteById] passed!");
     }
 }
