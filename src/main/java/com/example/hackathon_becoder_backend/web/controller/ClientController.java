@@ -18,7 +18,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -75,6 +74,11 @@ public class ClientController {
         return transactionMapper.toDtoList(transactionService.getAllByClientId(clientId));
     }
 
+    @Operation(summary = "Returns Client DTO with legal entities", description = "Return client DTO with legal entities and uses client if to it.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Successful operation",content = {@Content(schema = @Schema(implementation = ClientWithLegalEntitiesDto.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", description = "Legal entity or client not found",content = {@Content(schema = @Schema(implementation = ErrorMessage.class), mediaType = "application/json")})
+    })
     @GetMapping("/{clientId}/legalEntities")
     public ClientWithLegalEntitiesDto getLegalEntitiesByClientId(@PathVariable UUID clientId) {
         return clientMapper.toClientWithLegalEntitiesDto(clientService.findLegalEntitiesByClientId(clientId));

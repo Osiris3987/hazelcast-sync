@@ -42,9 +42,9 @@ public class BankMicroserviceSimulation extends Simulation {
     private ChainBuilder postTransactions =
             exec(http("creating transactions")
                     .post("/api/v1/transactions")
-                    .header("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huZG9lQGV4YW1wbGUuY29tIiwiaWQiOiJjN2EyZGY5NS04ZDJiLTRkM2UtYWFkNC1lOGUxM2FmNThlNWYiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTcxNDA1NzYzNSwiZXhwIjoxNzE0MDYxMjM1fQ.dc0C8b8kysBJKHzLU588yMHwQLc0lgdY5tn3HV6N-5w6rjwm5OD0T42aeZGKnWodZfyRPNOsFN7DUCt1oC_Kbw")
-                    .queryParam("clientId", "f0caf844-5a61-43a7-b1c2-e66971f5e08a")
-                    .queryParam("legalEntityId", "b3ec6a4c-6245-419d-b884-024a69fea3eb")
+                    .header("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjMiLCJpZCI6ImY3ZTNmZjlhLTA5NDItNGJhMC05MTFkLTVjZWI5YzIzNjM2NCIsInJvbGVzIjpbIlVTRVIiXSwiaWF0IjoxNzE0MDk5MjA1LCJleHAiOjE3MTQxMDI4MDV9.I1tb1ngdmQn3VQzXO8Eyi21Q3_K8ay3ZPF4f8ag6kwSLUpU9N2zti27v4a0QnT08X3t1DEaifr6vyxG4RaxTgg")
+                    .queryParam("clientId", "f7e3ff9a-0942-4ba0-911d-5ceb9c236364")
+                    .queryParam("legalEntityId", "a575f158-7590-47a2-a66f-e819502efe9f")
                     .body(StringBody("{ \"type\": \"REFILL\", \"amount\": 1000 }"))
                     .check(HttpDsl.status().is(200))
             );
@@ -56,7 +56,7 @@ public class BankMicroserviceSimulation extends Simulation {
     public BankMicroserviceSimulation() {
         this.setUp(
                 postTransaction.injectOpen(
-                        CoreDsl.constantUsersPerSec(100).during(Duration.ofSeconds(30))
+                        CoreDsl.constantUsersPerSec(488).during(Duration.ofSeconds(15))
                 )
         ).protocols(httpProtocol);
     }

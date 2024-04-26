@@ -42,6 +42,10 @@ public class LegalEntityController {
     private final TransactionService transactionService;
     private final TransactionMapper transactionMapper;
 
+    @Operation(summary = "Create new legal entity", description = "Creates new legal entity via delegated LegalEntityDto")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = LegalEntityDto.class)), mediaType = "application/json")),
+    })
     @PostMapping
     public LegalEntityDto create(
             @Validated(OnCreate.class) @RequestBody LegalEntityDto legalEntityDto,
