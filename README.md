@@ -20,16 +20,47 @@
 предусматривать корректность проведения операций с балансом в многопоточной среде;
 3) Значение баланса не может стать отрицательным.
 
+## Class Diagram:
+
+![image](https://github.com/Osiris3987/bank_microservice/assets/117763292/5caf2805-f304-44bb-90dd-d6d0a6a1e575)
+
+
 ### Transaction API
 
-- Создание транзакции
+- POST /api/v1/transactions : создание транзакции
+  
+### Client API
+
+- GET /api/v1/client : получение всех клиентов
+- DELETE /api/v1/client : удаление клиента (изменение статуса на deleted)
+- GET /api/v1/client/{clientId} : получение клиента по Id
+- GET /api/v1/client/{clientId}/transactions : получение всех транзакций клиента
+- GET /api/v1/client/{clientId}/legalEntities : получение всех юр лиц клиента
+
+### Auth API
+
+- POST /api/v1/auth/register : регистрация клиента
+- POST /api/v1/auth/login : вход в аккаунт
+- POST /api/v1/auth/refresh : обновление JWT токена
+
+### Legal Entity API
+
+- POST /api/v1/legalEntity : создание юрлица
+- DELETE /api/v1/legalEntity : удаление юр лица
+- POST /api/v1/legalEntity/assign : добавление пользователя в юр лицо
+- GET /api/v1/legalEntity/{legalEntityId}/transactions : получение всех транзакций юр лица
+- GET /api/v1/legalEntity/{legalEntityId}/client : получение всех клиентов юрлица
 
 ## Стек
 
 - Java
-- Spring Boot
+- Spring (Boot/Security/Data)
 - Maven
-- PostgreSQL
+- PostgreSQL/Liquibase
+- Gatling
+- Docker
+- JUnit/Mockito
+- Vaadin
 
 ## Дополнительно
 - Скрипт по наполнению тестовыми данными.
