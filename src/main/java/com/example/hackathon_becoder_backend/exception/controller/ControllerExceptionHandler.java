@@ -3,6 +3,9 @@ package com.example.hackathon_becoder_backend.exception.controller;
 import com.example.hackathon_becoder_backend.exception.AccessDeniedException;
 import com.example.hackathon_becoder_backend.exception.ErrorMessage;
 import com.example.hackathon_becoder_backend.exception.ResourceNotFoundException;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.security.SignatureException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.boot.json.JsonParseException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
@@ -29,6 +32,8 @@ public class ControllerExceptionHandler {
     private final String NOT_FOUND_EXCEPTION = "Not found";
     private final String ACCESS_DENIED_EXCEPTION = "Access denied";
     private final String UNAUTHORIZED_EXCEPTION = "Invalid password or email!";
+
+    private final String SIGNATURE_JWT_EXCEPTION = "JWT signature does not match locally computed signature";
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErrorMessage> resourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
@@ -64,6 +69,18 @@ public class ControllerExceptionHandler {
     public ResponseEntity<ErrorMessage> accessDeniedExceptionHandler(Exception ex, WebRequest request) {
         ErrorMessage message = new ErrorMessage(HttpStatus.FORBIDDEN.value(), new Date(), ACCESS_DENIED_EXCEPTION, ex.getMessage());
         return new ResponseEntity<ErrorMessage>(message, HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(SignatureException.class)
+    public ResponseEntity<ErrorMessage> signatureAccessException(Exception ex, WebRequest request) {
+        ErrorMessage message = new ErrorMessage(HttpStatus.UNAUTHORIZED.value(), new Date(), SIGNATURE_JWT_EXCEPTION, ex.getMessage());
+        return new ResponseEntity<ErrorMessage>(message, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(MalformedJwtException.class)
+    public ResponseEntity<ErrorMessage> jwtException(Exception ex, WebRequest request) {
+        ErrorMessage message = new ErrorMessage(HttpStatus.UNAUTHORIZED.value(), new Date(), SIGNATURE_JWT_EXCEPTION, ex.getMessage());
+        return new ResponseEntity<ErrorMessage>(message, HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(Exception.class)
