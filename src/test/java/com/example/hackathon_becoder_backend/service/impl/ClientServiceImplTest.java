@@ -1,14 +1,16 @@
-package com.example.hackathon_becoder_backend.service;
+package com.example.hackathon_becoder_backend.service.impl;
 
 import com.example.hackathon_becoder_backend.domain.client.Client;
 import com.example.hackathon_becoder_backend.domain.client.ClientStatus;
 import com.example.hackathon_becoder_backend.repository.ClientRepository;
 import com.example.hackathon_becoder_backend.service.impl.ClientServiceImpl;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -17,17 +19,20 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class ClientServiceImplTest {
 
     @Mock
     private ClientRepository clientRepository;
 
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
     @InjectMocks
     private ClientServiceImpl clientService;
 
     @Test
-    void findById_shouldReturnClient(){
+    void findById_shouldReturnClient() {
         UUID clientUUID = UUID.randomUUID();
         Client client = new Client();
         client.setId(clientUUID);
@@ -43,7 +48,7 @@ public class ClientServiceImplTest {
     }
 
     @Test
-    void findAll_shouldReturnAllClients(){
+    void findAll_shouldReturnAllClients() {
         Client client1 = new Client();
         Client client2 = new Client();
         Client client3 = new Client();
@@ -62,7 +67,7 @@ public class ClientServiceImplTest {
     }
 
     @Test
-    void create_shouldInvokeSaveMethodOnceWithDelegatedClient(){
+    void create_shouldInvokeSaveMethodOnceWithDelegatedClient() {
         Client client = new Client();
         client.setId(UUID.randomUUID());
 
@@ -73,7 +78,7 @@ public class ClientServiceImplTest {
     }
 
     @Test
-    void deleteById_shouldRemoveClientWithDelegatedId(){
+    void deleteById_shouldRemoveClientWithDelegatedId() {
         UUID clientUUID = UUID.randomUUID();
         Client client = new Client();
         client.setId(clientUUID);
@@ -85,6 +90,23 @@ public class ClientServiceImplTest {
         verify(clientRepository, Mockito.times(1)).findById(clientUUID); //  Поиск клиента был выполнен единожды
         verify(clientRepository, Mockito.times(1)).save(client); //  Удаление конкретного клиента было выполнено единожды
         System.out.println(LocalDateTime.now().toLocalTime() + "[deleteById_shouldRemoveClientWithDelegatedId] passed!");
+    }
+
+    @Test
+    void findByUserName_shouldReturnClientByName() {
+        String clientName = "client";
+        UUID clientUUID = UUID.randomUUID();
+        Client client = new Client();
+        client.setName(clientName);
+        client.setId(clientUUID);
+
+        when(clientRepository.findByUsername(clientName)).thenReturn(Optional.of(client));
+        Client recievedClient = clientService.findByUsername(clientName);
+
+        assertNotNull(recievedClient); //  Проверка, что результат был получен
+        assertEquals(clientUUID, recievedClient.getId()); //  Убедимся, что получен ожидаемый клиент
+        verify(clientRepository, Mockito.times(1)).findByUsername(clientName); //  Обращение к репозиторию было единожды
+        System.out.println(LocalDateTime.now().toLocalTime() + "[findByUserName_shouldReturnClientByName] passed!");
     }
 
 }
