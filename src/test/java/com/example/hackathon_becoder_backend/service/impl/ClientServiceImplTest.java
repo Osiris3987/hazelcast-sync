@@ -1,4 +1,4 @@
-package com.example.hackathon_becoder_backend.service;
+package com.example.hackathon_becoder_backend.service.impl;
 
 import com.example.hackathon_becoder_backend.domain.client.Client;
 import com.example.hackathon_becoder_backend.domain.client.ClientStatus;
@@ -20,7 +20,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class ClientServiceTest {
+public class ClientServiceImplTest {
 
     @Mock
     private ClientRepository clientRepository;
