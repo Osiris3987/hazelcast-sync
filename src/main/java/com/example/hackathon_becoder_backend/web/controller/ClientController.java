@@ -62,7 +62,6 @@ public class ClientController {
         return clientMapper.toDto(clientService.findById(clientId));
     }
 
-    // fixme: tests required
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = TransactionDto.class)), mediaType = "application/json")),
             @ApiResponse(responseCode = "400", description = "Invalid input",content = {@Content(schema = @Schema(implementation = ErrorMessage.class), mediaType = "application/json")}),
