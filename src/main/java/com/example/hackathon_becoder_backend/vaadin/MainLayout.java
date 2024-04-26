@@ -3,6 +3,10 @@ package com.example.hackathon_becoder_backend.vaadin;
 import com.example.hackathon_becoder_backend.vaadin.dataViewPage.clients.GetAllClientsView;
 import com.example.hackathon_becoder_backend.vaadin.dataViewPage.clients.GetClientByIdView;
 import com.example.hackathon_becoder_backend.vaadin.dataViewPage.clients.GetTransactionByClientIDView;
+import com.example.hackathon_becoder_backend.vaadin.dataViewPage.legalEntity.GetLegalEntitiesByClient;
+import com.example.hackathon_becoder_backend.vaadin.dataViewPage.legalEntity.GetTransactionsByLegalEntityView;
+import com.example.hackathon_becoder_backend.vaadin.dataViewPage.legalEntity.PostLegalEntityAssignView;
+import com.example.hackathon_becoder_backend.vaadin.dataViewPage.legalEntity.PostLegalEntityView;
 import com.example.hackathon_becoder_backend.vaadin.dataViewPage.transactions.PostTransactionView;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
@@ -70,9 +74,9 @@ public class MainLayout extends AppLayout implements AfterNavigationObserver {
             start.setEnabled(false);
             login.setEnabled(false);
             signUp.setEnabled(false);
-//            initTransactionApi();
+            initTransactionApi();
             initClientApi();
-//            initLegalEntityApi();
+            initLegalEntityApi();
         }
         final Nav navigation = new Nav(list);
         addToDrawer(navigation);
@@ -100,24 +104,24 @@ public class MainLayout extends AppLayout implements AfterNavigationObserver {
         list.add(new ListItem(getClientById));
         list.add(new ListItem(getTransactionByClientID));
     }
-//
+
     private void initTransactionApi(){
         RouterLink postTransaction = new RouterLink("postTransaction", PostTransactionView.class);
-        list.add(postTransaction);
+        list.add(new ListItem(postTransaction));
     }
 //
-//    private void initLegalEntityApi(){
-//        RouterLink postLegalEntity = new RouterLink("postLegalEntity", PostLegalEntityView.class);
+    private void initLegalEntityApi(){
+        RouterLink postLegalEntity = new RouterLink("postLegalEntity", PostLegalEntityView.class);
 //        RouterLink deleteLegalEntity =  new RouterLink("deleteLegalEntity", DeleteLegalEntityView.class);
-//        RouterLink postLegalEntityAssign = new RouterLink("postLegalEntityAssign", PostLegalEntityAssignView.class);
-//        RouterLink getTransactionsByLegalEntity = new RouterLink("getTransactionsByLegalEntity", GetTransactionsByLegalEntityView.class);
-//        RouterLink getClientByLegalEntity = new RouterLink("getClientByLegalEntity", GetClientByLegalEntityView.class);
-//        list.add(postLegalEntity);
+        RouterLink postLegalEntityAssign = new RouterLink("postLegalEntityAssign", PostLegalEntityAssignView.class);
+        RouterLink getTransactionsByLegalEntity = new RouterLink("getTransactionsByLegalEntity", GetTransactionsByLegalEntityView.class);
+        RouterLink getLegalEntitiesByClient = new RouterLink("getLegalEntitiesByClient", GetLegalEntitiesByClient.class);
+        list.add(new ListItem(postLegalEntity));
 //        list.add(deleteLegalEntity);
-//        list.add(postLegalEntityAssign);
-//        list.add(getTransactionsByLegalEntity);
-//        list.add(getClientByLegalEntity);
-//    }
+        list.add(new ListItem(postLegalEntityAssign));
+        list.add(new ListItem(getTransactionsByLegalEntity));
+        list.add(new ListItem(getLegalEntitiesByClient));
+    }
 
     @Override
     public void afterNavigation(AfterNavigationEvent event) {

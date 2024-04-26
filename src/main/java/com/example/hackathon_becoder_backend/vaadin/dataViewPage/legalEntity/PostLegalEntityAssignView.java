@@ -1,21 +1,17 @@
-package com.example.hackathon_becoder_backend.vaadin.dataViewPage.transactions;
+package com.example.hackathon_becoder_backend.vaadin.dataViewPage.legalEntity;
 
-import com.example.hackathon_becoder_backend.domain.transaction.Transaction;
-import com.example.hackathon_becoder_backend.domain.transaction.TransactionType;
-import com.example.hackathon_becoder_backend.service.ClientService;
-import com.example.hackathon_becoder_backend.service.TransactionService;
+import com.example.hackathon_becoder_backend.domain.legal_entity.LegalEntity;
+import com.example.hackathon_becoder_backend.service.LegalEntityService;
 import com.example.hackathon_becoder_backend.vaadin.MainLayout;
 import com.example.hackathon_becoder_backend.vaadin.VaadinAuthService;
-import com.example.hackathon_becoder_backend.web.dto.client.ClientDto;
-import com.example.hackathon_becoder_backend.web.dto.transaction.TransactionDto;
-import com.example.hackathon_becoder_backend.web.mapper.ClientMapper;
-import com.example.hackathon_becoder_backend.web.mapper.TransactionMapper;
+import com.example.hackathon_becoder_backend.web.dto.legalEntity.LegalEntityDto;
+import com.example.hackathon_becoder_backend.web.mapper.LegalEntityMapper;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.html.Main;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -30,26 +26,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-@PageTitle("PostTransactionView")
-@Route(value = "vaadin/postTransactionView", layout = MainLayout.class)
-public class PostTransactionView extends VerticalLayout  implements AfterNavigationObserver {
+@PageTitle("PostLegalEntityAssignView")
+@Route(value = "vaadin/postLegalEntityAssignView", layout = MainLayout.class)
+public class PostLegalEntityAssignView extends VerticalLayout implements AfterNavigationObserver {
 
     private final VaadinAuthService vaadinAuthService;
     private Button fetchComments;
 
-    public PostTransactionView(@Autowired TransactionService transactionService,
-                               @Autowired TransactionMapper transactionMapper,
-                               @Autowired VaadinAuthService vaadinAuthService) {
+    public PostLegalEntityAssignView(@Autowired LegalEntityService legalEntityService,
+                               @Autowired LegalEntityMapper legalEntityMapper,
+                                     @Autowired VaadinAuthService vaadinAuthService) {
         this.vaadinAuthService= vaadinAuthService;
-        var transatction = new Transaction();
-        TextField type = new TextField("Type");
-        type.setValue("REFILL");
-        NumberField amount = new NumberField("Amount");
-        amount.setValue(100.0);
-        TextField clientId = new TextField("clientId");
         TextField legalEntityId = new TextField("legalEntityId");
+        legalEntityId.setValue("123e4567-e89b-12d3-a456-426655440000");
+        TextField clientId = new TextField("clientId");
+        clientId.setValue("123e4567-e89b-12d3-a456-426655440001");
 
-        FormLayout formLayout = new FormLayout(type, amount, clientId, legalEntityId);
+        FormLayout formLayout = new FormLayout(legalEntityId, clientId);
 
         // Restrict maximum width and center on page
         formLayout.setMaxWidth("500px");
@@ -60,15 +53,13 @@ public class PostTransactionView extends VerticalLayout  implements AfterNavigat
 
         add(formLayout);
 
-        final Grid<TransactionDto> commentsGrid = new Grid<TransactionDto>(TransactionDto.class);
+        final Grid<LegalEntityDto> commentsGrid = new Grid<LegalEntityDto>(LegalEntityDto.class);
 
-         fetchComments = new Button("Post transaction data",
+          fetchComments = new Button("Post data",
                 e -> {
-                    transatction.setAmount(BigDecimal.valueOf(amount.getValue()));
-                    transatction.setType(TransactionType.valueOf(type.getValue()));
-                    commentsGrid.setItems(transactionMapper.toDto(transactionService.create(transatction,(UUID.fromString(clientId.getValue())),(UUID.fromString(legalEntityId.getValue())))));
+                    commentsGrid.setItems(legalEntityMapper.toDto(legalEntityService.assignClientToLegalEntity(UUID.fromString(legalEntityId.getValue()),UUID.fromString(clientId.getValue()))));
                 });
-                    fetchComments.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        fetchComments.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
 
         add(fetchComments, commentsGrid);
@@ -86,4 +77,5 @@ public class PostTransactionView extends VerticalLayout  implements AfterNavigat
 
         }
     }
+
 }
