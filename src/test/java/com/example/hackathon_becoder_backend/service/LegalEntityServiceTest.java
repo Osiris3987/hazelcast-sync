@@ -10,9 +10,11 @@ import com.example.hackathon_becoder_backend.repository.LegalEntityRepository;
 import com.example.hackathon_becoder_backend.service.impl.ClientServiceImpl;
 import com.example.hackathon_becoder_backend.service.impl.LegalEntityServiceImpl;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,17 +30,17 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 @Transactional
 class LegalEntityServiceTest {
     @Mock
-    LegalEntityRepository legalEntityRepository;
+    private LegalEntityRepository legalEntityRepository;
 
     @Mock
-    ClientServiceImpl clientService;
+    private ClientServiceImpl clientService;
 
     @InjectMocks
-    LegalEntityServiceImpl legalEntityService;
+    private LegalEntityServiceImpl legalEntityService;
 
     @Test
     void create_shouldCreateNewLegalEntityWithDelegatedOwner() {
@@ -81,12 +83,8 @@ class LegalEntityServiceTest {
         legalEntityService.changeBalance(legalEntityUUID, amount, TransactionType.DEBIT);
         legalEntityService.changeBalance(legalEntityUUID, amount, TransactionType.REFILL);
         legalEntityService.changeBalance(legalEntityUUID, amount, TransactionType.REFILL);
-        try {
-            legalEntityService.changeBalance(legalEntityUUID, amount.multiply(BigDecimal.valueOf(12)), TransactionType.DEBIT);
-            fail();
-        } catch (LackOfBalanceException lackOfBalanceException) {
-        }
 
+        assertThrows(LackOfBalanceException.class, () -> legalEntityService.changeBalance(legalEntityUUID, amount.multiply(BigDecimal.valueOf(12)), TransactionType.DEBIT));
         assertEquals(BigDecimal.valueOf(11000), legalEntity.getBalance()); //  Баланс соответствует ожидаемому значению
         verify(legalEntityRepository, Mockito.times(4)).findById(legalEntityUUID); //  Поиск по id был выполнен 3 раза
         verify(legalEntityRepository, Mockito.times(3)).save(legalEntity); //  Сохранение в БД было выполнено 3 раза
