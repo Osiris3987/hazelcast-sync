@@ -1,5 +1,9 @@
 package com.example.hackathon_becoder_backend.vaadin;
 
+import com.example.hackathon_becoder_backend.vaadin.dataViewPage.clients.GetAllClientsView;
+import com.example.hackathon_becoder_backend.vaadin.dataViewPage.clients.GetClientByIdView;
+import com.example.hackathon_becoder_backend.vaadin.dataViewPage.clients.GetTransactionByClientIDView;
+import com.example.hackathon_becoder_backend.vaadin.dataViewPage.transactions.PostTransactionView;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
@@ -9,7 +13,6 @@ import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.router.RouterLink;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 
 @CssImport("styles/shared-styles.css")
 public class MainLayout extends AppLayout implements AfterNavigationObserver {
@@ -51,23 +54,24 @@ public class MainLayout extends AppLayout implements AfterNavigationObserver {
             buttonLogOut.getUI().ifPresent(ui ->
                     ui.navigate(""));
         });
+        start = new RouterLink("Start Page", StartView.class);
+        login = new RouterLink("Login Page", LoginView.class);
+        signUp = new RouterLink("Sign Up Page", SignUpView.class);
         if (!vaadinAuthService.isAuth()) {
             list.removeAll();
             // Navigation
-            start = new RouterLink("Start Page", StartView.class);
-            login = new RouterLink("Login Page", LoginView.class);
-            signUp = new RouterLink("Sign Up Page", SignUpView.class);
+            start.setEnabled(true);
+            login.setEnabled(true);
+            signUp.setEnabled(true);
 
             list = new UnorderedList(new ListItem(start), new ListItem(login), new ListItem(signUp));
         } else {
             list.removeAll();
-            start = new RouterLink("Start Page", StartView.class);
-            login = new RouterLink("Login Page", LoginView.class);
-            signUp = new RouterLink("Sign Up Page", SignUpView.class);
-
-            list = new UnorderedList(new ListItem(login), new ListItem(start), new ListItem(signUp));
+            start.setEnabled(false);
+            login.setEnabled(false);
+            signUp.setEnabled(false);
 //            initTransactionApi();
-//            initClientApi();
+            initClientApi();
 //            initLegalEntityApi();
         }
         final Nav navigation = new Nav(list);
@@ -86,21 +90,21 @@ public class MainLayout extends AppLayout implements AfterNavigationObserver {
         return new RouterLink[]{start, login, signUp};
     }
 
-//    private void initClientApi(){
-//        RouterLink getAllClients = new RouterLink("getAllClients", GetAllClientsView.class);
+    private void initClientApi(){
+        RouterLink getAllClients = new RouterLink("getAllClients", GetAllClientsView.class);
 //        RouterLink deleteClient =  new RouterLink("deleteClient", DeleteClientView.class);
-//        RouterLink getClientById = new RouterLink("getClientById", GetClientByIdView.class);
-//        RouterLink getTransactionByClientID = new RouterLink("getTransactionByClientID", GetTransactionByClientIDView.class);
-//        list.add(getAllClients);
+        RouterLink getClientById = new RouterLink("getClientById", GetClientByIdView.class);
+        RouterLink getTransactionByClientID = new RouterLink("getTransactionByClientID", GetTransactionByClientIDView.class);
+        list.add(new ListItem(getAllClients));
 //        list.add(deleteClient);
-//        list.add(getClientById);
-//        list.add(getTransactionByClientID);
-//    }
+        list.add(new ListItem(getClientById));
+        list.add(new ListItem(getTransactionByClientID));
+    }
 //
-//    private void initTransactionApi(){
-//        RouterLink postTransaction = new RouterLink("postTransaction", PostTransactionView.class);
-//        list.add(postTransaction);
-//    }
+    private void initTransactionApi(){
+        RouterLink postTransaction = new RouterLink("postTransaction", PostTransactionView.class);
+        list.add(postTransaction);
+    }
 //
 //    private void initLegalEntityApi(){
 //        RouterLink postLegalEntity = new RouterLink("postLegalEntity", PostLegalEntityView.class);

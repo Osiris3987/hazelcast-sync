@@ -1,9 +1,10 @@
-package com.example.hackathon_becoder_backend.vaadin;
-
+package com.example.hackathon_becoder_backend.vaadin.dataViewPage.clients;
 
 import com.example.hackathon_becoder_backend.service.ClientService;
+import com.example.hackathon_becoder_backend.vaadin.MainLayout;
 import com.example.hackathon_becoder_backend.web.dto.client.ClientDto;
 import com.example.hackathon_becoder_backend.web.mapper.ClientMapper;
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
@@ -12,11 +13,11 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@PageTitle("ClientsView")
-@Route(value = "vaadin/clientsView", layout = MainLayout.class)
-public class ClientsView extends Main {
+@PageTitle("GetAllClientsView")
+@Route(value = "vaadin/getAllClientsView", layout = MainLayout.class)
+public class GetAllClientsView extends Main {
 
-    public ClientsView(@Autowired ClientService service,
+    public GetAllClientsView(@Autowired ClientService service,
                        @Autowired ClientMapper clientMapper) {
         final Grid<ClientDto> commentsGrid = new Grid<ClientDto>(ClientDto.class);
 
