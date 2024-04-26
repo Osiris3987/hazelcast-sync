@@ -22,4 +22,6 @@ public interface LegalEntityService {
     LegalEntity findClientsByLegalEntityId(UUID legalEntityId);
 
     List<LegalEntity> getAll();
+
+    List<LegalEntity> getAllLegalEntitiesByClientId(UUID fromString);
 }

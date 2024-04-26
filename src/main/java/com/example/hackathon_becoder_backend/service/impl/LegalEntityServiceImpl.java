@@ -91,4 +91,9 @@ public class LegalEntityServiceImpl implements LegalEntityService {
     public List<LegalEntity> getAll() {
         return legalEntityRepository.findAll();
     }
+
+    @Override
+    public List<LegalEntity> getAllLegalEntitiesByClientId(UUID fromString) {
+        return legalEntityRepository.findAllLegalEntitiesByClientId(fromString);
+    }
 }

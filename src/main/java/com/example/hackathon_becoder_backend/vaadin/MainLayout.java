@@ -18,7 +18,7 @@ import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.router.RouterLink;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@CssImport("styles/shared-styles.css")
+@CssImport("styles/style.css")
 public class MainLayout extends AppLayout implements AfterNavigationObserver {
 
     private final H1 pageTitle;
