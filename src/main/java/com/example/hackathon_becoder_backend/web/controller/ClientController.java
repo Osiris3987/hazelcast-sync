@@ -90,9 +90,9 @@ public class ClientController {
             @ApiResponse(responseCode = "404", description = "Client not found",content = {@Content(schema = @Schema(implementation = ErrorMessage.class), mediaType = "application/json")})
     })
     @Operation(summary = "Delete client by ID", description = "Set the \"Deleted\" status for this client", operationId = "deleteById")
-    @DeleteMapping("")
+    @DeleteMapping("/{clientId}")
     public ResponseEntity<String> deleteById(
-            @RequestParam @Parameter(description = "Client id", required = true) UUID clientId
+            @PathVariable @Parameter(description = "Client id", required = true) UUID clientId
     ) {
         clientService.deleteById(clientId);
         return ResponseEntity.noContent().build();

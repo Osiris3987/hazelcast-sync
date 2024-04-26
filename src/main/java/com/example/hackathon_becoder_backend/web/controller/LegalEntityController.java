@@ -57,12 +57,33 @@ public class LegalEntityController {
 
     @Operation(summary = "Delete legal entity", description = "Delete a legal entity by its ID")
     @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Successful operation")
+    })
+    @GetMapping
+    public List<LegalEntityDto> getAll() {
+        return legalEntityMapper.toDtoList(legalEntityService.getAll());
+    }
+
+    @Operation(summary = "Get legal entity", description = "Get a legal entity by its ID")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "Successfully operation"),
+            @ApiResponse(responseCode = "404", description = "Legal entity not found",content = {@Content(schema = @Schema(implementation = ErrorMessage.class), mediaType = "application/json")})
+    })
+    @GetMapping("/{legalEntityId}")
+    public LegalEntityDto getById(
+            @PathVariable UUID legalEntityId
+    ) {
+        return legalEntityMapper.toDto(legalEntityService.findById(legalEntityId));
+    }
+
+    @Operation(summary = "Delete legal entity", description = "Delete a legal entity by its ID")
+    @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Legal entity deleted"),
             @ApiResponse(responseCode = "404", description = "Legal entity not found",content = {@Content(schema = @Schema(implementation = ErrorMessage.class), mediaType = "application/json")})
     })
-    @DeleteMapping
+    @DeleteMapping("/{legalEntityId}")
     public ResponseEntity<String> deleteById(
-            @RequestParam @Parameter(description = "LegalEntity id", required = true) UUID legalEntityId
+            @PathVariable @Parameter(description = "LegalEntity id", required = true) UUID legalEntityId
     ) {
         legalEntityService.deleteById(legalEntityId);
         return ResponseEntity.noContent().build();
