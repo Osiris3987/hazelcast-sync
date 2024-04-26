@@ -55,7 +55,7 @@ public class LegalEntityController {
         return legalEntityMapper.toDto(legalEntity);
     }
 
-    @Operation(summary = "Delete legal entity", description = "Delete a legal entity by its ID")
+    @Operation(summary = "Get all legal entities", description = "Get all legal entities")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successful operation")
     })
