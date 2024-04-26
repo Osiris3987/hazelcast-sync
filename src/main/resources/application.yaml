@@ -19,3 +19,5 @@ security:
     secret: amF0amhvaWFob2loanE5ZXdqMDlyZWlvZmppZmppc2RqZnBkamZwb3Nkam9zZGZramZvcGpzZGY=
     access: 3600000
     refresh: 2592000000
+
+vaadin.excludeUrls: /swagger-ui/**
