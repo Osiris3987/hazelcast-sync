@@ -36,12 +36,12 @@ public class StartView extends VerticalLayout{
 
         loginButton.addClickListener(e ->
                 loginButton.getUI().ifPresent(ui ->
-                        ui.navigate("login"))
+                        ui.navigate("vaadin/login"))
         );
 
         signUpButton.addClickListener(e ->
                 signUpButton.getUI().ifPresent(ui ->
-                        ui.navigate("signUp"))
+                        ui.navigate("vaadin/signUp"))
         );
 
         add(formLayout);

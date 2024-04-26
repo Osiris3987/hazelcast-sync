@@ -15,28 +15,61 @@ import org.springframework.context.annotation.Bean;
 public class MainLayout extends AppLayout implements AfterNavigationObserver {
 
     private final H1 pageTitle;
-    private final RouterLink start;
-    private final RouterLink login;
-    private final RouterLink signUp;
-
+    private RouterLink start;
+    private RouterLink login;
+    private RouterLink signUp;
     private final Button buttonLogOut;
-    private final RouterLink homePage;
+    private RouterLink homePage;
+    //Client Api
+    private RouterLink getAllClients;
+    private RouterLink deleteClient;
+    private RouterLink getClientById;
+    private RouterLink getTransactionByClientID;
 
+
+    //Transaction Api
+    private RouterLink postTransaction;
+
+    //Legal Entity
+    private RouterLink postLegalEntity;
+    private RouterLink deleteLegalEntity;
+    private RouterLink postLegalEntityAssign;
+    private RouterLink getTransactionsByLegalEntity;
+    private RouterLink getClientByLegalEntity;
+
+
+    private UnorderedList list = new UnorderedList();
 
 
     public MainLayout(
             @Autowired
             VaadinAuthService vaadinAuthService
     ) {
-        // Navigation
-        start = new RouterLink("Start Page", StartView.class);
-        login = new RouterLink("Login Page", LoginView.class);
-        signUp = new RouterLink("Sign Up Page", SignUpView.class);
-        homePage = new RouterLink("Home Page", HomeView.class);
+        buttonLogOut = new Button("Log out");
+        buttonLogOut.addClickListener(buttonClickEvent -> {
+            vaadinAuthService.logOut();
+            buttonLogOut.getUI().ifPresent(ui ->
+                    ui.navigate(""));
+        });
+        if (!vaadinAuthService.isAuth()) {
+            list.removeAll();
+            // Navigation
+            start = new RouterLink("Start Page", StartView.class);
+            login = new RouterLink("Login Page", LoginView.class);
+            signUp = new RouterLink("Sign Up Page", SignUpView.class);
 
-        buttonLogOut = new Button("LogOut");
-        buttonLogOut.addClickListener(buttonClickEvent -> vaadinAuthService.logOut());
-        final UnorderedList list = new UnorderedList(new ListItem(start), new ListItem(login), new ListItem(signUp),new ListItem(homePage));
+            list = new UnorderedList(new ListItem(start), new ListItem(login), new ListItem(signUp));
+        } else {
+            list.removeAll();
+            start = new RouterLink("Start Page", StartView.class);
+            login = new RouterLink("Login Page", LoginView.class);
+            signUp = new RouterLink("Sign Up Page", SignUpView.class);
+
+            list = new UnorderedList(new ListItem(login), new ListItem(start), new ListItem(signUp));
+//            initTransactionApi();
+//            initClientApi();
+//            initLegalEntityApi();
+        }
         final Nav navigation = new Nav(list);
         addToDrawer(navigation);
         setPrimarySection(Section.DRAWER);
@@ -52,6 +85,35 @@ public class MainLayout extends AppLayout implements AfterNavigationObserver {
     private RouterLink[] getRouterLinks() {
         return new RouterLink[]{start, login, signUp};
     }
+
+//    private void initClientApi(){
+//        RouterLink getAllClients = new RouterLink("getAllClients", GetAllClientsView.class);
+//        RouterLink deleteClient =  new RouterLink("deleteClient", DeleteClientView.class);
+//        RouterLink getClientById = new RouterLink("getClientById", GetClientByIdView.class);
+//        RouterLink getTransactionByClientID = new RouterLink("getTransactionByClientID", GetTransactionByClientIDView.class);
+//        list.add(getAllClients);
+//        list.add(deleteClient);
+//        list.add(getClientById);
+//        list.add(getTransactionByClientID);
+//    }
+//
+//    private void initTransactionApi(){
+//        RouterLink postTransaction = new RouterLink("postTransaction", PostTransactionView.class);
+//        list.add(postTransaction);
+//    }
+//
+//    private void initLegalEntityApi(){
+//        RouterLink postLegalEntity = new RouterLink("postLegalEntity", PostLegalEntityView.class);
+//        RouterLink deleteLegalEntity =  new RouterLink("deleteLegalEntity", DeleteLegalEntityView.class);
+//        RouterLink postLegalEntityAssign = new RouterLink("postLegalEntityAssign", PostLegalEntityAssignView.class);
+//        RouterLink getTransactionsByLegalEntity = new RouterLink("getTransactionsByLegalEntity", GetTransactionsByLegalEntityView.class);
+//        RouterLink getClientByLegalEntity = new RouterLink("getClientByLegalEntity", GetClientByLegalEntityView.class);
+//        list.add(postLegalEntity);
+//        list.add(deleteLegalEntity);
+//        list.add(postLegalEntityAssign);
+//        list.add(getTransactionsByLegalEntity);
+//        list.add(getClientByLegalEntity);
+//    }
 
     @Override
     public void afterNavigation(AfterNavigationEvent event) {

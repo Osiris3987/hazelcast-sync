@@ -99,7 +99,7 @@ public class ApplicationConfig {
                                 .permitAll()
                                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html")
                                 .permitAll()
-                                .requestMatchers("/VAADIN/**","/","/login","/signUp")
+                                .requestMatchers("/VAADIN/**","/","/login","/signUp","/vaadin/**")
                                 .permitAll()
                                 .anyRequest().authenticated())
                 .anonymous(AbstractHttpConfigurer::disable)

@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 
-@Route("homePage")
+@Route(value = "vaadin/homePage", layout = MainLayout.class)
 public class HomeView extends VerticalLayout implements AfterNavigationObserver {
 
     private final VaadinAuthService vaadinAuthService;

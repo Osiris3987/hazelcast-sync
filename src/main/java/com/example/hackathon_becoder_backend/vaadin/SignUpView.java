@@ -150,7 +150,7 @@ public class SignUpView extends VerticalLayout {
         notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
         notification.open();
         passwordField1.getUI().ifPresent(ui ->
-                ui.navigate("homePage"));
+                ui.navigate("vaadin/homePage"));
     }
 
     /**

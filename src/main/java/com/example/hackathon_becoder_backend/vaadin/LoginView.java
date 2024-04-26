@@ -12,7 +12,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@Route("login")
+@Route("vaadin/login")
 @PageTitle("Login")
 public class LoginView extends VerticalLayout {
 
@@ -42,7 +42,7 @@ public class LoginView extends VerticalLayout {
                 vaadinAuthService.signIn();
                 vaadinAuthService.setClientByUsername(jwtRequest.getUsername());
                 login.getUI().ifPresent(ui ->
-                        ui.navigate("homePage"));
+                        ui.navigate("vaadin/homePage"));
             }catch (Exception e){
                 showFail(jwtRequest);
             }
