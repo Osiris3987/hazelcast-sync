@@ -31,7 +31,7 @@ public class GetLegalEntitiesByClient extends VerticalLayout implements AfterNav
                                     @Autowired VaadinAuthService vaadinAuthService) {
         this.vaadinAuthService= vaadinAuthService;
         TextField id = new TextField("Get transaction");
-
+        id.setValue("f0caf844-5a61-43a7-b1c2-e66971f5e08a");
         add(id);
 
         final Grid<LegalEntityDto> commentsGrid = new Grid<LegalEntityDto>(LegalEntityDto.class);

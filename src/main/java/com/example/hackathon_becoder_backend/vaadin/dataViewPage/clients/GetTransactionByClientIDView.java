@@ -38,7 +38,7 @@ public class GetTransactionByClientIDView extends VerticalLayout implements Afte
         this.vaadinAuthService= vaadinAuthService;
 
         TextField id = new TextField("Get Transaction by client id");
-
+        id.setValue("f0caf844-5a61-43a7-b1c2-e66971f5e08a");
         add(id);
 
         final Grid<TransactionDto> commentsGrid = new Grid<TransactionDto>(TransactionDto.class);

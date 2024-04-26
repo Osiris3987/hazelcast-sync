@@ -8,6 +8,7 @@ import com.example.hackathon_becoder_backend.vaadin.dataViewPage.legalEntity.Get
 import com.example.hackathon_becoder_backend.vaadin.dataViewPage.legalEntity.PostLegalEntityAssignView;
 import com.example.hackathon_becoder_backend.vaadin.dataViewPage.legalEntity.PostLegalEntityView;
 import com.example.hackathon_becoder_backend.vaadin.dataViewPage.transactions.PostTransactionView;
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
@@ -26,24 +27,6 @@ public class MainLayout extends AppLayout implements AfterNavigationObserver {
     private RouterLink login;
     private RouterLink signUp;
     private final Button buttonLogOut;
-    private RouterLink homePage;
-    //Client Api
-    private RouterLink getAllClients;
-    private RouterLink deleteClient;
-    private RouterLink getClientById;
-    private RouterLink getTransactionByClientID;
-
-
-    //Transaction Api
-    private RouterLink postTransaction;
-
-    //Legal Entity
-    private RouterLink postLegalEntity;
-    private RouterLink deleteLegalEntity;
-    private RouterLink postLegalEntityAssign;
-    private RouterLink getTransactionsByLegalEntity;
-    private RouterLink getClientByLegalEntity;
-
 
     private UnorderedList list = new UnorderedList();
 
@@ -53,24 +36,25 @@ public class MainLayout extends AppLayout implements AfterNavigationObserver {
             VaadinAuthService vaadinAuthService
     ) {
         buttonLogOut = new Button("Log out");
+        buttonLogOut.getStyle().set("background-color", "white");
+        buttonLogOut.getStyle().set("color", "black");
+        buttonLogOut.getStyle().set("font-weight", "bold");
         buttonLogOut.addClickListener(buttonClickEvent -> {
-            vaadinAuthService.logOut();
-            buttonLogOut.getUI().ifPresent(ui ->
-                    ui.navigate(""));
-        });
+                    vaadinAuthService.logOut();
+                    buttonLogOut.getUI().ifPresent(ui ->
+                            ui.navigate(""));
+                }
+        );
         start = new RouterLink("Start Page", StartView.class);
         login = new RouterLink("Login Page", LoginView.class);
         signUp = new RouterLink("Sign Up Page", SignUpView.class);
         if (!vaadinAuthService.isAuth()) {
-            list.removeAll();
-            // Navigation
             start.setEnabled(true);
             login.setEnabled(true);
             signUp.setEnabled(true);
 
             list = new UnorderedList(new ListItem(start), new ListItem(login), new ListItem(signUp));
         } else {
-            list.removeAll();
             start.setEnabled(false);
             login.setEnabled(false);
             signUp.setEnabled(false);
@@ -78,15 +62,23 @@ public class MainLayout extends AppLayout implements AfterNavigationObserver {
             initClientApi();
             initLegalEntityApi();
         }
-        final Nav navigation = new Nav(list);
+        final Nav navigation = new Nav();
+        H2 navTitle = new H2("Решения");
+        navTitle.getStyle().set("text-align", "center");
+        navTitle.getStyle().set("margin-top", "15px");
+        navTitle.getStyle().set("color", "black");
+        navigation.add(navTitle);
+        navigation.add(list);
         addToDrawer(navigation);
         setPrimarySection(Section.DRAWER);
         setDrawerOpened(false);
 
         // Header
-        pageTitle = new H1("Fin Tech");
-        final Header header = new Header(new DrawerToggle(), pageTitle);
-        header.add(buttonLogOut);
+        pageTitle = new H1("Start Page");
+        final Header header = new Header(new DrawerToggle());
+        if (vaadinAuthService.isAuth()) {
+            header.add(buttonLogOut);
+        }
         addToNavbar(header);
     }
 
@@ -94,28 +86,37 @@ public class MainLayout extends AppLayout implements AfterNavigationObserver {
         return new RouterLink[]{start, login, signUp};
     }
 
-    private void initClientApi(){
+    private void initClientApi() {
         RouterLink getAllClients = new RouterLink("getAllClients", GetAllClientsView.class);
+        getAllClients.getStyle().set("color", "black");
 //        RouterLink deleteClient =  new RouterLink("deleteClient", DeleteClientView.class);
         RouterLink getClientById = new RouterLink("getClientById", GetClientByIdView.class);
+        getClientById.getStyle().set("color", "black");
         RouterLink getTransactionByClientID = new RouterLink("getTransactionByClientID", GetTransactionByClientIDView.class);
+        getTransactionByClientID.getStyle().set("color", "black");
         list.add(new ListItem(getAllClients));
 //        list.add(deleteClient);
         list.add(new ListItem(getClientById));
         list.add(new ListItem(getTransactionByClientID));
     }
 
-    private void initTransactionApi(){
+    private void initTransactionApi() {
         RouterLink postTransaction = new RouterLink("postTransaction", PostTransactionView.class);
+        postTransaction.getStyle().set("color", "black");
         list.add(new ListItem(postTransaction));
     }
-//
-    private void initLegalEntityApi(){
+
+    //
+    private void initLegalEntityApi() {
         RouterLink postLegalEntity = new RouterLink("postLegalEntity", PostLegalEntityView.class);
+        postLegalEntity.getStyle().set("color", "black");
 //        RouterLink deleteLegalEntity =  new RouterLink("deleteLegalEntity", DeleteLegalEntityView.class);
         RouterLink postLegalEntityAssign = new RouterLink("postLegalEntityAssign", PostLegalEntityAssignView.class);
+        postLegalEntityAssign.getStyle().set("color", "black");
         RouterLink getTransactionsByLegalEntity = new RouterLink("getTransactionsByLegalEntity", GetTransactionsByLegalEntityView.class);
+        getTransactionsByLegalEntity.getStyle().set("color", "black");
         RouterLink getLegalEntitiesByClient = new RouterLink("getLegalEntitiesByClient", GetLegalEntitiesByClient.class);
+        getLegalEntitiesByClient.getStyle().set("color", "black");
         list.add(new ListItem(postLegalEntity));
 //        list.add(deleteLegalEntity);
         list.add(new ListItem(postLegalEntityAssign));
@@ -126,9 +127,12 @@ public class MainLayout extends AppLayout implements AfterNavigationObserver {
     @Override
     public void afterNavigation(AfterNavigationEvent event) {
         for (final RouterLink routerLink : getRouterLinks()) {
+            routerLink.getStyle().set("color", "black");
             if (routerLink.getHighlightCondition().shouldHighlight(routerLink, event)) {
                 pageTitle.setText(routerLink.getText());
             }
         }
+
+
     }
 }

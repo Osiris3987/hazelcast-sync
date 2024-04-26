@@ -37,7 +37,7 @@ public class GetTransactionsByLegalEntityView extends VerticalLayout implements 
         this.vaadinAuthService= vaadinAuthService;
 
         TextField id = new TextField("Get Transaction");
-
+        id.setValue("3f71f34c-be0f-46eb-853c-fbc1fd60b284");
         add(id);
 
         final Grid<TransactionDto> commentsGrid = new Grid<TransactionDto>(TransactionDto.class);

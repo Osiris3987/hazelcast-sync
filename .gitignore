@@ -39,3 +39,9 @@ build/
 .DS_Store
 /node_modules/
 /node_modules/
+/package.json
+/package-lock.json
+/tsconfig.json
+/types.d.ts
+/vite.config.ts
+/vite.generated.ts
