@@ -18,9 +18,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-@Route
-public class MainView extends VerticalLayout{
-    public MainView(){
+@Route(value = "", layout = MainLayout.class)
+public class StartView extends VerticalLayout{
+    public StartView(){
         H2 title = new H2();
         Button loginButton = new Button("Login in");
         Button signUpButton = new Button("Sign up");
@@ -45,6 +45,5 @@ public class MainView extends VerticalLayout{
         );
 
         add(formLayout);
-
     }
 }

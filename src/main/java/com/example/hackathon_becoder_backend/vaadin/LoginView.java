@@ -18,7 +18,9 @@ public class LoginView extends VerticalLayout {
 
     public LoginView(
             @Autowired
-            AuthService authService
+            AuthService authService,
+            @Autowired
+            VaadinAuthService vaadinAuthService
     ) {
         addClassName("login-view");
         setSizeFull();
@@ -37,12 +39,12 @@ public class LoginView extends VerticalLayout {
             try {
                 authService.login(jwtRequest);
                 showSuccess(jwtRequest);
+                vaadinAuthService.signIn();
+                vaadinAuthService.setClientByUsername(jwtRequest.getUsername());
                 login.getUI().ifPresent(ui ->
-                        ui.navigate("signUp"));
+                        ui.navigate("homePage"));
             }catch (Exception e){
                 showFail(jwtRequest);
-                login.getUI().ifPresent(ui ->
-                        ui.navigate("/"));
             }
 
         });

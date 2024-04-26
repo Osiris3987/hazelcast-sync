@@ -47,7 +47,7 @@ public class SignUpView extends VerticalLayout {
      */
     public SignUpView(@Autowired AuthService authService,
                       @Autowired ClientService clientService,
-                      @Autowired AuthenticationFacade authenticationFacade) {
+                      @Autowired VaadinAuthService vaadinAuthService) {
         H3 title = new H3("Signup form");
 
         TextField username = new TextField("Username");
@@ -125,8 +125,9 @@ public class SignUpView extends VerticalLayout {
                 jwtRequest.setUsername(client.getUsername());
                 // Call backend to store the data
                 clientService.create(client);
-
                 authService.login(jwtRequest);
+                vaadinAuthService.signIn();
+                vaadinAuthService.setClient(client);
                 showSuccess(client);
             } catch (Exception e1) {
                 showFail(client);
@@ -148,6 +149,8 @@ public class SignUpView extends VerticalLayout {
         Notification notification = Notification.show("Data saved, welcome " + client.getName());
         notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
         notification.open();
+        passwordField1.getUI().ifPresent(ui ->
+                ui.navigate("homePage"));
     }
 
     /**
