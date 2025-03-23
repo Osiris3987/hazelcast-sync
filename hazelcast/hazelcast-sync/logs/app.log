@@ -1,0 +1,287 @@
+2025-03-23 16:08:05 INFO  c.e.h.HazelcastSyncApplication - Starting HazelcastSyncApplication using Java 17.0.12 with PID 31405 (/home/lomakin/JavaProjects/hazelcast/hazelcast-sync/build/classes/java/main started by lomakin in /home/lomakin/JavaProjects/hazelcast/hazelcast-sync)
+2025-03-23 16:08:05 INFO  c.e.h.HazelcastSyncApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-23 16:08:05 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8087 (http)
+2025-03-23 16:08:05 INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8087"]
+2025-03-23 16:08:05 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-03-23 16:08:05 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-03-23 16:08:05 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-03-23 16:08:05 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 456 ms
+2025-03-23 16:08:05 WARN  c.h.i.impl.HazelcastInstanceFactory - Hazelcast is starting in a Java modular environment (Java 9 and newer) but without proper access to required Java packages. Use additional Java arguments to provide Hazelcast access to Java internal API. The internal API access is used to get the best performance results. Arguments to be used:
+ --add-modules java.se --add-exports java.base/jdk.internal.ref=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.nio=ALL-UNNAMED --add-opens java.base/sun.nio.ch=ALL-UNNAMED --add-opens java.management/sun.management=ALL-UNNAMED --add-opens jdk.management/com.sun.management.internal=ALL-UNNAMED
+2025-03-23 16:08:05 INFO  com.hazelcast.system.logo - [172.17.0.1]:5701 [dev] [5.0.2] 
+	+       +  o    o     o     o---o o----o o      o---o     o     o----o o--o--o
+	+ +   + +  |    |    / \       /  |      |     /         / \    |         |   
+	+ + + + +  o----o   o   o     o   o----o |    o         o   o   o----o    |   
+	+ +   + +  |    |  /     \   /    |      |     \       /     \       |    |   
+	+       +  o    o o       o o---o o----o o----o o---o o       o o----o    o   
+2025-03-23 16:08:05 INFO  com.hazelcast.system - [172.17.0.1]:5701 [dev] [5.0.2] Copyright (c) 2008-2021, Hazelcast, Inc. All Rights Reserved.
+2025-03-23 16:08:05 INFO  com.hazelcast.system - [172.17.0.1]:5701 [dev] [5.0.2] Hazelcast Platform 5.0.2 (20211221 - 18eec9f) starting at [172.17.0.1]:5701
+2025-03-23 16:08:05 INFO  com.hazelcast.system - [172.17.0.1]:5701 [dev] [5.0.2] Cluster name: dev
+2025-03-23 16:08:05 INFO  com.hazelcast.system - [172.17.0.1]:5701 [dev] [5.0.2] The Jet engine is disabled.
+To enable the Jet engine on the members, please do one of the following:
+  - Change member config using Java API: config.getJetConfig().setEnabled(true);
+  - Change XML/YAML configuration property: Set hazelcast.jet.enabled to true
+  - Add system property: -Dhz.jet.enabled=true
+  - Add environment variable: HZ_JET_ENABLED=true
+2025-03-23 16:08:06 INFO  com.hazelcast.system.security - [172.17.0.1]:5701 [dev] [5.0.2] Enable DEBUG/FINE log level for log category com.hazelcast.system.security  or use -Dhazelcast.security.recommendations system property to see 🔒 security recommendations and the status of current config.
+2025-03-23 16:08:06 INFO  com.hazelcast.instance.impl.Node - [172.17.0.1]:5701 [dev] [5.0.2] Using Multicast discovery
+2025-03-23 16:08:06 WARN  com.hazelcast.cp.CPSubsystem - [172.17.0.1]:5701 [dev] [5.0.2] CP Subsystem is not enabled. CP data structures will operate in UNSAFE mode! Please note that UNSAFE mode will not provide strong consistency guarantees.
+2025-03-23 16:08:06 INFO  c.h.internal.diagnostics.Diagnostics - [172.17.0.1]:5701 [dev] [5.0.2] Diagnostics disabled. To enable add -Dhazelcast.diagnostics.enabled=true to the JVM arguments.
+2025-03-23 16:08:06 INFO  com.hazelcast.core.LifecycleService - [172.17.0.1]:5701 [dev] [5.0.2] [172.17.0.1]:5701 is STARTING
+2025-03-23 16:08:08 INFO  c.h.internal.cluster.ClusterService - [172.17.0.1]:5701 [dev] [5.0.2] 
+
+Members {size:1, ver:1} [
+	Member [172.17.0.1]:5701 - 36ba77f4-379c-4dbb-8ac2-fe1e2efc767d this
+]
+
+2025-03-23 16:08:08 INFO  com.hazelcast.core.LifecycleService - [172.17.0.1]:5701 [dev] [5.0.2] [172.17.0.1]:5701 is STARTED
+2025-03-23 16:08:08 INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8087"]
+2025-03-23 16:08:08 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8087 (http) with context path '/'
+2025-03-23 16:08:08 INFO  c.e.h.HazelcastSyncApplication - Started HazelcastSyncApplication in 3.165 seconds (process running for 3.569)
+2025-03-23 16:08:10 INFO  c.h.i.p.impl.PartitionStateManager - [172.17.0.1]:5701 [dev] [5.0.2] Initializing cluster partition table arrangement...
+2025-03-23 16:08:10 INFO  c.h.c.i.session.RaftSessionService - [172.17.0.1]:5701 [dev] [5.0.2] Created new session: 1 in CPGroupId{name='showMessageLock', seed=0, groupId=206} for SERVER -> [172.17.0.1]:5701
+2025-03-23 16:08:10 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at null
+2025-03-23 16:08:15 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:08:14.051872399
+2025-03-23 16:08:20 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:08:19.004829932
+2025-03-23 16:08:25 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:08:24.003290797
+2025-03-23 16:08:27 INFO  com.hazelcast.instance.impl.Node - [172.17.0.1]:5701 [dev] [5.0.2] Running shutdown hook... Current state: ACTIVE
+2025-03-23 16:08:27 INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-23 16:08:27 INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-03-23 16:08:53 INFO  c.e.h.HazelcastSyncApplication - Starting HazelcastSyncApplication using Java 17.0.12 with PID 31699 (/home/lomakin/JavaProjects/hazelcast/hazelcast-sync/build/classes/java/main started by lomakin in /home/lomakin/JavaProjects/hazelcast/hazelcast-sync)
+2025-03-23 16:08:53 INFO  c.e.h.HazelcastSyncApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-23 16:08:53 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8087 (http)
+2025-03-23 16:08:53 INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8087"]
+2025-03-23 16:08:53 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-03-23 16:08:53 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-03-23 16:08:53 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-03-23 16:08:53 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 444 ms
+2025-03-23 16:08:53 WARN  c.h.i.impl.HazelcastInstanceFactory - Hazelcast is starting in a Java modular environment (Java 9 and newer) but without proper access to required Java packages. Use additional Java arguments to provide Hazelcast access to Java internal API. The internal API access is used to get the best performance results. Arguments to be used:
+ --add-modules java.se --add-exports java.base/jdk.internal.ref=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.nio=ALL-UNNAMED --add-opens java.base/sun.nio.ch=ALL-UNNAMED --add-opens java.management/sun.management=ALL-UNNAMED --add-opens jdk.management/com.sun.management.internal=ALL-UNNAMED
+2025-03-23 16:08:53 INFO  com.hazelcast.system.logo - [172.17.0.1]:5701 [dev] [5.0.2] 
+	+       +  o    o     o     o---o o----o o      o---o     o     o----o o--o--o
+	+ +   + +  |    |    / \       /  |      |     /         / \    |         |   
+	+ + + + +  o----o   o   o     o   o----o |    o         o   o   o----o    |   
+	+ +   + +  |    |  /     \   /    |      |     \       /     \       |    |   
+	+       +  o    o o       o o---o o----o o----o o---o o       o o----o    o   
+2025-03-23 16:08:53 INFO  com.hazelcast.system - [172.17.0.1]:5701 [dev] [5.0.2] Copyright (c) 2008-2021, Hazelcast, Inc. All Rights Reserved.
+2025-03-23 16:08:53 INFO  com.hazelcast.system - [172.17.0.1]:5701 [dev] [5.0.2] Hazelcast Platform 5.0.2 (20211221 - 18eec9f) starting at [172.17.0.1]:5701
+2025-03-23 16:08:53 INFO  com.hazelcast.system - [172.17.0.1]:5701 [dev] [5.0.2] Cluster name: dev
+2025-03-23 16:08:53 INFO  com.hazelcast.system - [172.17.0.1]:5701 [dev] [5.0.2] The Jet engine is disabled.
+To enable the Jet engine on the members, please do one of the following:
+  - Change member config using Java API: config.getJetConfig().setEnabled(true);
+  - Change XML/YAML configuration property: Set hazelcast.jet.enabled to true
+  - Add system property: -Dhz.jet.enabled=true
+  - Add environment variable: HZ_JET_ENABLED=true
+2025-03-23 16:08:54 INFO  com.hazelcast.system.security - [172.17.0.1]:5701 [dev] [5.0.2] Enable DEBUG/FINE log level for log category com.hazelcast.system.security  or use -Dhazelcast.security.recommendations system property to see 🔒 security recommendations and the status of current config.
+2025-03-23 16:08:54 INFO  com.hazelcast.instance.impl.Node - [172.17.0.1]:5701 [dev] [5.0.2] Using Multicast discovery
+2025-03-23 16:08:54 WARN  com.hazelcast.cp.CPSubsystem - [172.17.0.1]:5701 [dev] [5.0.2] CP Subsystem is not enabled. CP data structures will operate in UNSAFE mode! Please note that UNSAFE mode will not provide strong consistency guarantees.
+2025-03-23 16:08:54 INFO  c.h.internal.diagnostics.Diagnostics - [172.17.0.1]:5701 [dev] [5.0.2] Diagnostics disabled. To enable add -Dhazelcast.diagnostics.enabled=true to the JVM arguments.
+2025-03-23 16:08:54 INFO  com.hazelcast.core.LifecycleService - [172.17.0.1]:5701 [dev] [5.0.2] [172.17.0.1]:5701 is STARTING
+2025-03-23 16:08:55 INFO  c.h.internal.cluster.ClusterService - [172.17.0.1]:5701 [dev] [5.0.2] 
+
+Members {size:1, ver:1} [
+	Member [172.17.0.1]:5701 - dac978e0-71fd-40ec-b348-cb1aed5b1bfd this
+]
+
+2025-03-23 16:08:55 INFO  com.hazelcast.core.LifecycleService - [172.17.0.1]:5701 [dev] [5.0.2] [172.17.0.1]:5701 is STARTED
+2025-03-23 16:08:56 INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8087"]
+2025-03-23 16:08:56 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8087 (http) with context path '/'
+2025-03-23 16:08:56 INFO  c.e.h.HazelcastSyncApplication - Started HazelcastSyncApplication in 2.988 seconds (process running for 3.357)
+2025-03-23 16:09:00 INFO  c.h.i.p.impl.PartitionStateManager - [172.17.0.1]:5701 [dev] [5.0.2] Initializing cluster partition table arrangement...
+2025-03-23 16:09:00 INFO  c.h.c.i.session.RaftSessionService - [172.17.0.1]:5701 [dev] [5.0.2] Created new session: 1 in CPGroupId{name='showMessageLock', seed=0, groupId=206} for SERVER -> [172.17.0.1]:5701
+2025-03-23 16:09:00 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at null
+2025-03-23 16:09:05 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:09:04.053254874
+2025-03-23 16:09:10 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:09:09.006508495
+2025-03-23 16:09:15 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:09:14.003112222
+2025-03-23 16:09:20 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:09:19.003513218
+2025-03-23 16:09:25 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:09:24.001548955
+2025-03-23 16:09:30 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:09:29.003245459
+2025-03-23 16:09:35 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:09:34.003229539
+2025-03-23 16:09:40 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:09:39.001021535
+2025-03-23 16:09:45 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:09:44.003256176
+2025-03-23 16:09:50 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:09:49.002914759
+2025-03-23 16:09:55 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:09:54.001173099
+2025-03-23 16:09:58 INFO  com.hazelcast.instance.impl.Node - [172.17.0.1]:5701 [dev] [5.0.2] Running shutdown hook... Current state: ACTIVE
+2025-03-23 16:09:58 INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-23 16:09:58 INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-03-23 16:10:02 INFO  c.e.h.HazelcastSyncApplication - Starting HazelcastSyncApplication using Java 17.0.12 with PID 32250 (/home/lomakin/JavaProjects/hazelcast/hazelcast-sync/build/classes/java/main started by lomakin in /home/lomakin/JavaProjects/hazelcast/hazelcast-sync)
+2025-03-23 16:10:02 INFO  c.e.h.HazelcastSyncApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-23 16:10:02 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8087 (http)
+2025-03-23 16:10:02 INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8087"]
+2025-03-23 16:10:02 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-03-23 16:10:02 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-03-23 16:10:02 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-03-23 16:10:02 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 506 ms
+2025-03-23 16:10:02 WARN  c.h.i.impl.HazelcastInstanceFactory - Hazelcast is starting in a Java modular environment (Java 9 and newer) but without proper access to required Java packages. Use additional Java arguments to provide Hazelcast access to Java internal API. The internal API access is used to get the best performance results. Arguments to be used:
+ --add-modules java.se --add-exports java.base/jdk.internal.ref=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.nio=ALL-UNNAMED --add-opens java.base/sun.nio.ch=ALL-UNNAMED --add-opens java.management/sun.management=ALL-UNNAMED --add-opens jdk.management/com.sun.management.internal=ALL-UNNAMED
+2025-03-23 16:10:02 INFO  com.hazelcast.system.logo - [172.17.0.1]:5701 [dev] [5.0.2] 
+	+       +  o    o     o     o---o o----o o      o---o     o     o----o o--o--o
+	+ +   + +  |    |    / \       /  |      |     /         / \    |         |   
+	+ + + + +  o----o   o   o     o   o----o |    o         o   o   o----o    |   
+	+ +   + +  |    |  /     \   /    |      |     \       /     \       |    |   
+	+       +  o    o o       o o---o o----o o----o o---o o       o o----o    o   
+2025-03-23 16:10:02 INFO  com.hazelcast.system - [172.17.0.1]:5701 [dev] [5.0.2] Copyright (c) 2008-2021, Hazelcast, Inc. All Rights Reserved.
+2025-03-23 16:10:02 INFO  com.hazelcast.system - [172.17.0.1]:5701 [dev] [5.0.2] Hazelcast Platform 5.0.2 (20211221 - 18eec9f) starting at [172.17.0.1]:5701
+2025-03-23 16:10:02 INFO  com.hazelcast.system - [172.17.0.1]:5701 [dev] [5.0.2] Cluster name: dev
+2025-03-23 16:10:02 INFO  com.hazelcast.system - [172.17.0.1]:5701 [dev] [5.0.2] The Jet engine is disabled.
+To enable the Jet engine on the members, please do one of the following:
+  - Change member config using Java API: config.getJetConfig().setEnabled(true);
+  - Change XML/YAML configuration property: Set hazelcast.jet.enabled to true
+  - Add system property: -Dhz.jet.enabled=true
+  - Add environment variable: HZ_JET_ENABLED=true
+2025-03-23 16:10:02 INFO  com.hazelcast.system.security - [172.17.0.1]:5701 [dev] [5.0.2] Enable DEBUG/FINE log level for log category com.hazelcast.system.security  or use -Dhazelcast.security.recommendations system property to see 🔒 security recommendations and the status of current config.
+2025-03-23 16:10:02 INFO  com.hazelcast.instance.impl.Node - [172.17.0.1]:5701 [dev] [5.0.2] Using Multicast discovery
+2025-03-23 16:10:02 WARN  com.hazelcast.cp.CPSubsystem - [172.17.0.1]:5701 [dev] [5.0.2] CP Subsystem is not enabled. CP data structures will operate in UNSAFE mode! Please note that UNSAFE mode will not provide strong consistency guarantees.
+2025-03-23 16:10:03 INFO  c.h.internal.diagnostics.Diagnostics - [172.17.0.1]:5701 [dev] [5.0.2] Diagnostics disabled. To enable add -Dhazelcast.diagnostics.enabled=true to the JVM arguments.
+2025-03-23 16:10:03 INFO  com.hazelcast.core.LifecycleService - [172.17.0.1]:5701 [dev] [5.0.2] [172.17.0.1]:5701 is STARTING
+2025-03-23 16:10:05 INFO  c.h.internal.cluster.ClusterService - [172.17.0.1]:5701 [dev] [5.0.2] 
+
+Members {size:1, ver:1} [
+	Member [172.17.0.1]:5701 - 25ec3323-964c-44fc-98b5-b1a1c78fbd7b this
+]
+
+2025-03-23 16:10:05 INFO  com.hazelcast.core.LifecycleService - [172.17.0.1]:5701 [dev] [5.0.2] [172.17.0.1]:5701 is STARTED
+2025-03-23 16:10:05 INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8087"]
+2025-03-23 16:10:05 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8087 (http) with context path '/'
+2025-03-23 16:10:05 INFO  c.e.h.HazelcastSyncApplication - Started HazelcastSyncApplication in 3.332 seconds (process running for 3.704)
+2025-03-23 16:10:10 INFO  c.h.i.p.impl.PartitionStateManager - [172.17.0.1]:5701 [dev] [5.0.2] Initializing cluster partition table arrangement...
+2025-03-23 16:10:10 INFO  c.h.c.i.session.RaftSessionService - [172.17.0.1]:5701 [dev] [5.0.2] Created new session: 1 in CPGroupId{name='showMessageLock', seed=0, groupId=206} for SERVER -> [172.17.0.1]:5701
+2025-03-23 16:10:10 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at null
+2025-03-23 16:10:15 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:10:14.043473882
+2025-03-23 16:10:20 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:10:19.005593233
+2025-03-23 16:10:25 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:10:24.003081460
+2025-03-23 16:10:30 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:10:29.001569744
+2025-03-23 16:10:35 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:10:34.003186152
+2025-03-23 16:10:40 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:10:39.004032201
+2025-03-23 16:10:45 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:10:44.004365883
+2025-03-23 16:10:50 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:10:49.002418664
+2025-03-23 16:10:55 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:10:54.003053399
+2025-03-23 16:11:00 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:10:59.003006918
+2025-03-23 16:11:03 INFO  com.hazelcast.instance.impl.Node - [172.17.0.1]:5701 [dev] [5.0.2] Running shutdown hook... Current state: ACTIVE
+2025-03-23 16:11:03 INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-23 16:11:03 INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-03-23 16:17:40 INFO  c.e.h.HazelcastSyncApplication - Starting HazelcastSyncApplication using Java 17.0.12 with PID 33513 (/home/lomakin/JavaProjects/hazelcast/hazelcast-sync/build/classes/java/main started by lomakin in /home/lomakin/JavaProjects/hazelcast/hazelcast-sync)
+2025-03-23 16:17:40 INFO  c.e.h.HazelcastSyncApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-23 16:17:40 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8086 (http)
+2025-03-23 16:17:40 INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8086"]
+2025-03-23 16:17:40 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-03-23 16:17:40 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-03-23 16:17:40 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-03-23 16:17:40 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 454 ms
+2025-03-23 16:17:40 WARN  c.h.i.impl.HazelcastInstanceFactory - Hazelcast is starting in a Java modular environment (Java 9 and newer) but without proper access to required Java packages. Use additional Java arguments to provide Hazelcast access to Java internal API. The internal API access is used to get the best performance results. Arguments to be used:
+ --add-modules java.se --add-exports java.base/jdk.internal.ref=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.nio=ALL-UNNAMED --add-opens java.base/sun.nio.ch=ALL-UNNAMED --add-opens java.management/sun.management=ALL-UNNAMED --add-opens jdk.management/com.sun.management.internal=ALL-UNNAMED
+2025-03-23 16:17:40 INFO  com.hazelcast.system.logo - [172.17.0.1]:5701 [dev] [5.0.2] 
+	+       +  o    o     o     o---o o----o o      o---o     o     o----o o--o--o
+	+ +   + +  |    |    / \       /  |      |     /         / \    |         |   
+	+ + + + +  o----o   o   o     o   o----o |    o         o   o   o----o    |   
+	+ +   + +  |    |  /     \   /    |      |     \       /     \       |    |   
+	+       +  o    o o       o o---o o----o o----o o---o o       o o----o    o   
+2025-03-23 16:17:40 INFO  com.hazelcast.system - [172.17.0.1]:5701 [dev] [5.0.2] Copyright (c) 2008-2021, Hazelcast, Inc. All Rights Reserved.
+2025-03-23 16:17:40 INFO  com.hazelcast.system - [172.17.0.1]:5701 [dev] [5.0.2] Hazelcast Platform 5.0.2 (20211221 - 18eec9f) starting at [172.17.0.1]:5701
+2025-03-23 16:17:40 INFO  com.hazelcast.system - [172.17.0.1]:5701 [dev] [5.0.2] Cluster name: dev
+2025-03-23 16:17:40 INFO  com.hazelcast.system - [172.17.0.1]:5701 [dev] [5.0.2] The Jet engine is disabled.
+To enable the Jet engine on the members, please do one of the following:
+  - Change member config using Java API: config.getJetConfig().setEnabled(true);
+  - Change XML/YAML configuration property: Set hazelcast.jet.enabled to true
+  - Add system property: -Dhz.jet.enabled=true
+  - Add environment variable: HZ_JET_ENABLED=true
+2025-03-23 16:17:41 INFO  com.hazelcast.system.security - [172.17.0.1]:5701 [dev] [5.0.2] Enable DEBUG/FINE log level for log category com.hazelcast.system.security  or use -Dhazelcast.security.recommendations system property to see 🔒 security recommendations and the status of current config.
+2025-03-23 16:17:41 INFO  com.hazelcast.instance.impl.Node - [172.17.0.1]:5701 [dev] [5.0.2] Using Multicast discovery
+2025-03-23 16:17:41 WARN  com.hazelcast.cp.CPSubsystem - [172.17.0.1]:5701 [dev] [5.0.2] CP Subsystem is not enabled. CP data structures will operate in UNSAFE mode! Please note that UNSAFE mode will not provide strong consistency guarantees.
+2025-03-23 16:17:41 INFO  c.h.internal.diagnostics.Diagnostics - [172.17.0.1]:5701 [dev] [5.0.2] Diagnostics disabled. To enable add -Dhazelcast.diagnostics.enabled=true to the JVM arguments.
+2025-03-23 16:17:41 INFO  com.hazelcast.core.LifecycleService - [172.17.0.1]:5701 [dev] [5.0.2] [172.17.0.1]:5701 is STARTING
+2025-03-23 16:17:43 INFO  c.h.internal.cluster.ClusterService - [172.17.0.1]:5701 [dev] [5.0.2] 
+
+Members {size:1, ver:1} [
+	Member [172.17.0.1]:5701 - e10192d5-7769-4bba-a56e-17715a3b6197 this
+]
+
+2025-03-23 16:17:43 INFO  com.hazelcast.core.LifecycleService - [172.17.0.1]:5701 [dev] [5.0.2] [172.17.0.1]:5701 is STARTED
+2025-03-23 16:17:43 INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8086"]
+2025-03-23 16:17:43 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8086 (http) with context path '/'
+2025-03-23 16:17:43 INFO  c.e.h.HazelcastSyncApplication - Started HazelcastSyncApplication in 3.529 seconds (process running for 3.927)
+2025-03-23 16:17:45 INFO  c.h.i.p.impl.PartitionStateManager - [172.17.0.1]:5701 [dev] [5.0.2] Initializing cluster partition table arrangement...
+2025-03-23 16:17:45 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at null
+2025-03-23 16:17:50 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:17:49.039480129
+2025-03-23 16:17:55 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:17:54.011897911
+2025-03-23 16:17:59 INFO  c.e.h.HazelcastSyncApplication - Starting HazelcastSyncApplication using Java 17.0.12 with PID 33838 (/home/lomakin/JavaProjects/hazelcast/hazelcast-sync/build/classes/java/main started by lomakin in /home/lomakin/JavaProjects/hazelcast/hazelcast-sync)
+2025-03-23 16:17:59 INFO  c.e.h.HazelcastSyncApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-23 16:18:00 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:17:59.002309973
+2025-03-23 16:18:00 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8087 (http)
+2025-03-23 16:18:00 INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8087"]
+2025-03-23 16:18:00 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-03-23 16:18:00 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-03-23 16:18:00 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-03-23 16:18:00 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 536 ms
+2025-03-23 16:18:00 WARN  c.h.i.impl.HazelcastInstanceFactory - Hazelcast is starting in a Java modular environment (Java 9 and newer) but without proper access to required Java packages. Use additional Java arguments to provide Hazelcast access to Java internal API. The internal API access is used to get the best performance results. Arguments to be used:
+ --add-modules java.se --add-exports java.base/jdk.internal.ref=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.nio=ALL-UNNAMED --add-opens java.base/sun.nio.ch=ALL-UNNAMED --add-opens java.management/sun.management=ALL-UNNAMED --add-opens jdk.management/com.sun.management.internal=ALL-UNNAMED
+2025-03-23 16:18:00 INFO  com.hazelcast.system.logo - [172.17.0.1]:5702 [dev] [5.0.2] 
+	+       +  o    o     o     o---o o----o o      o---o     o     o----o o--o--o
+	+ +   + +  |    |    / \       /  |      |     /         / \    |         |   
+	+ + + + +  o----o   o   o     o   o----o |    o         o   o   o----o    |   
+	+ +   + +  |    |  /     \   /    |      |     \       /     \       |    |   
+	+       +  o    o o       o o---o o----o o----o o---o o       o o----o    o   
+2025-03-23 16:18:00 INFO  com.hazelcast.system - [172.17.0.1]:5702 [dev] [5.0.2] Copyright (c) 2008-2021, Hazelcast, Inc. All Rights Reserved.
+2025-03-23 16:18:00 INFO  com.hazelcast.system - [172.17.0.1]:5702 [dev] [5.0.2] Hazelcast Platform 5.0.2 (20211221 - 18eec9f) starting at [172.17.0.1]:5702
+2025-03-23 16:18:00 INFO  com.hazelcast.system - [172.17.0.1]:5702 [dev] [5.0.2] Cluster name: dev
+2025-03-23 16:18:00 INFO  com.hazelcast.system - [172.17.0.1]:5702 [dev] [5.0.2] The Jet engine is disabled.
+To enable the Jet engine on the members, please do one of the following:
+  - Change member config using Java API: config.getJetConfig().setEnabled(true);
+  - Change XML/YAML configuration property: Set hazelcast.jet.enabled to true
+  - Add system property: -Dhz.jet.enabled=true
+  - Add environment variable: HZ_JET_ENABLED=true
+2025-03-23 16:18:00 INFO  com.hazelcast.system.security - [172.17.0.1]:5702 [dev] [5.0.2] Enable DEBUG/FINE log level for log category com.hazelcast.system.security  or use -Dhazelcast.security.recommendations system property to see 🔒 security recommendations and the status of current config.
+2025-03-23 16:18:00 INFO  com.hazelcast.instance.impl.Node - [172.17.0.1]:5702 [dev] [5.0.2] Using Multicast discovery
+2025-03-23 16:18:00 WARN  com.hazelcast.cp.CPSubsystem - [172.17.0.1]:5702 [dev] [5.0.2] CP Subsystem is not enabled. CP data structures will operate in UNSAFE mode! Please note that UNSAFE mode will not provide strong consistency guarantees.
+2025-03-23 16:18:00 INFO  c.h.internal.diagnostics.Diagnostics - [172.17.0.1]:5702 [dev] [5.0.2] Diagnostics disabled. To enable add -Dhazelcast.diagnostics.enabled=true to the JVM arguments.
+2025-03-23 16:18:00 INFO  com.hazelcast.core.LifecycleService - [172.17.0.1]:5702 [dev] [5.0.2] [172.17.0.1]:5702 is STARTING
+2025-03-23 16:18:00 INFO  c.h.i.cluster.impl.MulticastJoiner - [172.17.0.1]:5702 [dev] [5.0.2] Trying to join to discovered node: [172.17.0.1]:5701
+2025-03-23 16:18:00 INFO  c.h.i.server.tcp.TcpServerConnection - [172.17.0.1]:5701 [dev] [5.0.2] Initialized new cluster connection between /172.17.0.1:5701 and /192.168.0.101:48121
+2025-03-23 16:18:00 INFO  c.h.i.server.tcp.TcpServerConnection - [172.17.0.1]:5702 [dev] [5.0.2] Initialized new cluster connection between /172.17.0.1:48121 and /172.17.0.1:5701
+2025-03-23 16:18:05 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:18:04.000955161
+2025-03-23 16:18:06 INFO  c.h.internal.cluster.ClusterService - [172.17.0.1]:5701 [dev] [5.0.2] 
+
+Members {size:2, ver:2} [
+	Member [172.17.0.1]:5701 - e10192d5-7769-4bba-a56e-17715a3b6197 this
+	Member [172.17.0.1]:5702 - faf96b1a-3486-4c34-8f78-a3e5b046ad93
+]
+
+2025-03-23 16:18:06 INFO  c.h.internal.cluster.ClusterService - [172.17.0.1]:5702 [dev] [5.0.2] 
+
+Members {size:2, ver:2} [
+	Member [172.17.0.1]:5701 - e10192d5-7769-4bba-a56e-17715a3b6197
+	Member [172.17.0.1]:5702 - faf96b1a-3486-4c34-8f78-a3e5b046ad93 this
+]
+
+2025-03-23 16:18:07 INFO  c.h.i.p.impl.MigrationManager - [172.17.0.1]:5701 [dev] [5.0.2] Repartitioning cluster data. Migration tasks count: 271
+2025-03-23 16:18:07 INFO  c.h.i.p.impl.MigrationManager - [172.17.0.1]:5701 [dev] [5.0.2] All migration tasks have been completed. (repartitionTime=Sun Mar 23 16:18:07 MSK 2025, plannedMigrations=271, completedMigrations=271, remainingMigrations=0, totalCompletedMigrations=271)
+2025-03-23 16:18:07 INFO  com.hazelcast.core.LifecycleService - [172.17.0.1]:5702 [dev] [5.0.2] [172.17.0.1]:5702 is STARTED
+2025-03-23 16:18:08 INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8087"]
+2025-03-23 16:18:08 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8087 (http) with context path '/'
+2025-03-23 16:18:08 INFO  c.e.h.HazelcastSyncApplication - Started HazelcastSyncApplication in 8.505 seconds (process running for 8.988)
+2025-03-23 16:18:10 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:18:09.002845195
+2025-03-23 16:18:15 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:18:14.007805525
+2025-03-23 16:18:20 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:18:19.003367723
+2025-03-23 16:18:25 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:18:24.004448591
+2025-03-23 16:18:30 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:18:29.003906799
+2025-03-23 16:18:35 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:18:34.004834211
+2025-03-23 16:18:40 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:18:39.003036262
+2025-03-23 16:18:45 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:18:44.002837483
+2025-03-23 16:18:50 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:18:49.004252487
+2025-03-23 16:18:55 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:18:54.004286108
+2025-03-23 16:19:00 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:18:59.003900508
+2025-03-23 16:19:05 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:19:04.004442022
+2025-03-23 16:19:10 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:19:09.003626695
+2025-03-23 16:19:15 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:19:14.004166013
+2025-03-23 16:19:20 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:19:19.002717670
+2025-03-23 16:19:25 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:19:24.003986201
+2025-03-23 16:19:30 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:19:29.004039167
+2025-03-23 16:19:35 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:19:34.003697243
+2025-03-23 16:19:40 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:19:39.005127747
+2025-03-23 16:19:45 INFO  c.e.h.task.ServerNodeScheduler - Server node 1 scheduled at 2025-03-23T16:19:44.005906967
+2025-03-23 16:19:49 INFO  com.hazelcast.instance.impl.Node - [172.17.0.1]:5701 [dev] [5.0.2] Running shutdown hook... Current state: ACTIVE
+2025-03-23 16:19:49 INFO  com.hazelcast.instance.impl.Node - [172.17.0.1]:5702 [dev] [5.0.2] Running shutdown hook... Current state: ACTIVE
+2025-03-23 16:19:49 INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-23 16:19:49 INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-23 16:19:49 INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-03-23 16:19:49 INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
